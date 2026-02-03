@@ -1,0 +1,19 @@
+[project]
+name = "thesis-causal-llm"
+version = "0.1.0"
+description = "Add your description here"
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "ollama>=0.6.1",
+    "openai>=2.16.0",
+    "pandas>=3.0.0",
+    "python-dotenv>=1.2.1",
+]
+
+[project.scripts]
+thesis-causal-llm = "thesis_causal_llm:main"
+
+[build-system]
+requires = ["uv_build>=0.9.28,<0.10.0"]
+build-backend = "uv_build"

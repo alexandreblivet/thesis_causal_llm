@@ -1,0 +1,29 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+env/
+venv/
+.venv/
+
+# uv
+.venv/
+uv.lock
+
+# Environment variables
+.env
+
+# Results
+data/results/
+*.csv
+
+# Notebooks
+.ipynb_checkpoints/
+*.ipynb
+
+# IDE
+.vscode/
+.idea/
+
