@@ -1,0 +1,340 @@
+timestamp,scenario_id,structure,dag,model_name,prompt,response,predicted_answer,ground_truth,correct
+2026-02-03T21:05:34.346542,direct_1,direct_causation,ad_spend → website_traffic → sales,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+The analyst wants to know: Given these correlations, does ad_spend cause sales?
+
+Based solely on the correlation data provided, answer Yes or No: Does ad_spend cause sales?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data provided only shows correlation between ad_spend and its outcomes. It does not provide evidence of causation. The correlations could be due to a confounding variable (e.g., a change in the market or season) that affects both ad_spend and sales. Alternatively, there could be reverse causation (e.g., a company that is doing well may choose to spend more on ads). To determine causation, the analyst would need to control for other variables or use more advanced statistical methods.",no,True,False
+2026-02-03T21:05:37.394904,direct_2,direct_causation,email_opens → click_throughs → purchases,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+The analyst wants to know: Given these correlations, does email_opens cause purchases?
+
+Based solely on the correlation data provided, answer Yes or No: Does email_opens cause purchases?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The correlation data provided alone is insufficient to establish a causal relationship between email_opens and purchases. 
+
+One of the primary concerns is reverse causation. It is possible that purchases are causing email_opens, rather than the other way around. For example, a person may purchase a product and then receive an email about their purchase.
+
+Another alternative explanation is confounding. There could be a third variable that is driving both the email_opens and purchases, such as customer engagement or interest in the product category. If this third variable is not accounted for, it could lead to an incorrect conclusion about the causal relationship between email_opens and purchases.
+
+Additionally, correlation does not necessarily imply causation, especially when there are alternative explanations. The correlations provided are high, but they do not provide evidence of a direct causal relationship between email_opens and purchases.",no,True,False
+2026-02-03T21:05:39.526733,direct_3,direct_causation,discount_rate → cart_additions → conversion,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+The analyst wants to know: Given these correlations, does discount_rate cause conversion?
+
+Based solely on the correlation data provided, answer Yes or No: Does discount_rate cause conversion?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+While the correlations suggest a strong relationship between discount and conversion rates, we cannot conclusively say that discount_rate causes conversion. 
+
+One possible explanation for this relationship is reverse causation, where the conversion rate influences the discount rate (e.g., the company may lower prices after observing higher sales). Another possibility is confounding, where a third variable (e.g., seasonality, product demand) affects both the discount rate and the conversion rate.
+
+The data does not provide enough information to establish causality. The correlations only show the strength and direction of the relationships between variables and do not address the underlying mechanisms or potential confounding factors.",no,True,False
+2026-02-03T21:05:44.405817,direct_4,direct_causation,content_quality → time_on_page → engagement,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+The analyst wants to know: Given these correlations, does content_quality cause engagement?
+
+Based solely on the correlation data provided, answer Yes or No: Does content_quality cause engagement?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data provided shows correlations between content quality and engagement metrics (quality_engagement and quality_time_on_page), but it does not provide any evidence of causation due to the following limitations:
+
+1. **Correlation does not imply causation**: The correlations between content quality and engagement metrics can be attributed to various factors, such as reverse causation (engagement influencing content quality) or confounding variables (other factors influencing both content quality and engagement metrics).
+
+2. **Lack of control variables**: The data does not account for potential confounding variables, which can influence the relationship between content quality and engagement metrics. For example, the presence of ads, the target audience, or the platform used can all impact both content quality and engagement metrics.
+
+3. **No information about time direction**: The correlations do not provide any information about the time direction of the relationship. In other words, it is unclear whether content quality precedes engagement metrics or vice versa.
+
+4. **No control for reverse causation**: The correlations do not rule out the possibility of reverse causation, where engagement metrics influence content quality. For instance, high engagement might prompt content creators to improve their content quality.
+
+Given these limitations, it is not possible to conclude that content quality causes engagement based solely on the provided correlation data. Alternative explanations, such as confounding variables or reverse causation, should be considered before making a causal claim.",no,True,False
+2026-02-03T21:05:47.381391,direct_5,direct_causation,personalization → user_satisfaction → retention,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+The analyst wants to know: Given these correlations, does personalization cause retention?
+
+Based solely on the correlation data provided, answer Yes or No: Does personalization cause retention?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data does not directly support a causal claim that personalization causes retention. 
+
+There are alternative explanations possible, such as:
+
+1. **Reverse causation**: It's possible that higher retention rates lead to more opportunities for personalization. For example, if customers are retained, the business has more data to use for personalization efforts. This would mean that retention causes personalization, not the other way around.
+
+2. **Confounding variable**: There might be another variable that influences both personalization and retention. For instance, a business that invests in personalization efforts might also have a strong focus on customer satisfaction, which in turn affects retention. In this case, the observed correlation between personalization and retention could be due to the presence of a common underlying factor (customer satisfaction).
+
+To establish a causal relationship between personalization and retention, the analyst would need to control for potential confounders and/or use experimental methods, such as randomized controlled trials, where personalization efforts are manipulated independently of other factors.",no,True,False
+2026-02-03T21:05:51.397165,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+The analyst wants to know: Given these correlations, does ad_spend cause sales?
+
+Based solely on the correlation data provided, answer Yes or No: Does ad_spend cause sales?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+There are several reasons why the correlation data provided does not support a causal claim that ad_spend causes sales:
+
+1. **Correlation does not imply causation**: As the phrase goes, correlation does not necessarily mean causation. There might be other factors at play that are driving both ad_spend and sales.
+
+2. **Confounding variable**: Seasonality is strongly correlated with both ad_spend and sales, indicating that it could be a confounding variable. This means that the observed correlation between ad_spend and sales could be due to the effect of seasonality rather than a causal relationship between ad_spend and sales.
+
+3. **Reverse causation**: It's also possible that sales drive ad_spend rather than the other way around. For example, during peak sales seasons, the company may choose to spend more on advertising to maintain momentum.
+
+4. **Correlation between ad and sales is not as strong as correlation between seasonality and ad_spend or sales**: The correlation between ad and sales is 0.88, which is lower than the correlation between seasonality and either ad_spend or sales. This suggests that seasonality plays a larger role in determining both ad_spend and sales.
+
+In the absence of more information or a controlled study, it's not possible to confirm a causal relationship between ad_spend and sales based solely on the correlation data provided.",no,False,True
+2026-02-03T21:05:54.750934,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+The analyst wants to know: Given these correlations, does social_posts cause revenue?
+
+Based solely on the correlation data provided, answer Yes or No: Does social_posts cause revenue?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data does not support a causal claim that social_posts cause revenue because correlation does not imply causation. There are alternative explanations possible:
+
+1. **Confounding**: Other variables may be influencing both social_posts and revenue. For example, companies with more resources may have more social media presence and higher revenue. The correlation between social_posts and revenue could be due to a third variable (resources) rather than social_posts causing revenue.
+
+2. **Reverse causation**: It's possible that revenue is causing social_posts. For example, successful companies may have more resources to invest in social media marketing, leading to more social_posts.
+
+3. **Common cause**: There may be a common cause that influences both social_posts and revenue. For example, changes in the market or industry trends could lead to both increased social media presence and higher revenue.
+
+To establish causation, the analyst would need to control for confounding variables, perform experiments to test the causal relationship, or use other methods that can establish cause-and-effect relationships.",no,False,True
+2026-02-03T21:05:57.639476,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+The analyst wants to know: Given these correlations, does support_calls cause churn?
+
+Based solely on the correlation data provided, answer Yes or No: Does support_calls cause churn?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The correlations provided do not directly imply causation between support_calls and churn. 
+
+A correlation of 0.85 between support and calls_churn suggests a strong positive relationship between the two variables, where as support increases, calls_churn also tends to increase. However, this does not necessarily imply that support_calls causes churn.
+
+The relationship between product and bugs_support_calls (corr = 0.91) and product and bugs_churn (corr = 0.93) indicate that a third variable (product) might be influencing the relationship between support_calls and churn. These correlations suggest that product might be a confounding variable, which could be causing the observed relationship between support_calls and churn.
+
+In other words, it is possible that the observed correlation between support_calls and churn is due to a third variable (product) rather than a causal relationship between the two variables. Therefore, based solely on the correlation data provided, it is not possible to conclude that support_calls causes churn.",no,False,True
+2026-02-03T21:06:02.125590,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+The analyst wants to know: Given these correlations, does training_hours cause sales_performance?
+
+Based solely on the correlation data provided, answer Yes or No: Does training_hours cause sales_performance?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data does not support a causal claim that training_hours causes sales_performance. 
+
+There are several alternative explanations that could be at play here:
+
+1. **Confounding variable**: It's possible that another variable, such as employee, is driving both training_hours and sales_performance. The high correlation between employee and sales_performance (corr = 0.92) suggests that employee experience might be related to sales performance, and this relationship could be driving the observed correlation between training_hours and sales_performance.
+
+2. **Reverse causation**: The data does not eliminate the possibility that sales_performance influences training_hours. For example, better-performing employees might receive more training hours, leading to a spurious correlation between training_hours and sales_performance.
+
+3. **Third variable**: Another variable, not listed in the data, might be driving the correlation between training_hours and sales_performance. For example, a company that prioritizes employee development might also invest in employee training and improve sales performance.
+
+To establish causality, the analyst would need to collect more data, including information about potential confounding variables, and perform a more rigorous analysis, such as a regression analysis with control variables.",no,False,True
+2026-02-03T21:06:04.945525,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+The analyst wants to know: Given these correlations, does influencer_posts cause brand_awareness?
+
+Based solely on the correlation data provided, answer Yes or No: Does influencer_posts cause brand_awareness?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data provided suggests strong correlations between influencer posts, brand awareness, and market trend. However, these correlations alone do not establish causality. There are alternative explanations that could be at play, such as reverse causation or confounding variables.
+
+In reverse causation, it's possible that brand awareness is causing influencer posts, rather than the other way around. For example, if a brand is already popular, they may choose to invest more in influencer marketing.
+
+A confounding variable could also explain the correlation. For instance, the market trend could be causing both influencer posts and brand awareness to increase simultaneously. This would mean that the correlation between influencer posts and brand awareness is spurious, and influencer posts do not actually cause brand awareness.
+
+To establish causality, the analyst would need to use additional data and methods, such as controlled experiments, instrumental variables, or regression analysis with time lag.",no,False,True
+2026-02-03T21:06:07.208133,reverse_1,reverse_causation,product_quality → customer_reviews,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+The analyst wants to know: Given this correlation, does customer_reviews cause product_quality?
+
+Based solely on the correlation data provided, answer Yes or No: Does customer_reviews cause product_quality?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The correlation between customer_reviews and reviews_product_quality does not necessarily imply causation. There are alternative explanations possible, such as:
+
+1. **Reverse causation**: It's possible that product quality influences customer reviews, rather than customer reviews causing product quality.
+2. **Confounding variable**: There might be an underlying factor that affects both customer reviews and product quality, such as the product's price, brand reputation, or marketing efforts.
+
+To establish causation, the analyst would need to collect additional data or use techniques such as regression analysis with control variables or instrumental variables to account for these alternative explanations.",no,False,True
+2026-02-03T21:06:10.486670,reverse_2,reverse_causation,user_frustration → support_tickets,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+The analyst wants to know: Given this correlation, does support_tickets cause user_frustration?
+
+Based solely on the correlation data provided, answer Yes or No: Does support_tickets cause user_frustration?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The correlation between support_tickets and user_frustration does not necessarily imply causation. There are several alternative explanations:
+
+1. **Reverse Causation**: User frustration may be the cause of the number of support tickets, rather than the other way around. For example, if users are frustrated, they are more likely to submit support tickets.
+
+2. **Confounding Variable**: There may be a third variable that is causing both the number of support tickets and user frustration to increase. For example, a new software update may be causing both an increase in user frustration and an increase in support tickets.
+
+3. **Third Variable**: There may be a third variable that is not accounted for in the data, which is causing both the number of support tickets and user frustration to increase.
+
+To establish causation, further analysis would be required, such as:
+
+- Checking for reverse causation by examining the relationship between user frustration and support tickets over time.
+- Identifying potential confounding variables and controlling for them in the analysis.
+- Conducting a more in-depth analysis, such as a regression analysis or an instrumental variable analysis, to determine the direction of causality.",no,False,True
+2026-02-03T21:06:13.213974,reverse_3,reverse_causation,customer_satisfaction → referrals,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+The analyst wants to know: Given this correlation, does referrals cause customer_satisfaction?
+
+Based solely on the correlation data provided, answer Yes or No: Does referrals cause customer_satisfaction?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The given correlation data (corr(referrals, customer_satisfaction) = 0.92) alone is not sufficient to establish causality between referrals and customer_satisfaction. 
+
+There are several alternative explanations, including:
+
+1. **Confounding**: It is possible that a third variable, not accounted for in this analysis, is causing both referrals and customer_satisfaction. For example, if a company's product quality is influencing both referrals and customer_satisfaction, then the observed correlation would be due to this underlying variable.
+
+2. **Reverse causation**: It could be that customer_satisfaction is causing referrals rather than the other way around. For example, customers are more likely to refer others to a business if they are satisfied with their experience.
+
+3. **Spurious correlation**: The correlation could be due to a chance or random event, especially given the large sample size (n = 100).",no,False,True
+2026-02-03T21:06:17.746343,reverse_4,reverse_causation,product_value → repeat_purchases,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+The analyst wants to know: Given this correlation, does repeat_purchases cause product_value?
+
+Based solely on the correlation data provided, answer Yes or No: Does repeat_purchases cause product_value?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No
+
+The data does not support a causal claim that repeat_purchases causes product_value. The correlation between repeat_purchases and product_value (corr = 0.88) indicates a strong positive relationship, but it does not necessarily imply causation. 
+
+There are two primary alternative explanations that make a causal claim suspect:
+
+1. **Confounding**: A third variable could be influencing both repeat_purchases and product_value, causing the observed correlation. For example, if the data also shows that a higher average order value is associated with repeat business and also predicts a higher product value, then a confounding variable (average order value) could be driving the observed correlation.
+
+2. **Reverse Causation**: It's possible that product_value causes repeat_purchases. For instance, if customers are more likely to repeat their purchases with a specific product brand that they like, then the product_value could be the cause of repeat_purchases, rather than the cause being the other way around.
+
+Without further analysis (e.g., regression analysis, structural equation modeling), or more data, it's impossible to determine the direction of causality. Therefore, the analyst should treat the observed correlation with caution and not make a causal claim based solely on this information.",no,False,True
+2026-02-03T21:06:20.497901,reverse_5,reverse_causation,content_virality → social_shares,meta-llama/Llama-3.1-8B-Instruct,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+The analyst wants to know: Given this correlation, does social_shares cause content_virality?
+
+Based solely on the correlation data provided, answer Yes or No: Does social_shares cause content_virality?
+
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No.
+
+The data provided does not support a causal claim that social_shares causes content_virality. 
+
+There are alternative explanations for a high correlation coefficient, such as:
+
+1. **Confounding variable**: Another variable could be driving the relationship between social_shares and content_virality, and the correlation is just a result of this confounding variable. For example, maybe a high-quality content is more likely to be shared socially and also more likely to go viral.
+
+2. **Reverse causation**: Content_virality could cause social_shares, not the other way around. For example, people might share content that they think will go viral.
+
+Correlation does not imply causation, and without further analysis or data, it's impossible to determine the direction of the relationship between social_shares and content_virality.",no,False,True
