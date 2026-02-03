@@ -1,122 +1,272 @@
 [
-    {
-        "id": "direct_1",
-        "structure": "direct_causation",
-        "scenario": "A company runs an email marketing campaign. The data shows that email opens and website visits are positively correlated. Email opens and purchases are positively correlated. Website visits and purchases are positively correlated.",
-        "question": "Based on these correlations, can we conclude that email opens directly cause purchases?",
-        "ground_truth": true,
-        "reasoning": "In a direct causal chain (Email opens → Website visits → Purchases), the correlation between email opens and purchases reflects genuine causation through the intermediate step."
+  {
+    "id": "direct_1",
+    "structure": "direct_causation",
+    "dag": "ad_spend \u2192 website_traffic \u2192 sales",
+    "variables": {
+      "x": "ad_spend",
+      "y": "sales",
+      "m": "website_traffic"
     },
-    {
-        "id": "direct_2",
-        "structure": "direct_causation",
-        "scenario": "A retail brand tests different product page layouts. The data shows that improved layout scores and time on page are positively correlated. Improved layout scores and add-to-cart rates are positively correlated. Time on page and add-to-cart rates are positively correlated.",
-        "question": "Based on these correlations, can we conclude that improved page layouts cause higher add-to-cart rates?",
-        "ground_truth": true,
-        "reasoning": "Better layouts directly influence user engagement (time on page) which leads to more add-to-cart actions."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_ad_spend_sales": 0.71,
+      "corr_ad_spend_website_traffic": 0.89,
+      "corr_website_traffic_sales": 0.91
     },
-    {
-        "id": "direct_3",
-        "structure": "direct_causation",
-        "scenario": "A SaaS company analyzes user onboarding. The data shows that tutorial completion and feature adoption are positively correlated. Tutorial completion and subscription upgrades are positively correlated. Feature adoption and subscription upgrades are positively correlated.",
-        "question": "Based on these correlations, can we conclude that tutorial completion causes subscription upgrades?",
-        "ground_truth": true,
-        "reasoning": "Tutorial completion leads to feature adoption, which increases the likelihood of upgrades."
+    "question": "Given these correlations, does ad_spend cause sales?",
+    "ground_truth": true,
+    "reasoning": "ad_spend causes website_traffic, which causes sales. The correlation reflects genuine (mediated) causation."
+  },
+  {
+    "id": "direct_2",
+    "structure": "direct_causation",
+    "dag": "email_opens \u2192 click_throughs \u2192 purchases",
+    "variables": {
+      "x": "email_opens",
+      "y": "purchases",
+      "m": "click_throughs"
     },
-    {
-        "id": "direct_4",
-        "structure": "direct_causation",
-        "scenario": "An e-commerce site tests checkout optimizations. The data shows that reduced checkout steps and completion speed are positively correlated. Reduced checkout steps and conversion rate are positively correlated. Completion speed and conversion rate are positively correlated.",
-        "question": "Based on these correlations, can we conclude that reducing checkout steps causes higher conversion rates?",
-        "ground_truth": true,
-        "reasoning": "Fewer steps directly reduce friction, speeding up checkout and increasing conversions."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_email_opens_purchases": 0.68,
+      "corr_email_opens_click_throughs": 0.87,
+      "corr_click_throughs_purchases": 0.88
     },
-    {
-        "id": "direct_5",
-        "structure": "direct_causation",
-        "scenario": "A mobile app tracks push notification effectiveness. The data shows that personalized notifications and app opens are positively correlated. Personalized notifications and in-app purchases are positively correlated. App opens and in-app purchases are positively correlated.",
-        "question": "Based on these correlations, can we conclude that personalized notifications cause in-app purchases?",
-        "ground_truth": true,
-        "reasoning": "Personalized notifications drive app engagement, which leads to purchase behavior."
+    "question": "Given these correlations, does email_opens cause purchases?",
+    "ground_truth": true,
+    "reasoning": "email_opens causes click_throughs, which causes purchases. The correlation reflects genuine (mediated) causation."
+  },
+  {
+    "id": "direct_3",
+    "structure": "direct_causation",
+    "dag": "discount_rate \u2192 cart_additions \u2192 conversion",
+    "variables": {
+      "x": "discount_rate",
+      "y": "conversion",
+      "m": "cart_additions"
     },
-    {
-        "id": "confounding_1",
-        "structure": "confounding",
-        "scenario": "A retailer observes that ad spend and sales are positively correlated. Seasonality and ad spend are positively correlated. Seasonality and sales are positively correlated.",
-        "question": "Based on these correlations, can we conclude that ad spend directly causes increased sales?",
-        "ground_truth": false,
-        "reasoning": "Seasonality confounds the relationship. Both ad spend and sales increase during peak seasons, creating spurious correlation."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_discount_rate_conversion": 0.73,
+      "corr_discount_rate_cart_additions": 0.91,
+      "corr_cart_additions_conversion": 0.86
     },
-    {
-        "id": "confounding_2",
-        "structure": "confounding",
-        "scenario": "An online platform finds that content production and user engagement are positively correlated. Platform growth and content production are positively correlated. Platform growth and user engagement are positively correlated.",
-        "question": "Based on these correlations, can we conclude that content production causes user engagement?",
-        "ground_truth": false,
-        "reasoning": "Platform growth confounds this relationship. As the platform grows, both content and engagement increase independently."
+    "question": "Given these correlations, does discount_rate cause conversion?",
+    "ground_truth": true,
+    "reasoning": "discount_rate causes cart_additions, which causes conversion. The correlation reflects genuine (mediated) causation."
+  },
+  {
+    "id": "direct_4",
+    "structure": "direct_causation",
+    "dag": "content_quality \u2192 time_on_page \u2192 engagement",
+    "variables": {
+      "x": "content_quality",
+      "y": "engagement",
+      "m": "time_on_page"
     },
-    {
-        "id": "confounding_3",
-        "structure": "confounding",
-        "scenario": "A B2B company observes that sales calls and deal closures are positively correlated. Lead quality and sales calls are positively correlated. Lead quality and deal closures are positively correlated.",
-        "question": "Based on these correlations, can we conclude that more sales calls cause more deal closures?",
-        "ground_truth": false,
-        "reasoning": "Lead quality confounds this. High-quality leads both receive more attention (calls) and are more likely to close regardless of call volume."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_content_quality_engagement": 0.69,
+      "corr_content_quality_time_on_page": 0.88,
+      "corr_time_on_page_engagement": 0.90
     },
-    {
-        "id": "confounding_4",
-        "structure": "confounding",
-        "scenario": "A streaming service notices that personalized recommendations and watch time are positively correlated. User engagement level and recommendations are positively correlated. User engagement level and watch time are positively correlated.",
-        "question": "Based on these correlations, can we conclude that recommendations cause increased watch time?",
-        "ground_truth": false,
-        "reasoning": "User engagement level is a confounder. Highly engaged users both interact more with recommendations and watch more content naturally."
+    "question": "Given these correlations, does content_quality cause engagement?",
+    "ground_truth": true,
+    "reasoning": "content_quality causes time_on_page, which causes engagement. The correlation reflects genuine (mediated) causation."
+  },
+  {
+    "id": "direct_5",
+    "structure": "direct_causation",
+    "dag": "personalization \u2192 user_satisfaction \u2192 retention",
+    "variables": {
+      "x": "personalization",
+      "y": "retention",
+      "m": "user_satisfaction"
     },
-    {
-        "id": "confounding_5",
-        "structure": "confounding",
-        "scenario": "A fintech app observes that financial education content views and investment activity are positively correlated. Market conditions and content views are positively correlated. Market conditions and investment activity are positively correlated.",
-        "question": "Based on these correlations, can we conclude that viewing educational content causes more investment activity?",
-        "ground_truth": false,
-        "reasoning": "Market conditions confound this relationship. During bull markets, both content consumption and investment activity increase."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_personalization_retention": 0.72,
+      "corr_personalization_user_satisfaction": 0.90,
+      "corr_user_satisfaction_retention": 0.87
     },
-    {
-        "id": "reverse_1",
-        "structure": "reverse_causation",
-        "scenario": "A software company finds that customer satisfaction scores and product quality ratings are positively correlated. Customer retention and satisfaction scores are positively correlated. Customer retention and product quality ratings are positively correlated.",
-        "question": "Based on these correlations, can we conclude that customer satisfaction causes higher product quality ratings?",
-        "ground_truth": false,
-        "reasoning": "This is reverse causation. Product quality drives satisfaction, not the other way around. Satisfied customers stay because of quality."
+    "question": "Given these correlations, does personalization cause retention?",
+    "ground_truth": true,
+    "reasoning": "personalization causes user_satisfaction, which causes retention. The correlation reflects genuine (mediated) causation."
+  },
+  {
+    "id": "confounding_1",
+    "structure": "confounding",
+    "dag": "seasonality \u2192 ad_spend, seasonality \u2192 sales",
+    "variables": {
+      "x": "ad_spend",
+      "y": "sales",
+      "z": "seasonality"
     },
-    {
-        "id": "reverse_2",
-        "structure": "reverse_causation",
-        "scenario": "A marketplace platform observes that seller ratings and sales volume are positively correlated. Platform visibility and seller ratings are positively correlated. Platform visibility and sales volume are positively correlated.",
-        "question": "Based on these correlations, can we conclude that high sales volume causes better seller ratings?",
-        "ground_truth": false,
-        "reasoning": "Reverse causation: Better ratings lead to higher visibility and more sales, not the reverse."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_ad_spend_sales": 0.78,
+      "corr_seasonality_ad_spend": 0.91,
+      "corr_seasonality_sales": 0.88
     },
-    {
-        "id": "reverse_3",
-        "structure": "reverse_causation",
-        "scenario": "An educational platform finds that course completion rates and student engagement scores are positively correlated. Learning outcomes and completion rates are positively correlated. Learning outcomes and engagement scores are positively correlated.",
-        "question": "Based on these correlations, can we conclude that course completion causes better engagement scores?",
-        "ground_truth": false,
-        "reasoning": "Reverse causation: Engaged students are more likely to complete courses, not the other way around."
+    "question": "Given these correlations, does ad_spend cause sales?",
+    "ground_truth": false,
+    "reasoning": "seasonality is a confounder that causes both ad_spend and sales. The correlation between ad_spend and sales is spurious."
+  },
+  {
+    "id": "confounding_2",
+    "structure": "confounding",
+    "dag": "product_launches \u2192 social_posts, product_launches \u2192 revenue",
+    "variables": {
+      "x": "social_posts",
+      "y": "revenue",
+      "z": "product_launches"
     },
-    {
-        "id": "reverse_4",
-        "structure": "reverse_causation",
-        "scenario": "A fitness app observes that workout frequency and user motivation scores are positively correlated. Goal achievement and workout frequency are positively correlated. Goal achievement and motivation scores are positively correlated.",
-        "question": "Based on these correlations, can we conclude that frequent workouts cause higher motivation?",
-        "ground_truth": false,
-        "reasoning": "Reverse causation: Motivated users work out more frequently. Motivation drives behavior, not the reverse."
+    "data_summary": {
+      "n_samples": 100,
+      "corr_social_posts_revenue": 0.81,
+      "corr_product_launches_social_posts": 0.89,
+      "corr_product_launches_revenue": 0.92
     },
-    {
-        "id": "reverse_5",
-        "structure": "reverse_causation",
-        "scenario": "A restaurant delivery service finds that order frequency and customer loyalty scores are positively correlated. App usage and order frequency are positively correlated. App usage and loyalty scores are positively correlated.",
-        "question": "Based on these correlations, can we conclude that frequent orders cause higher loyalty?",
-        "ground_truth": false,
-        "reasoning": "Reverse causation: Loyal customers order more frequently. Loyalty drives ordering behavior."
-    }
+    "question": "Given these correlations, does social_posts cause revenue?",
+    "ground_truth": false,
+    "reasoning": "product_launches is a confounder that causes both social_posts and revenue. The correlation between social_posts and revenue is spurious."
+  },
+  {
+    "id": "confounding_3",
+    "structure": "confounding",
+    "dag": "product_bugs \u2192 support_calls, product_bugs \u2192 churn",
+    "variables": {
+      "x": "support_calls",
+      "y": "churn",
+      "z": "product_bugs"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_support_calls_churn": 0.76,
+      "corr_product_bugs_support_calls": 0.87,
+      "corr_product_bugs_churn": 0.90
+    },
+    "question": "Given these correlations, does support_calls cause churn?",
+    "ground_truth": false,
+    "reasoning": "product_bugs is a confounder that causes both support_calls and churn. The correlation between support_calls and churn is spurious."
+  },
+  {
+    "id": "confounding_4",
+    "structure": "confounding",
+    "dag": "employee_experience \u2192 training_hours, employee_experience \u2192 sales_performance",
+    "variables": {
+      "x": "training_hours",
+      "y": "sales_performance",
+      "z": "employee_experience"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_training_hours_sales_performance": 0.79,
+      "corr_employee_experience_training_hours": 0.88,
+      "corr_employee_experience_sales_performance": 0.91
+    },
+    "question": "Given these correlations, does training_hours cause sales_performance?",
+    "ground_truth": false,
+    "reasoning": "employee_experience is a confounder that causes both training_hours and sales_performance. The correlation between training_hours and sales_performance is spurious."
+  },
+  {
+    "id": "confounding_5",
+    "structure": "confounding",
+    "dag": "market_trend \u2192 influencer_posts, market_trend \u2192 brand_awareness",
+    "variables": {
+      "x": "influencer_posts",
+      "y": "brand_awareness",
+      "z": "market_trend"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_influencer_posts_brand_awareness": 0.82,
+      "corr_market_trend_influencer_posts": 0.90,
+      "corr_market_trend_brand_awareness": 0.93
+    },
+    "question": "Given these correlations, does influencer_posts cause brand_awareness?",
+    "ground_truth": false,
+    "reasoning": "market_trend is a confounder that causes both influencer_posts and brand_awareness. The correlation between influencer_posts and brand_awareness is spurious."
+  },
+  {
+    "id": "reverse_1",
+    "structure": "reverse_causation",
+    "dag": "product_quality \u2192 customer_reviews",
+    "variables": {
+      "x": "customer_reviews",
+      "y": "product_quality"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_customer_reviews_product_quality": 0.89
+    },
+    "question": "Given this correlation, does customer_reviews cause product_quality?",
+    "ground_truth": false,
+    "reasoning": "Reverse causation: product_quality actually causes customer_reviews, not the other way around."
+  },
+  {
+    "id": "reverse_2",
+    "structure": "reverse_causation",
+    "dag": "user_frustration \u2192 support_tickets",
+    "variables": {
+      "x": "support_tickets",
+      "y": "user_frustration"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_support_tickets_user_frustration": 0.91
+    },
+    "question": "Given this correlation, does support_tickets cause user_frustration?",
+    "ground_truth": false,
+    "reasoning": "Reverse causation: user_frustration actually causes support_tickets, not the other way around."
+  },
+  {
+    "id": "reverse_3",
+    "structure": "reverse_causation",
+    "dag": "customer_satisfaction \u2192 referrals",
+    "variables": {
+      "x": "referrals",
+      "y": "customer_satisfaction"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_referrals_customer_satisfaction": 0.87
+    },
+    "question": "Given this correlation, does referrals cause customer_satisfaction?",
+    "ground_truth": false,
+    "reasoning": "Reverse causation: customer_satisfaction actually causes referrals, not the other way around."
+  },
+  {
+    "id": "reverse_4",
+    "structure": "reverse_causation",
+    "dag": "product_value \u2192 repeat_purchases",
+    "variables": {
+      "x": "repeat_purchases",
+      "y": "product_value"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_repeat_purchases_product_value": 0.88
+    },
+    "question": "Given this correlation, does repeat_purchases cause product_value?",
+    "ground_truth": false,
+    "reasoning": "Reverse causation: product_value actually causes repeat_purchases, not the other way around."
+  },
+  {
+    "id": "reverse_5",
+    "structure": "reverse_causation",
+    "dag": "content_virality \u2192 social_shares",
+    "variables": {
+      "x": "social_shares",
+      "y": "content_virality"
+    },
+    "data_summary": {
+      "n_samples": 100,
+      "corr_social_shares_content_virality": 0.90
+    },
+    "question": "Given this correlation, does social_shares cause content_virality?",
+    "ground_truth": false,
+    "reasoning": "Reverse causation: content_virality actually causes social_shares, not the other way around."
+  }
 ]

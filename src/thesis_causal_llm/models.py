@@ -1,60 +1,39 @@
 """
 LLM interface for causal reasoning experiments.
-Supports both local models (via Ollama) and API models (OpenAI).
+Supports local models via Ollama.
 """
 
-import os
-from typing import Literal
-from dotenv import load_dotenv
 import ollama
-from openai import OpenAI
-
-load_dotenv()
 
 
 class LLMInterface:
-    """Unified interface for querying different LLMs."""
+    """Interface for querying Ollama models."""
 
-    def __init__(self, model_type: Literal["ollama", "openai"], model_name: str):
+    def __init__(self, model_name: str):
         """
         Initialize LLM interface.
 
         Args:
-            model_type: Either "ollama" (local) or "openai" (API)
-            model_name: Model identifier (e.g., "llama3.1:8b" or "gpt-4o-mini")
+            model_name: Ollama model identifier (e.g., "llama3.1:8b")
         """
-        self.model_type = model_type
         self.model_name = model_name
 
-        if model_type == "openai":
-            api_key = os.getenv("OPENAI_API_KEY")
-            if not api_key:
-                raise ValueError("OPENAI_API_KEY not found in environment")
-            self.client = OpenAI(api_key=api_key)
-
-    def query(self, prompt: str) -> str:
+    def query(self, prompt: str, temperature: float = 0.0) -> str:
         """
         Send a prompt to the LLM and return the response.
 
         Args:
             prompt: The question/prompt to send
+            temperature: Sampling temperature (0.0 for deterministic)
 
         Returns:
             The model's text response
         """
-        if self.model_type == "ollama":
-            return self._query_ollama(prompt)
-        elif self.model_type == "openai":
-            return self._query_openai(prompt)
-        else:
-            raise ValueError(f"Unknown model type: {self.model_type}")
-
-    def _query_ollama(self, prompt: str) -> str:
-        """Query a local Ollama model."""
         try:
             response = ollama.chat(
                 model=self.model_name,
-                messages=[{"role": "user", "content": prompt}]
+                messages=[{"role": "user", "content": prompt}],
+                options={"temperature": temperature}
             )
             return response["message"]["content"]
         except ConnectionError:
@@ -77,23 +56,15 @@ class LLMInterface:
                 )
             raise RuntimeError(f"Ollama query failed: {e}")
 
-    def _query_openai(self, prompt: str) -> str:
-        """Query OpenAI API."""
-        try:
-            response = self.client.chat.completions.create(
-                model=self.model_name,
-                messages=[{"role": "user", "content": prompt}],
-                temperature=0,  # Deterministic for reproducibility
-                max_tokens=500
-            )
-            return response.choices[0].message.content
-        except Exception as e:
-            raise RuntimeError(f"OpenAI query failed: {e}")
+
+# Models to evaluate in the experiment
+MODELS = [
+    "llama3.1:8b",
+    "mistral:7b",
+    "qwen2.5:7b",
+]
 
 
-def get_available_models():
-    """Return list of available models for the experiment."""
-    return [
-        ("ollama", "llama3.1:8b"),
-        ("openai", "gpt-4o-mini")
-    ]
+def get_available_models() -> list[str]:
+    """Return list of Ollama models to test."""
+    return MODELS.copy()

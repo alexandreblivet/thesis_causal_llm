@@ -1,14 +1,18 @@
 """
-Test script for running a single scenario against both models.
+Test script for running a single scenario against Ollama models.
 Useful for debugging and verifying setup before running the full experiment.
 """
 
 import argparse
 import sys
-from pathlib import Path
 
 from .models import LLMInterface, get_available_models
-from .run_experiment import load_scenarios, create_prompt, parse_response, evaluate_answer
+from .run_experiment import (
+    load_scenarios,
+    create_prompt,
+    parse_response,
+    evaluate_answer,
+)
 
 
 def test_single_scenario(scenario_id: str | None = None, model_filter: str | None = None):
@@ -17,7 +21,7 @@ def test_single_scenario(scenario_id: str | None = None, model_filter: str | Non
 
     Args:
         scenario_id: Specific scenario ID to test (default: first scenario)
-        model_filter: Filter to specific model type ("ollama" or "openai")
+        model_filter: Test only this specific model
     """
     # Load scenarios
     scenarios = load_scenarios()
@@ -32,43 +36,45 @@ def test_single_scenario(scenario_id: str | None = None, model_filter: str | Non
     else:
         scenario = scenarios[0]
 
-    print("=" * 60)
-    print(f"TESTING SCENARIO: {scenario['id']}")
+    print("=" * 70)
+    print(f"SCENARIO: {scenario['id']}")
     print(f"Structure: {scenario['structure']}")
-    print("=" * 60)
+    print(f"DAG: {scenario['dag']}")
+    print("=" * 70)
 
     # Create prompt
     prompt = create_prompt(scenario)
     print("\n--- PROMPT ---")
     print(prompt)
-    print("-" * 40)
+    print("-" * 70)
 
     # Get models to test
     models = get_available_models()
     if model_filter:
-        models = [(t, n) for t, n in models if t == model_filter]
-        if not models:
-            print(f"Error: No models found for filter '{model_filter}'")
+        if model_filter in models:
+            models = [model_filter]
+        else:
+            print(f"Error: Model '{model_filter}' not in available models: {models}")
             sys.exit(1)
 
     # Test each model
-    for model_type, model_name in models:
-        print(f"\n{'='*60}")
-        print(f"MODEL: {model_type}:{model_name}")
-        print("=" * 60)
+    for model_name in models:
+        print(f"\n{'=' * 70}")
+        print(f"MODEL: {model_name}")
+        print("=" * 70)
 
         try:
-            llm = LLMInterface(model_type, model_name)
+            llm = LLMInterface(model_name)
             response = llm.query(prompt)
             parsed = parse_response(response)
             correct = evaluate_answer(parsed["answer"], scenario["ground_truth"])
 
             print("\n--- RESPONSE ---")
             print(response)
-            print("-" * 40)
+            print("-" * 70)
             print(f"\nParsed answer: {parsed['answer']}")
-            print(f"Ground truth: {'yes' if scenario['ground_truth'] else 'no'}")
-            print(f"Correct: {'YES' if correct else 'NO'}")
+            print(f"Ground truth:  {'yes' if scenario['ground_truth'] else 'no'}")
+            print(f"Correct:       {'YES' if correct else 'NO'}")
 
             if not correct:
                 print(f"\nExpected reasoning: {scenario['reasoning']}")
@@ -83,9 +89,22 @@ def list_scenarios():
     """Print all available scenarios."""
     scenarios = load_scenarios()
     print("\nAvailable scenarios:")
-    print("-" * 40)
+    print("-" * 60)
+    print(f"{'ID':<20} {'Structure':<20} {'Ground Truth'}")
+    print("-" * 60)
     for s in scenarios:
-        print(f"  {s['id']:20} ({s['structure']})")
+        gt = "Yes (causal)" if s["ground_truth"] else "No (not causal)"
+        print(f"{s['id']:<20} {s['structure']:<20} {gt}")
+
+
+def list_models():
+    """Print all available models."""
+    models = get_available_models()
+    print("\nAvailable models:")
+    print("-" * 40)
+    for m in models:
+        print(f"  {m}")
+    print("\nTo pull a model: ollama pull <model_name>")
 
 
 def main():
@@ -98,19 +117,27 @@ def main():
     )
     parser.add_argument(
         "--model", "-m",
-        choices=["ollama", "openai"],
-        help="Test only this model type"
+        help="Test only this specific model"
     )
     parser.add_argument(
-        "--list", "-l",
+        "--list-scenarios", "-ls",
         action="store_true",
         help="List all available scenarios"
+    )
+    parser.add_argument(
+        "--list-models", "-lm",
+        action="store_true",
+        help="List all available models"
     )
 
     args = parser.parse_args()
 
-    if args.list:
+    if args.list_scenarios:
         list_scenarios()
+        return
+
+    if args.list_models:
+        list_models()
         return
 
     test_single_scenario(args.scenario, args.model)
