@@ -59,9 +59,7 @@ class LLMInterface:
 
 # Models to evaluate in the experiment
 MODELS = [
-    "llama3.1:8b",
-    "mistral:7b",
-    "qwen2.5:7b",
+    "phi3:mini",
 ]
 
 

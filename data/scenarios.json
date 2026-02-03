@@ -10,9 +10,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_ad_spend_sales": 0.71,
-      "corr_ad_spend_website_traffic": 0.89,
-      "corr_website_traffic_sales": 0.91
+      "corr_ad_spend_sales": 0.79,
+      "corr_ad_spend_website_traffic": 0.9,
+      "corr_website_traffic_sales": 0.85
     },
     "question": "Given these correlations, does ad_spend cause sales?",
     "ground_truth": true,
@@ -29,9 +29,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_email_opens_purchases": 0.68,
-      "corr_email_opens_click_throughs": 0.87,
-      "corr_click_throughs_purchases": 0.88
+      "corr_email_opens_purchases": 0.83,
+      "corr_email_opens_click_throughs": 0.91,
+      "corr_click_throughs_purchases": 0.89
     },
     "question": "Given these correlations, does email_opens cause purchases?",
     "ground_truth": true,
@@ -48,9 +48,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_discount_rate_conversion": 0.73,
-      "corr_discount_rate_cart_additions": 0.91,
-      "corr_cart_additions_conversion": 0.86
+      "corr_discount_rate_conversion": 0.85,
+      "corr_discount_rate_cart_additions": 0.93,
+      "corr_cart_additions_conversion": 0.9
     },
     "question": "Given these correlations, does discount_rate cause conversion?",
     "ground_truth": true,
@@ -67,9 +67,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_content_quality_engagement": 0.69,
-      "corr_content_quality_time_on_page": 0.88,
-      "corr_time_on_page_engagement": 0.90
+      "corr_content_quality_engagement": 0.81,
+      "corr_content_quality_time_on_page": 0.91,
+      "corr_time_on_page_engagement": 0.84
     },
     "question": "Given these correlations, does content_quality cause engagement?",
     "ground_truth": true,
@@ -86,9 +86,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_personalization_retention": 0.72,
-      "corr_personalization_user_satisfaction": 0.90,
-      "corr_user_satisfaction_retention": 0.87
+      "corr_personalization_retention": 0.83,
+      "corr_personalization_user_satisfaction": 0.92,
+      "corr_user_satisfaction_retention": 0.88
     },
     "question": "Given these correlations, does personalization cause retention?",
     "ground_truth": true,
@@ -105,9 +105,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_ad_spend_sales": 0.78,
-      "corr_seasonality_ad_spend": 0.91,
-      "corr_seasonality_sales": 0.88
+      "corr_ad_spend_sales": 0.88,
+      "corr_seasonality_ad_spend": 0.94,
+      "corr_seasonality_sales": 0.93
     },
     "question": "Given these correlations, does ad_spend cause sales?",
     "ground_truth": false,
@@ -124,9 +124,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_social_posts_revenue": 0.81,
-      "corr_product_launches_social_posts": 0.89,
-      "corr_product_launches_revenue": 0.92
+      "corr_social_posts_revenue": 0.78,
+      "corr_product_launches_social_posts": 0.9,
+      "corr_product_launches_revenue": 0.91
     },
     "question": "Given these correlations, does social_posts cause revenue?",
     "ground_truth": false,
@@ -143,9 +143,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_support_calls_churn": 0.76,
-      "corr_product_bugs_support_calls": 0.87,
-      "corr_product_bugs_churn": 0.90
+      "corr_support_calls_churn": 0.85,
+      "corr_product_bugs_support_calls": 0.91,
+      "corr_product_bugs_churn": 0.93
     },
     "question": "Given these correlations, does support_calls cause churn?",
     "ground_truth": false,
@@ -162,9 +162,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_training_hours_sales_performance": 0.79,
-      "corr_employee_experience_training_hours": 0.88,
-      "corr_employee_experience_sales_performance": 0.91
+      "corr_training_hours_sales_performance": 0.8,
+      "corr_employee_experience_training_hours": 0.89,
+      "corr_employee_experience_sales_performance": 0.92
     },
     "question": "Given these correlations, does training_hours cause sales_performance?",
     "ground_truth": false,
@@ -181,9 +181,9 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_influencer_posts_brand_awareness": 0.82,
-      "corr_market_trend_influencer_posts": 0.90,
-      "corr_market_trend_brand_awareness": 0.93
+      "corr_influencer_posts_brand_awareness": 0.79,
+      "corr_market_trend_influencer_posts": 0.88,
+      "corr_market_trend_brand_awareness": 0.91
     },
     "question": "Given these correlations, does influencer_posts cause brand_awareness?",
     "ground_truth": false,
@@ -199,7 +199,7 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_customer_reviews_product_quality": 0.89
+      "corr_customer_reviews_product_quality": 0.92
     },
     "question": "Given this correlation, does customer_reviews cause product_quality?",
     "ground_truth": false,
@@ -231,7 +231,7 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_referrals_customer_satisfaction": 0.87
+      "corr_referrals_customer_satisfaction": 0.92
     },
     "question": "Given this correlation, does referrals cause customer_satisfaction?",
     "ground_truth": false,
@@ -263,7 +263,7 @@
     },
     "data_summary": {
       "n_samples": 100,
-      "corr_social_shares_content_virality": 0.90
+      "corr_social_shares_content_virality": 0.88
     },
     "question": "Given this correlation, does social_shares cause content_virality?",
     "ground_truth": false,

@@ -15,10 +15,6 @@ uv.lock
 # Environment variables
 .env
 
-# Results
-data/results/
-*.csv
-
 # Notebooks
 .ipynb_checkpoints/
 *.ipynb
