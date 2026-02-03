@@ -1,0 +1,211 @@
+timestamp,scenario_id,structure,dag,model_name,prompt,response,predicted_answer,ground_truth,correct
+2026-02-03T15:06:59.894972,direct_1,direct_causation,ad_spend → website_traffic → sales,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+The analyst wants to know: Given these correlations, does ad_spend cause sales?
+
+Based solely on the correlation data provided, answer Yes or No: Does ad_spend cause sales?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between ad spend and sales as well as advertising and website traffic which in turn correlates to sales, this does not necessarily imply that the ad spend causes an increase in sales directly. Correlation alone cannot establish causation because it's possible other variables could be influencing both factors (confounding variable), or there might even be a reverse relationship where increased sales lead to more advertising spending as companies reinvest their profits into marketing efforts, which is known as the third-variable problem. Additionally, without experimental data or further analysis controlling for potential confounders and establishing temporal precedence (ad spend before an increase in sales), we cannot definitively claim causation from correlation alone.",no,True,False
+2026-02-03T15:08:04.310117,direct_2,direct_causation,email_opens → click_throughs → purchases,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+The analyst wants to know: Given these correlations, does email_opens cause purchases?
+
+Based solely on the correlation data provided, answer Yes or No: Does email_opens cause purchases?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between email opens and purchases as well as between clicks and throughs/purchases, this does not necessarily imply that opening an email causes someone to make a purchase. There could be other factors at play (confounding variables) such as the content of the emails or promotions being offered which might influence both open rates and subsequent actions like purchasing. Additionally, it's possible there is reverse causation where individuals who are already interested in making a purchase may pay more attention to marketing communications leading them to be more likely to click on ads but not necessarily influenced by the email itself. To establish causality, one would need to conduct controlled experiments or further analysis that rules out alternative explanations and confounding variables.",no,True,False
+2026-02-03T15:09:06.063926,direct_3,direct_causation,discount_rate → cart_additions → conversion,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+The analyst wants to know: Given these correlations, does discount_rate cause conversion?
+
+Based solely on the correlation data provided, answer Yes or No: Does discount_rate cause conversion?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between discount and conversion rate as well as cart additions and conversion rate, this does not necessarily imply that the discount causes an increase in conversions. Correlation only indicates a relationship where variables move together but doesn't establish which variable influences the other or if they are both influenced by another factor (confounding). Additionally, it is possible that customers who convert more easily might be naturally inclined to add items to their cart and respond positively to discounts. Reverse causation could also occur where higher conversion rates lead individuals to perceive better deals as a result of the store's reputation for quality products or service excellence, rather than due to any direct influence from the applied discount rate itself.",no,True,False
+2026-02-03T15:10:08.325457,direct_4,direct_causation,content_quality → time_on_page → engagement,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+The analyst wants to know: Given these correlations, does content_quality cause engagement?
+
+Based solely on the correlation data provided, answer Yes or No: Does content_quality cause engagement?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between content quality and both engagement metrics (content-quality to time on page: r = 0.91; content-quality to engagement directly through the given data point: r = 0.81), this does not necessarily imply causation. Correlation only indicates that two variables are related, but it doesn't establish a cause-and-effect relationship. There could be other factors at play (confounding variables) influencing both content quality and engagement simultaneously or the possibility of reverse causality where higher engagement leads to perceived better content quality due to more user interaction with high-quality material being rated as such, rather than it causing increased engagement directly.",no,True,False
+2026-02-03T15:11:10.301506,direct_5,direct_causation,personalization → user_satisfaction → retention,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+The analyst wants to know: Given these correlations, does personalization cause retention?
+
+Based solely on the correlation data provided, answer Yes or No: Does personalization cause retention?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong positive correlation between personalization and retention as well as between personalization and user satisfaction, this does not necessarily imply that personalization causes these outcomes. Correlation only indicates an association; it doesn't establish causation. There could be other variables at play (confounders) influencing both the level of personalization a company can offer and its retention rates or customer satisfaction levels. Additionally, there might also be reverse causality where higher user satisfaction leads to more feedback that results in better personalization strategies without direct cause-and-effect from personalization alone. To establish causation, further experimental research would need to control for potential confounders and possibly use methods like randomized controlled trials or instrumental variable analysis.",no,True,False
+2026-02-03T15:43:56.041653,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+The analyst wants to know: Given these correlations, does ad_spend cause sales?
+
+Based solely on the correlation data provided, answer Yes or No: Does ad_spend cause sales?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between ad spend and sales as well as seasonality and both of these variables, the data alone does not establish that advertising spending causes an increase in sales. Correlation only indicates a relationship where two or more variables move together; it doesn't prove one variable directly affects another (causation). There could be other factors at play causing this correlation – for instance, seasonality might independently influence both ad spend and sales due to increased consumer demand during certain times of the year. Additionally, there may also be reverse causation where higher sales lead to more advertising spending as a result rather than being caused by it. To establish causation, further analysis such as controlled experiments or longitudinal studies would need to be conducted.",no,False,True
+2026-02-03T15:47:19.230944,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+The analyst wants to know: Given these correlations, does social_posts cause revenue?
+
+Based solely on the correlation data provided, answer Yes or No: Does social_posts cause revenue?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between social_posts and revenue as well as correlations involving the product variable that also relate to these two variables, this does not establish causation. Correlation only indicates that there's an association or relationship in terms of movement among the variables but doesn’t prove which way it goes (if any). There could be other factors at play causing both social_posts and revenue to increase together – a confounding variable such as marketing campaign effectiveness, seasonal effects on consumer behavior, product popularity driving more posts about launches or promotions that in turn drive sales. Additionally, it's possible there is reverse causation where increased revenue leads to an uptick in social_posts due to higher investment capacity for promotion activities rather than the other way around. To establish a cause-and-effect relationship, further analysis such as controlled experiments or longitudinal studies would be necessary.",no,False,True
+2026-02-03T15:48:48.460007,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+The analyst wants to know: Given these correlations, does support_calls cause churn?
+
+Based solely on the correlation data provided, answer Yes or No: Does support_calls cause churn?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between support_calls and churn at 0.85, this does not necessarily imply that making more calls to provide customer support causes customers to leave (churn). Correlation only indicates an association or relationship in which two variables move together; it doesn't establish one variable as the cause of movement in another. There could be other factors influencing churn rates such as product quality, pricing issues, or external market conditions that are not accounted for by this correlation alone. Additionally, reverse causation is possible where customers who are already considering leaving (churn) might increase their support calls due to dissatisfaction with the service before they leave. Therefore, without further investigation into these potential confounders and directionality of influence, we cannot conclude that there's a cause-and-effect relationship between support_calls and churn based solely on correlation data.",no,False,True
+2026-02-03T16:09:20.682314,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+The analyst wants to know: Given these correlations, does training_hours cause sales_performance?
+
+Based solely on the correlation data provided, answer Yes or No: Does training_hours cause sales_performance?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between training hours and sales performance as well as employee experience correlating strongly with both variables, this does not necessarily imply that the increase in training hours causes an improvement in sales performance. Correlation alone cannot establish causation because it's possible other factors could be influencing these relationships (confounding variables), or there might even be reverse causality at play where better-performing employees seek more training opportunities, rather than training leading to improved performance. To determine causation, one would need to conduct controlled experiments or use statistical methods that account for potential confounders and establish temporal precedence of the cause before its effect (training hours on sales performance).",no,False,True
+2026-02-03T16:10:19.982012,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+The analyst wants to know: Given these correlations, does influencer_posts cause brand_awareness?
+
+Based solely on the correlation data provided, answer Yes or No: Does influencer_posts cause brand_awareness?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between influencer posts and brand awareness as well as market trends affecting both variables, this does not necessarily imply that the influencer's posts cause an increase in brand awareness. Correlation only indicates a relationship or association but cannot establish causation on its own due to potential confounding factors (such as other concurrent marketing campaigns) and reverse causality issues (where increased brand awareness could lead individuals to follow more influencers). To claim causation, further experimental research would be needed where variables are controlled.",no,False,True
+2026-02-03T16:11:26.946605,reverse_1,reverse_causation,product_quality → customer_reviews,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+The analyst wants to know: Given this correlation, does customer_reviews cause product_quality?
+
+Based solely on the correlation data provided, answer Yes or No: Does customer_reviews cause product_quality?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between customer reviews and product quality as indicated by the value of 0.92, this does not necessarily mean that customer_reviews cause product_quality. Correlation only indicates a relationship where variables move together in some way but doesn't establish which variable influences the other or if they are both influenced by another factor (confounding variable). It is also possible that customers give high-quality reviews because of an already good quality, suggesting reverse causation – product_quality causes customer_reviews. To determine causation, further investigation such as controlled experiments would be needed to rule out alternative explanations and establish a cause-and-effect relationship.",no,False,True
+2026-02-03T16:13:10.694560,reverse_2,reverse_causation,user_frustration → support_tickets,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+The analyst wants to know: Given this correlation, does support_tickets cause user_frustration?
+
+Based solely on the correlation data provided, answer Yes or No: Does support_tickets cause user_frustration?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between support tickets and user frustration at 0.91, this does not necessarily imply that one causes the other. Correlation only indicates that two variables are related in some way; it doesn't establish cause-and-effect relationships. There could be alternative explanations such as:
+
+
+- Confounding Variables: Other factors might influence both support tickets and user frustration, like system outages or poor product design leading to more issues being reported while users are simultaneously becoming more irritated with the service overall.
+
+- Reverse Causation: It's possible that increased user frustration leads to a higher number of support tickets as users become less tolerant and report problems more frequently, rather than ticket volume causing frustration.
+
+- Coincidence or Spurious Relationship: The correlation might be due to chance or an external factor affecting both variables independently (e.g., seasonal effects where certain times of the year see increased usage leading to higher tickets and user stress).
+
+
+To establish causation, further investigation is needed such as controlled experiments or longitudinal studies that can account for potential confounders and test directionality of the relationship.",no,False,True
+2026-02-03T16:14:05.957761,reverse_3,reverse_causation,customer_satisfaction → referrals,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+The analyst wants to know: Given this correlation, does referrals cause customer_satisfaction?
+
+Based solely on the correlation data provided, answer Yes or No: Does referrals cause customer_satisfaction?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong correlation between referrals and customer satisfaction in this dataset, we cannot conclude that referrals cause higher levels of customer satisfaction based solely on the correlation coefficient. Correlation does not imply causation because other factors could be influencing both variables simultaneously (confounding variable), or it might even be possible that high customer satisfaction leads to more referrals rather than vice versa (reverse causation). To establish a cause-and-effect relationship, further analysis such as controlled experiments or longitudinal studies would be necessary.",no,False,True
+2026-02-03T16:15:01.840349,reverse_4,reverse_causation,product_value → repeat_purchases,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+The analyst wants to know: Given this correlation, does repeat_purchases cause product_value?
+
+Based solely on the correlation data provided, answer Yes or No: Does repeat_purchases cause product_value?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong positive correlation between repeat purchases and product value at n = 1 endpoints of the data set, this does not necessarily imply that repeat_purchases causes an increase in product_value. Correlation alone cannot establish causation because it's possible other variables are influencing both factors (confounding variable), or there could be a reverse relationship where higher perceived value leads to more repeat purchases rather than the other way around (reverse causation). To determine causality, further analysis such as controlled experiments would need to be conducted.",no,False,True
+2026-02-03T16:16:09.558337,reverse_5,reverse_causation,content_virality → social_shares,phi3:mini,"A marketing analyst collected the following data:
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+The analyst wants to know: Given this correlation, does social_shares cause content_virality?
+
+Based solely on the correlation data provided, answer Yes or No: Does social_shares cause content_virality?
+
+Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+
+Answer with ""Yes"" or ""No"" first, then explain your reasoning.","No. While there is a strong positive correlation between social shares and content virality, this does not necessarily imply that sharing causes the content to go viral. There could be other factors at play (confounding variables) such as the inherent quality or appeal of the content itself which might drive both high engagement on social media platforms leading to more shares and also contribute independently to its likelihood of going viral. Additionally, it'self is possible that popular content gets shared more often simply because there are already many people talking about it (reverse causation). To establish a cause-and-effect relationship, further experimental or longitudinal studies would be needed where other variables can be controlled for and the directionality of influence could be tested.",no,False,True

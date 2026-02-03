@@ -76,7 +76,7 @@ The analyst wants to know: {scenario['question']}
 
 Based solely on the correlation data provided, answer Yes or No: Does {x_var} cause {y_var}?
 
-Important: Correlation does not imply causation. Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
+Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
 
 Answer with "Yes" or "No" first, then explain your reasoning."""
 

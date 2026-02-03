@@ -1,22 +1,34 @@
 """
 LLM interface for causal reasoning experiments.
-Supports local models via Ollama.
+Uses HuggingFace Inference API.
 """
 
-import ollama
+import os
+
+from dotenv import load_dotenv
+from huggingface_hub import InferenceClient
+
+load_dotenv()
 
 
 class LLMInterface:
-    """Interface for querying Ollama models."""
+    """Interface for querying LLMs via HuggingFace Inference API."""
 
     def __init__(self, model_name: str):
         """
         Initialize LLM interface.
 
         Args:
-            model_name: Ollama model identifier (e.g., "llama3.1:8b")
+            model_name: HuggingFace model identifier (e.g., "meta-llama/Llama-3.1-8B-Instruct")
         """
         self.model_name = model_name
+        token = os.getenv("HF_TOKEN")
+        if not token:
+            raise RuntimeError(
+                "HF_TOKEN not found in environment. "
+                "Add it to your .env file: HF_TOKEN=your_token_here"
+            )
+        self.client = InferenceClient(token=token)
 
     def query(self, prompt: str, temperature: float = 0.0) -> str:
         """
@@ -30,39 +42,21 @@ class LLMInterface:
             The model's text response
         """
         try:
-            response = ollama.chat(
+            response = self.client.chat_completion(
                 model=self.model_name,
                 messages=[{"role": "user", "content": prompt}],
-                options={"temperature": temperature}
+                temperature=temperature if temperature > 0 else None,
+                max_tokens=1024,
             )
-            return response["message"]["content"]
-        except ConnectionError:
-            raise RuntimeError(
-                "Cannot connect to Ollama. Is the Ollama service running?\n"
-                "Start it with: ollama serve"
-            )
-        except ollama.ResponseError as e:
-            if "model" in str(e).lower() and "not found" in str(e).lower():
-                raise RuntimeError(
-                    f"Model '{self.model_name}' not found. Pull it with:\n"
-                    f"ollama pull {self.model_name}"
-                )
-            raise RuntimeError(f"Ollama query failed: {e}")
+            return response.choices[0].message.content
         except Exception as e:
-            if "connection refused" in str(e).lower():
-                raise RuntimeError(
-                    "Cannot connect to Ollama. Is the Ollama service running?\n"
-                    "Start it with: ollama serve"
-                )
-            raise RuntimeError(f"Ollama query failed: {e}")
-
-
-# Models to evaluate in the experiment
-MODELS = [
-    "phi3:mini",
-]
+            raise RuntimeError(f"HuggingFace query failed: {e}")
 
 
 def get_available_models() -> list[str]:
-    """Return list of Ollama models to test."""
-    return MODELS.copy()
+    """Return list of models to test."""
+    return [
+        "meta-llama/Llama-3.1-8B-Instruct",
+        "google/gemma-2-9b-it",
+        "Qwen/Qwen2.5-7B-Instruct",
+    ]
