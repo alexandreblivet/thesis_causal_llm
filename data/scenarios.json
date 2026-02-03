@@ -1,0 +1,122 @@
+[
+    {
+        "id": "direct_1",
+        "structure": "direct_causation",
+        "scenario": "A company runs an email marketing campaign. The data shows that email opens and website visits are positively correlated. Email opens and purchases are positively correlated. Website visits and purchases are positively correlated.",
+        "question": "Based on these correlations, can we conclude that email opens directly cause purchases?",
+        "ground_truth": true,
+        "reasoning": "In a direct causal chain (Email opens → Website visits → Purchases), the correlation between email opens and purchases reflects genuine causation through the intermediate step."
+    },
+    {
+        "id": "direct_2",
+        "structure": "direct_causation",
+        "scenario": "A retail brand tests different product page layouts. The data shows that improved layout scores and time on page are positively correlated. Improved layout scores and add-to-cart rates are positively correlated. Time on page and add-to-cart rates are positively correlated.",
+        "question": "Based on these correlations, can we conclude that improved page layouts cause higher add-to-cart rates?",
+        "ground_truth": true,
+        "reasoning": "Better layouts directly influence user engagement (time on page) which leads to more add-to-cart actions."
+    },
+    {
+        "id": "direct_3",
+        "structure": "direct_causation",
+        "scenario": "A SaaS company analyzes user onboarding. The data shows that tutorial completion and feature adoption are positively correlated. Tutorial completion and subscription upgrades are positively correlated. Feature adoption and subscription upgrades are positively correlated.",
+        "question": "Based on these correlations, can we conclude that tutorial completion causes subscription upgrades?",
+        "ground_truth": true,
+        "reasoning": "Tutorial completion leads to feature adoption, which increases the likelihood of upgrades."
+    },
+    {
+        "id": "direct_4",
+        "structure": "direct_causation",
+        "scenario": "An e-commerce site tests checkout optimizations. The data shows that reduced checkout steps and completion speed are positively correlated. Reduced checkout steps and conversion rate are positively correlated. Completion speed and conversion rate are positively correlated.",
+        "question": "Based on these correlations, can we conclude that reducing checkout steps causes higher conversion rates?",
+        "ground_truth": true,
+        "reasoning": "Fewer steps directly reduce friction, speeding up checkout and increasing conversions."
+    },
+    {
+        "id": "direct_5",
+        "structure": "direct_causation",
+        "scenario": "A mobile app tracks push notification effectiveness. The data shows that personalized notifications and app opens are positively correlated. Personalized notifications and in-app purchases are positively correlated. App opens and in-app purchases are positively correlated.",
+        "question": "Based on these correlations, can we conclude that personalized notifications cause in-app purchases?",
+        "ground_truth": true,
+        "reasoning": "Personalized notifications drive app engagement, which leads to purchase behavior."
+    },
+    {
+        "id": "confounding_1",
+        "structure": "confounding",
+        "scenario": "A retailer observes that ad spend and sales are positively correlated. Seasonality and ad spend are positively correlated. Seasonality and sales are positively correlated.",
+        "question": "Based on these correlations, can we conclude that ad spend directly causes increased sales?",
+        "ground_truth": false,
+        "reasoning": "Seasonality confounds the relationship. Both ad spend and sales increase during peak seasons, creating spurious correlation."
+    },
+    {
+        "id": "confounding_2",
+        "structure": "confounding",
+        "scenario": "An online platform finds that content production and user engagement are positively correlated. Platform growth and content production are positively correlated. Platform growth and user engagement are positively correlated.",
+        "question": "Based on these correlations, can we conclude that content production causes user engagement?",
+        "ground_truth": false,
+        "reasoning": "Platform growth confounds this relationship. As the platform grows, both content and engagement increase independently."
+    },
+    {
+        "id": "confounding_3",
+        "structure": "confounding",
+        "scenario": "A B2B company observes that sales calls and deal closures are positively correlated. Lead quality and sales calls are positively correlated. Lead quality and deal closures are positively correlated.",
+        "question": "Based on these correlations, can we conclude that more sales calls cause more deal closures?",
+        "ground_truth": false,
+        "reasoning": "Lead quality confounds this. High-quality leads both receive more attention (calls) and are more likely to close regardless of call volume."
+    },
+    {
+        "id": "confounding_4",
+        "structure": "confounding",
+        "scenario": "A streaming service notices that personalized recommendations and watch time are positively correlated. User engagement level and recommendations are positively correlated. User engagement level and watch time are positively correlated.",
+        "question": "Based on these correlations, can we conclude that recommendations cause increased watch time?",
+        "ground_truth": false,
+        "reasoning": "User engagement level is a confounder. Highly engaged users both interact more with recommendations and watch more content naturally."
+    },
+    {
+        "id": "confounding_5",
+        "structure": "confounding",
+        "scenario": "A fintech app observes that financial education content views and investment activity are positively correlated. Market conditions and content views are positively correlated. Market conditions and investment activity are positively correlated.",
+        "question": "Based on these correlations, can we conclude that viewing educational content causes more investment activity?",
+        "ground_truth": false,
+        "reasoning": "Market conditions confound this relationship. During bull markets, both content consumption and investment activity increase."
+    },
+    {
+        "id": "reverse_1",
+        "structure": "reverse_causation",
+        "scenario": "A software company finds that customer satisfaction scores and product quality ratings are positively correlated. Customer retention and satisfaction scores are positively correlated. Customer retention and product quality ratings are positively correlated.",
+        "question": "Based on these correlations, can we conclude that customer satisfaction causes higher product quality ratings?",
+        "ground_truth": false,
+        "reasoning": "This is reverse causation. Product quality drives satisfaction, not the other way around. Satisfied customers stay because of quality."
+    },
+    {
+        "id": "reverse_2",
+        "structure": "reverse_causation",
+        "scenario": "A marketplace platform observes that seller ratings and sales volume are positively correlated. Platform visibility and seller ratings are positively correlated. Platform visibility and sales volume are positively correlated.",
+        "question": "Based on these correlations, can we conclude that high sales volume causes better seller ratings?",
+        "ground_truth": false,
+        "reasoning": "Reverse causation: Better ratings lead to higher visibility and more sales, not the reverse."
+    },
+    {
+        "id": "reverse_3",
+        "structure": "reverse_causation",
+        "scenario": "An educational platform finds that course completion rates and student engagement scores are positively correlated. Learning outcomes and completion rates are positively correlated. Learning outcomes and engagement scores are positively correlated.",
+        "question": "Based on these correlations, can we conclude that course completion causes better engagement scores?",
+        "ground_truth": false,
+        "reasoning": "Reverse causation: Engaged students are more likely to complete courses, not the other way around."
+    },
+    {
+        "id": "reverse_4",
+        "structure": "reverse_causation",
+        "scenario": "A fitness app observes that workout frequency and user motivation scores are positively correlated. Goal achievement and workout frequency are positively correlated. Goal achievement and motivation scores are positively correlated.",
+        "question": "Based on these correlations, can we conclude that frequent workouts cause higher motivation?",
+        "ground_truth": false,
+        "reasoning": "Reverse causation: Motivated users work out more frequently. Motivation drives behavior, not the reverse."
+    },
+    {
+        "id": "reverse_5",
+        "structure": "reverse_causation",
+        "scenario": "A restaurant delivery service finds that order frequency and customer loyalty scores are positively correlated. App usage and order frequency are positively correlated. App usage and loyalty scores are positively correlated.",
+        "question": "Based on these correlations, can we conclude that frequent orders cause higher loyalty?",
+        "ground_truth": false,
+        "reasoning": "Reverse causation: Loyal customers order more frequently. Loyalty drives ordering behavior."
+    }
+]
