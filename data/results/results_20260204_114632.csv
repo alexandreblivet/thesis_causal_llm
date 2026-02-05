@@ -1,0 +1,1415 @@
+timestamp,scenario_id,structure,dag,model_name,prompt,response,predicted_answer,ground_truth,correct
+2026-02-04T11:46:33.998241,direct_1,direct_causation,ad_spend → website_traffic → sales,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No.
+
+Although the correlations are strong, correlation does not imply causation. To determine causation, a controlled experiment or a time-series analysis with lagged variables would be needed to confirm the relationship between ad spend and sales.",no,True,False
+2026-02-04T11:46:35.768853,direct_2,direct_causation,email_opens → click_throughs → purchases,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","No
+
+The reason is that correlation does not imply causation. The given correlations suggest a strong relationship between email and purchases, and between email and click-throughs, as well as between click-throughs and purchases. However, this does not necessarily mean that email opens cause purchases. There could be other factors at play, or it could be that purchases cause email opens and click-throughs. To determine causation, a more complex analysis, such as regression or experimentation, would be needed.",no,True,False
+2026-02-04T11:46:37.376987,direct_3,direct_causation,discount_rate → cart_additions → conversion,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","Yes.
+
+The correlation between discount and rate_conversion is 0.85, indicating a strong positive relationship between the two variables. This suggests that as the discount rate increases, the conversion rate also tends to increase, implying a potential causal relationship where discount_rate causes conversion.",yes,True,True
+2026-02-04T11:46:39.527733,direct_4,direct_causation,content_quality → time_on_page → engagement,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","No.
+
+The given correlations suggest a strong relationship between content and quality metrics (engagement and time on page), and between time on page and engagement. However, correlation does not imply causation. 
+
+In this case, it's possible that content quality is causing engagement, but it's also possible that engagement is causing people to spend more time on the page, or that a third variable (e.g., interesting content) is driving both content quality and engagement.",no,True,False
+2026-02-04T11:46:41.297024,direct_5,direct_causation,personalization → user_satisfaction → retention,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","No.
+
+The presence of a strong correlation between personalization and retention (corr(personalization, retention) = 0.83) does not necessarily imply causation. It's possible that there are common underlying factors driving both variables, or that retention is causing personalization. To establish causality, further analysis, such as regression analysis or an experiment, would be needed to control for other potential factors and isolate the effect of personalization on retention.",no,True,False
+2026-02-04T11:46:43.234875,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No
+
+There is a high positive correlation between seasonality and both sales (0.93) and ad_spend (0.94), which suggests that seasonality could be the underlying cause of the correlations between ad_spend and sales. This indicates that other factors (seasonality) might be driving the relationship between ad_spend and sales, rather than ad_spend causing sales directly.",no,False,True
+2026-02-04T11:46:45.050958,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","No
+
+In this case, correlation does not imply causation. The high correlation between social and posts_revenue (0.78) suggests a strong relationship, but it doesn't necessarily mean that social_posts cause revenue. There could be a third variable causing both social_posts and revenue to be high.",no,False,True
+2026-02-04T11:46:47.708903,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation between support_calls and churn (support_calls is not directly mentioned, but we have support) is not explicitly provided. However, we can use the given correlations to make an indirect inference. 
+
+The correlation between support and calls_churn is 0.85. This suggests that there is a strong positive relationship between the level of support provided and the number of calls related to churn. 
+
+If support_calls were causing churn, we would expect a negative correlation between support_calls and churn, as higher support_calls would be expected to lead to lower churn. However, the given correlations do not support this interpretation.
+
+Therefore, based on the given information, it does not appear that support_calls causes churn.",no,False,True
+2026-02-04T11:46:49.960107,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","No
+
+The correlation coefficients provided suggest a strong relationship between the variables, but correlation does not imply causation. There could be other underlying factors that influence the relationships observed. For example, it's possible that both ""hours_sales_performance"" and ""training"" are affected by a third variable, such as ""employee experience"" (which also shows a high correlation). To determine causation, a more rigorous analysis, such as regression analysis or experimentation, would be required.",no,False,True
+2026-02-04T11:46:51.862823,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","No
+
+In this case, correlation does not imply causation. The high correlation between influencer and brand awareness (0.79) suggests that there is a relationship between the two variables, but it does not necessarily mean that influencer posts cause brand awareness. There may be other factors at play that are driving this relationship, such as a third variable that is causing both influencer activity and brand awareness to increase simultaneously.",no,False,True
+2026-02-04T11:46:53.543367,reverse_1,reverse_causation,product_quality → customer_reviews,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+The reason is that correlation does not imply causation. A correlation of 0.92 between customer reviews and product quality suggests a strong positive relationship, but it does not necessarily mean that customer reviews cause product quality. It could be that product quality influences customer reviews, or there could be a third variable that affects both variables.",no,False,True
+2026-02-04T11:46:55.534994,reverse_2,reverse_causation,user_frustration → support_tickets,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No.
+
+The high correlation between support and tickets_user_frustration (0.91) does not necessarily imply causation. It could be the other way around or there could be a third variable causing both. This is known as the correlation does not imply causation problem in statistics.",no,False,True
+2026-02-04T11:46:57.140602,reverse_3,reverse_causation,customer_satisfaction → referrals,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficient of 0.92 indicates a strong positive relationship between referrals and customer_satisfaction. However, correlation does not imply causation. There could be a third variable (e.g., quality of service) that affects both referrals and customer_satisfaction, making the relationship between referrals and customer_satisfaction coincidence rather than causation.",no,False,True
+2026-02-04T11:46:58.702716,reverse_4,reverse_causation,product_value → repeat_purchases,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No 
+
+The high correlation (0.88) between repeat and purchases_product_value suggests a strong positive relationship, but it does not necessarily imply causation. Other variables could be driving the relationship, and without additional information or analysis, it is difficult to establish causality.",no,False,True
+2026-02-04T11:47:00.352917,reverse_5,reverse_causation,content_virality → social_shares,meta-llama/Llama-3.1-8B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation between social_shares and shares_content_virality is 0.88, which is a strong positive relationship. However, correlation does not imply causation. There may be other factors (such as a third variable or reverse causality) that are driving the relationship between social_shares and shares_content_virality. Therefore, it's not possible to conclude from this information alone that social_shares causes content_virality.",no,False,True
+2026-02-04T11:47:10.457173,direct_1,direct_causation,ad_spend → website_traffic → sales,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No.
+
+While the correlation between ad spend and sales is 0.79, and the correlation between ad spend and website traffic is 0.9, these correlations do not imply causation. Correlation measures the strength and direction of a linear relationship between two variables but does not account for other potential factors that might influence the relationship.
+
+In this case, the high correlation between ad spend and website traffic (0.9) suggests that ad spend is strongly related to website traffic. Additionally, the high correlation between website traffic and sales (0.85) suggests that website traffic is strongly related to sales. However, this does not necessarily mean that ad spend directly causes an increase in sales. It is possible that both ad spend and sales are influenced by a third variable, such as overall market conditions or economic factors, which could be driving both ad spend and sales.
+
+To establish causation, you would need to conduct further analysis, such as a controlled experiment or use methods like instrumental variables or difference-in-differences to rule out other potential confounding factors.",no,True,False
+2026-02-04T11:47:11.945737,direct_2,direct_causation,email_opens → click_throughs → purchases,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","No.
+
+While the correlations provided indicate strong positive relationships between the variables (e.g., a high correlation between email opens and purchases, and between click-throughs and purchases), correlation does not imply causation. The high correlations suggest that there is a strong association between these variables, but they do not provide evidence that email opens directly cause purchases.
+
+To establish causation, you would need to conduct further analysis, such as a controlled experiment (e.g., A/B testing) or use methods like instrumental variables, difference-in-differences, or propensity score matching to rule out other potential confounding factors. Correlation alone is not sufficient to infer causality.",no,True,False
+2026-02-04T11:47:13.277539,direct_3,direct_causation,discount_rate → cart_additions → conversion,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","No.
+
+While the correlations provided indicate strong positive relationships between the variables (e.g., higher discount rates are associated with higher conversion rates and higher cart additions), correlation does not imply causation. The high correlation between `discount` and `rate_conversion` (0.85) and between `discount` and `rate_cart_additions` (0.93) suggests that there is a strong association, but it does not establish that `discount_rate` directly causes an increase in conversion rates.
+
+To establish causation, you would need to conduct experiments or use more rigorous statistical methods, such as instrumental variables, difference-in-differences, or randomized controlled trials, to rule out other potential confounding factors. Correlation alone cannot account for all possible confounders and does not provide evidence of a causal relationship.",no,True,False
+2026-02-04T11:47:15.629072,direct_4,direct_causation,content_quality → time_on_page → engagement,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlations provided indicate strong relationships between the variables, but correlation does not imply causation. The high correlations (0.81, 0.91, and 0.84) suggest that there is a strong linear relationship between the variables, but they do not provide evidence of causation. To establish causation, you would need to conduct a more rigorous analysis, such as a controlled experiment or a more advanced statistical method like structural equation modeling or instrumental variables analysis, which can help rule out other potential confounding factors.",no,True,False
+2026-02-04T11:47:17.686411,direct_5,direct_causation,personalization → user_satisfaction → retention,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficients provided indicate strong positive relationships between the variables, but correlation does not imply causation. Specifically:
+
+- `corr(personalization, retention) = 0.83` suggests a strong positive relationship between personalization and retention.
+- `corr(personalization, user_satisfaction) = 0.92` suggests an even stronger positive relationship between personalization and user satisfaction.
+- `corr(user_satisfaction, retention) = 0.88` suggests a strong positive relationship between user satisfaction and retention.
+
+While these correlations suggest that personalization is associated with both user satisfaction and retention, they do not provide evidence that personalization causes retention. Other factors could be influencing both personalization and retention, or there could be a common underlying factor (like user engagement) that affects all three variables. To establish causation, you would need to conduct further analysis, such as a controlled experiment or a more sophisticated statistical method like structural equation modeling.",no,True,False
+2026-02-04T11:47:19.409840,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No.
+
+The given correlation coefficients indicate strong relationships between the variables, but correlation does not imply causation. Specifically:
+
+- `corr(ad, spend_sales) = 0.88` suggests a strong positive relationship between ad spend and sales.
+- `corr(seasonality, ad_spend) = 0.94` indicates a very strong positive relationship between seasonality and ad spend.
+- `corr(seasonality, sales) = 0.93` shows a very strong positive relationship between seasonality and sales.
+
+While these correlations suggest that ad spend and sales are positively related, and that seasonality is strongly related to both ad spend and sales, they do not provide evidence of causation. There could be other factors (such as seasonality) that influence both ad spend and sales, leading to these correlations. To establish causation, you would need to conduct further analysis, such as using methods like randomized controlled trials, instrumental variables, or controlling for seasonality in a regression analysis.",no,False,True
+2026-02-04T11:47:21.567562,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficients provided indicate strong relationships between the variables, but correlation does not imply causation. Specifically:
+
+- `corr(social, posts_revenue) = 0.78` suggests a strong positive relationship between social posts and revenue, but it does not establish that social posts cause revenue.
+- `corr(product, launches_social_posts) = 0.9` and `corr(product, launches_revenue) = 0.91` suggest that product launches are strongly associated with both social posts and revenue, but this does not imply causation either. It's possible that product launches are driving both the creation of social posts and the revenue, or there could be other factors influencing all three variables.
+
+To establish causation, you would need to conduct further analysis, such as using experimental designs (e.g., A/B testing) or more advanced statistical methods like instrumental variables or structural equation modeling, to rule out other potential confounding factors.",no,False,True
+2026-02-04T11:47:23.090461,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficients provided do not indicate causation. While there is a strong positive correlation between `support_calls` and `churn` (with a correlation coefficient of 0.85), correlation does not imply causation. The high correlation could be due to other underlying factors or variables that are not accounted for in this analysis. For example, the relationship could be mediated by the `product` variable, as `bugs_support_calls` and `bugs_churn` are highly correlated with `product` (0.91 and 0.93, respectively).
+
+To establish causation, you would need to conduct further analysis, such as a controlled experiment or use methods like instrumental variables, difference-in-differences, or propensity score matching to rule out other confounding factors.",no,False,True
+2026-02-04T11:47:27.512042,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","No.
+
+While there is a strong correlation between training hours and sales performance (with a correlation coefficient of 0.8), correlation does not imply causation. The high correlation could be due to other underlying factors or confounders that affect both training hours and sales performance. For example, employee experience might be a confounding variable that influences both training hours and sales performance. The high correlation between employee experience and both training hours (0.89) and sales performance (0.92) suggests that employee experience might be a more direct driver of sales performance than training hours.
+
+To establish causation, you would need to conduct further analysis, such as using methods like randomized controlled trials, instrumental variables, or controlling for confounders in a regression analysis. Without such evidence, we cannot conclude that training hours cause sales performance based solely on the correlation coefficient.",no,False,True
+2026-02-04T11:47:29.872219,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation between `influencer` and `posts_brand_awareness` (0.79) and between `market` and `trend_influencer_posts` (0.88) and `trend_brand_awareness` (0.91) indicates strong relationships, but correlation does not imply causation. These correlations suggest that there is a strong association between these variables, but they do not provide evidence that `influencer_posts` directly causes an increase in `brand_awareness`.
+
+To establish causation, you would need to conduct further analysis, such as a controlled experiment or use methods like instrumental variables, difference-in-differences, or propensity score matching to rule out other potential confounding factors. Additionally, you might want to look at the temporal relationship between the variables to ensure that `influencer_posts` precedes changes in `brand_awareness`.",no,False,True
+2026-02-04T11:47:31.552761,reverse_1,reverse_causation,product_quality → customer_reviews,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficient between `customer` and `reviews_product_quality` is 0.92, which indicates a very strong positive relationship. However, correlation does not imply causation. This high correlation could be due to various factors, such as both variables being influenced by a third variable (common cause), or it could be a result of reverse causality (product quality influencing customer reviews). Without additional information or experimental evidence, we cannot conclude that `customer_reviews` cause `product_quality`.",no,False,True
+2026-02-04T11:47:36.520109,reverse_2,reverse_causation,user_frustration → support_tickets,Qwen/Qwen2.5-7B-Instruct,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No.
+
+The correlation coefficient between `support` and `tickets_user_frustration` is 0.91, which indicates a very strong positive relationship. However, correlation does not imply causation. A strong correlation could be due to various factors, including a common cause or reverse causality, but it does not provide evidence of a direct causal relationship.
+
+To determine if `support_tickets` causes `user_frustration`, you would need to conduct further analysis, such as:
+
+1. **Experimental Design**: Conducting a controlled experiment where you manipulate the `support` variable and observe the effect on `tickets_user_frustration`.
+2. **Instrumental Variables**: Using an instrumental variable that affects `support` but not `user_frustration` directly to help isolate the causal effect.
+3. **Difference-in-Differences**: Analyzing changes in `user_frustration` before and after changes in `support` to see if there is a causal effect.
+4. **Propensity Score Matching**: Matching individuals who received different levels of support to see if there is a difference in `user_frustration`.
+
+Without such evidence, we cannot conclude that `support_tickets` causes `user_frustration` based solely on the correlation coefficient.",no,False,True
+2026-02-04T11:47:41.820559,direct_1,direct_causation,ad_spend → website_traffic → sales,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: **No**
+
+## Explanation
+
+The correlation between ad spend and sales is 0.79, which shows a strong *association*, but correlation does not imply causation. Several alternative explanations are possible:
+
+1. **Reverse causation**: Higher sales could enable more ad spending, rather than ad spend driving sales.
+
+2. **Confounding variables**: A third variable (e.g., overall business growth, market conditions, or season) could drive both ad spending and sales simultaneously.
+
+3. **Indirect relationship**: Ad spend might influence sales *through* website traffic (note the very high correlation of 0.9 between ad spend and website traffic, and 0.85 between website traffic and sales), rather than directly.
+
+To establish causation, you would need:
+- Experimental design (randomized controlled trials)
+- Temporal evidence (ad spend clearly precedes sales)
+- Mechanism understanding
+- Control for confounding variables
+
+The data provided only shows correlational relationships, which are insufficient to claim causation.",no,True,False
+2026-02-04T11:47:44.143925,direct_2,direct_causation,email_opens → click_throughs → purchases,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between email opens and purchases (r = 0.83), correlation does not imply causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Customers who have already made purchases may be more engaged and thus more likely to open emails.
+
+2. **Common cause**: A third variable (e.g., customer interest level, product quality, or customer loyalty) could drive both email opens and purchases independently.
+
+3. **Confounding through click-throughs**: The data shows email opens correlate strongly with click-throughs (0.91), and click-throughs correlate strongly with purchases (0.89). The relationship between opens and purchases may be *mediated* by click-throughs rather than direct causation.
+
+To establish causation, you would need experimental evidence (e.g., randomized controlled trials where email sends are randomly assigned) rather than observational correlations alone.",no,True,False
+2026-02-04T11:47:48.696076,direct_3,direct_causation,discount_rate → cart_additions → conversion,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation between discount and conversion rate (0.85), **correlation does not imply causation**. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Products with naturally high conversion rates may be discounted more aggressively by the company.
+
+2. **Confounding variables**: A third variable (e.g., product quality, marketing campaign intensity, seasonality) could drive both higher discounts AND higher conversions independently.
+
+3. **Selection bias**: The company may apply discounts strategically to certain customer segments or products that were already converting well.
+
+The high correlations in your data (0.85, 0.93, 0.9) are suspiciously uniform and suggest potential confounding rather than direct causal relationships. To establish causation, you would need:
+- Randomized controlled experiments (A/B testing)
+- Temporal evidence (discount applied *before* conversion increase)
+- Causal inference methods controlling for confounders",no,True,False
+2026-02-04T11:47:51.577507,direct_4,direct_causation,content_quality → time_on_page → engagement,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation between content quality and engagement (r = 0.81), **correlation does not imply causation**. 
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: High engagement might motivate better content creation
+2. **Confounding variables**: A third factor (e.g., audience interest, marketing budget, distribution channels) could drive both content quality and engagement
+3. **Spurious correlation**: The relationship could be coincidental
+
+To establish causation, you would need:
+- **Experimental design** (randomized controlled trials)
+- **Temporal evidence** (content quality changes *before* engagement increases)
+- **Mechanism understanding** (why/how quality causes engagement)
+- **Control for confounders** (multivariate analysis)
+
+The strong correlation (0.81) suggests content quality is *associated with* engagement and may be *part of* a causal mechanism, but the data alone cannot prove causation.",no,True,False
+2026-02-04T11:48:01.754477,direct_5,direct_causation,personalization → user_satisfaction → retention,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation between personalization and retention (r = 0.83), **correlation does not imply causation**.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Retained users might enable better personalization (more data, longer history)
+
+2. **Common cause**: User satisfaction appears to be strongly correlated with both variables (r = 0.92 with personalization, r = 0.88 with retention), suggesting it may be a confounding variable that drives both
+
+3. **Other unmeasured factors**: Brand quality, customer service, pricing, or product-market fit could drive both personalization efforts and retention
+
+To establish causation, you would need:
+- Experimental evidence (A/B testing with/without personalization)
+- Temporal evidence (personalization changes precede retention changes)
+- Causal mechanisms (theoretical justification)
+- Control for confounding variables
+
+The strong correlation is suggestive and warrants further investigation, but the data alone cannot confirm a causal relationship.",no,True,False
+2026-02-04T11:48:04.794179,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between ad_spend and sales (0.88), this does not establish causation. The data reveals a more likely explanation:
+
+**Confounding variable**: Seasonality is highly correlated with both ad_spend (0.94) and sales (0.93). This suggests that seasonality is driving both variables:
+
+- During high-demand seasons → companies increase ad spending AND sales naturally increase
+- During low-demand seasons → companies decrease ad spending AND sales naturally decrease
+
+The strong correlation between ad_spend and sales appears to be largely explained by their mutual relationship with seasonality, rather than ad_spend directly causing sales.
+
+**To establish causation**, you would need:
+- Experimental evidence (randomized controlled tests)
+- Temporal precedence (ad_spend changes before sales changes)
+- Control for confounding variables like seasonality
+- A plausible mechanism
+
+The correlational data alone cannot rule out that seasonality is the true driver of both variables.",no,False,True
+2026-02-04T11:48:07.847157,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between social posts and revenue (r = 0.78), correlation does not imply causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Higher revenue could enable more social media spending/posting, rather than posts driving revenue.
+
+2. **Common cause**: Product launches appear to be a confounding variable. Notice that:
+   - Product launches correlate strongly with social posts (r = 0.9)
+   - Product launches correlate strongly with revenue (r = 0.91)
+   
+   This suggests that **product launches** may be the true driver of both increased social posting activity and revenue growth, making the social posts → revenue relationship spurious.
+
+3. **Temporal information missing**: We don't know if posts precede revenue changes, which would be necessary for causation.
+
+To establish causation, you would need experimental evidence (randomized testing), temporal precedence confirmation, or causal modeling that controls for confounders like product launches.",no,False,True
+2026-02-04T11:48:10.643151,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between support calls and churn (r = 0.85), correlation does not imply causation. The data suggests a **reverse causal relationship or common cause**:
+
+1. **Reverse causality is more likely**: Customers experiencing problems are more likely to call support AND more likely to churn. The churn causes the support calls, not the other way around.
+
+2. **Common cause**: Product bugs appear to be the underlying driver:
+   - Product bugs → Support calls (r = 0.91)
+   - Product bugs → Churn (r = 0.93)
+
+The strong correlation between product bugs and both support calls and churn suggests that **product quality is the root cause**, not support calls themselves. Improving support call handling alone would not reduce churn; fixing the underlying product issues would.",no,False,True
+2026-02-04T11:48:15.572403,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation between training_hours and sales_performance (r = 0.8), **correlation does not imply causation**.
+
+The data suggests that **employee experience** is likely the underlying common cause:
+
+- Employee experience correlates very strongly with training hours (r = 0.89)
+- Employee experience correlates very strongly with sales performance (r = 0.92)
+
+This pattern indicates that **more experienced employees** likely:
+1. Receive more training (or seek it out)
+2. Perform better in sales
+
+The relationship between training and sales performance could be **spurious** — driven by the confounding variable of employee experience rather than training directly causing better sales performance.
+
+To establish causation, you would need:
+- Experimental design (random assignment to training vs. control)
+- Temporal evidence (training occurs before performance improvement)
+- Control for confounding variables like experience",no,False,True
+2026-02-04T11:48:18.249674,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between influencer_posts and brand_awareness (r = 0.79), **correlation does not imply causation**. 
+
+The data suggests a likely **confounding variable**: market trends appear to drive both variables:
+- Market trends correlate strongly with influencer posts (r = 0.88)
+- Market trends correlate strongly with brand awareness (r = 0.91)
+
+This pattern indicates that **market conditions** may be the common cause driving both influencer activity and brand awareness simultaneously, rather than influencer posts directly causing brand awareness.
+
+To establish causation, you would need:
+- Experimental evidence (randomized controlled trials)
+- Temporal precedence (influencer posts clearly precede awareness changes)
+- Control for confounding variables like market trends
+- A plausible causal mechanism
+
+The correlational data alone cannot answer the causal question.",no,False,True
+2026-02-04T11:48:20.990908,reverse_1,reverse_causation,product_quality → customer_reviews,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation:
+
+A correlation of 0.92 indicates a **strong association** between customer reviews and product quality, but correlation does not establish causation.
+
+**Key reasons:**
+
+1. **Reverse causality**: Higher product quality likely *causes* better customer reviews, not the other way around. Customers rate products based on their actual quality.
+
+2. **Confounding variables**: Both variables could be influenced by a third factor (e.g., manufacturing standards, materials used, production processes).
+
+3. **Correlation ≠ Causation**: Even a very strong correlation (0.92) only shows that two variables move together—it doesn't prove one causes the other.
+
+To establish causation, you would need experimental evidence (e.g., randomized controlled trials) or a clear temporal sequence showing that reviews precede and influence product quality, which is implausible in this case.",no,False,True
+2026-02-04T11:48:23.859032,reverse_2,reverse_causation,user_frustration → support_tickets,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation:
+
+A correlation of 0.91 indicates a strong *association* between support tickets and user frustration, but correlation does not establish causation.
+
+There are several plausible explanations for this relationship:
+
+1. **Reverse causation**: User frustration likely *causes* people to submit support tickets (more frustrated users → more tickets), rather than tickets causing frustration.
+
+2. **Common cause**: Both variables may be driven by an underlying factor, such as product bugs or poor user experience, which independently increases both frustration and support ticket volume.
+
+3. **Bidirectional relationship**: The relationship could be cyclical—frustration leads to tickets, and slow/inadequate support responses increase frustration further.
+
+To establish causation, you would need experimental evidence (e.g., a randomized controlled trial) or stronger causal inference methods, not just correlation.",no,False,True
+2026-02-04T11:48:26.533537,reverse_3,reverse_causation,customer_satisfaction → referrals,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation:
+
+A correlation of 0.92 indicates a **strong relationship** between referrals and customer_satisfaction, but correlation does not establish causation.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: High customer satisfaction may *cause* more referrals (more likely)
+2. **Common cause**: A third variable (e.g., product quality, customer service) could drive both referrals and satisfaction
+3. **Coincidence**: The relationship could be spurious
+
+To determine causation, you would need:
+- **Temporal evidence**: Referrals would need to precede satisfaction changes
+- **Experimental design**: Randomized controlled trials manipulating referrals
+- **Theoretical mechanism**: A logical explanation for *how* referrals would increase satisfaction
+- **Control for confounders**: Ruling out third variables
+
+The strong correlation is valuable information suggesting these variables are related, but it's insufficient to claim a causal direction.",no,False,True
+2026-02-04T11:48:29.942575,reverse_4,reverse_causation,product_value → repeat_purchases,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation:
+
+A correlation of 0.88 indicates a **strong association** between repeat purchases and product value, but correlation does not establish causation.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Higher product value might *cause* customers to make repeat purchases (more likely explanation)
+
+2. **Confounding variables**: A third factor could drive both variables (e.g., customer satisfaction, product quality, or customer income level)
+
+3. **Coincidence**: The relationship could be spurious
+
+To determine causation, you would need:
+- Experimental design (randomized controlled trial)
+- Temporal evidence (repeat purchases occurring *before* product value changes)
+- Theoretical mechanism explaining the causal pathway
+- Control for confounding variables
+
+The strong correlation is useful for prediction but insufficient for causal claims.",no,False,True
+2026-02-04T11:48:32.793523,reverse_5,reverse_causation,content_virality → social_shares,claude-haiku-4-5-20251001,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation:
+
+Correlation does not imply causation. While there is a strong positive correlation (0.88) between social_shares and content_virality, this alone cannot establish a causal relationship.
+
+**Alternative explanations for this correlation:**
+
+1. **Reverse causation**: More viral content may *cause* more social shares, rather than the other way around
+2. **Confounding variables**: A third variable (e.g., content quality, influencer endorsement, trending topic) could drive both social shares and virality
+3. **Mutual reinforcement**: The two variables may influence each other bidirectionally
+
+To establish causation, you would need:
+- Experimental design (randomized controlled trial)
+- Temporal evidence (social_shares clearly precedes virality)
+- Causal inference methods (instrumental variables, propensity score matching, etc.)
+- Theoretical justification for the causal mechanism",no,False,True
+2026-02-04T11:48:38.330966,direct_1,direct_causation,ad_spend → website_traffic → sales,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation (0.79) between ad spend and sales, correlation does not imply causation. The data presented only shows associations between variables, not causal relationships.
+
+The high correlations suggest a potential causal pathway (ad_spend → website_traffic → sales), but this could also be explained by:
+- **Reverse causation**: Higher sales could lead to larger ad budgets
+- **Confounding variables**: Other factors (seasonality, economic conditions, product quality) could drive both ad spend and sales
+- **Spurious correlation**: The relationships could be coincidental
+
+To establish causation, you would need:
+- Experimental data (randomized controlled trials)
+- Temporal precedence (ad spend occurring before sales changes)
+- Controlled analysis ruling out confounders
+- A theoretical mechanism explaining the relationship
+
+The correlations are suggestive but insufficient to conclude causation.",no,True,False
+2026-02-04T11:48:43.524969,direct_2,direct_causation,email_opens → click_throughs → purchases,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.83) between email opens and purchases, this alone cannot establish a causal relationship. 
+
+Several alternative explanations exist:
+
+1. **Reverse causation**: People who are already inclined to purchase may be more likely to open emails
+2. **Confounding variables**: A third factor (e.g., customer engagement level, interest in products, brand loyalty) could cause both email opens and purchases
+3. **Spurious correlation**: The relationship could be coincidental or driven by other unmeasured factors
+
+To establish causation, we would need:
+- A controlled experiment (e.g., randomized A/B test)
+- Temporal precedence clearly established
+- Ruling out confounding variables
+- A theoretical mechanism explaining why opens would cause purchases
+
+The correlation simply tells us these variables move together, not that one causes the other.",no,True,False
+2026-02-04T11:48:50.486531,direct_3,direct_causation,discount_rate → cart_additions → conversion,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.85) between discount rate and conversion rate, this alone cannot establish a causal relationship. 
+
+Several alternative explanations exist:
+
+1. **Reverse causation**: High conversion rates might lead to reduced discounts (companies offer fewer discounts when conversions are already high)
+
+2. **Confounding variables**: Other factors (seasonality, product quality, marketing campaigns, customer segments) could be driving both discount rates and conversions simultaneously
+
+3. **Spurious correlation**: The relationship might be coincidental or driven by the strong correlations with the intermediate variable (cart additions)
+
+To establish causation, you would need:
+- A controlled experiment (A/B test with random assignment)
+- Temporal precedence (discount changes occurring before conversion changes)
+- Ruling out confounding variables through statistical controls or experimental design
+- A theoretical mechanism explaining why discounts would cause conversions
+
+The correlation data provided is consistent with causation but does not prove it.",no,True,False
+2026-02-04T11:48:56.111665,direct_4,direct_causation,content_quality → time_on_page → engagement,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.81) between content quality and engagement, this alone cannot establish a causal relationship. 
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Higher engagement might lead to better perceived content quality (e.g., through social proof or confirmation bias)
+
+2. **Confounding variables**: A third variable (like topic relevance, audience expertise, or marketing spend) could be driving both content quality and engagement
+
+3. **Spurious correlation**: The relationship might be coincidental or driven by measurement artifacts
+
+To establish causation, you would need:
+- Experimental data (randomized controlled trials)
+- Temporal precedence (content quality measured before engagement)
+- Control for confounding variables
+- A theoretical mechanism explaining the causal pathway
+
+The correlational data provided is consistent with causation but does not prove it.",no,True,False
+2026-02-04T11:49:01.557669,direct_5,direct_causation,personalization → user_satisfaction → retention,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong positive correlation (0.83) between personalization and retention, correlation does not imply causation. 
+
+Based on the given information, there are several alternative explanations:
+
+1. **Confounding variable**: User satisfaction is highly correlated with both personalization (0.92) and retention (0.88). This suggests user satisfaction could be a mediating variable or common cause affecting both.
+
+2. **Reverse causality**: Retained users might receive more personalization over time as the system learns their preferences.
+
+3. **Third variables**: Other unmeasured factors could be driving both personalization and retention.
+
+To establish causation, we would need:
+- A controlled experiment (e.g., randomized A/B test)
+- Temporal precedence evidence
+- Ruling out confounding variables through statistical controls or experimental design
+
+The correlational data alone cannot establish a causal relationship.",no,True,False
+2026-02-04T11:49:06.272045,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+While there is a strong correlation between ad_spend and sales (0.88), this does not establish causation. The data suggests a classic confounding variable problem:
+
+- Seasonality is highly correlated with both ad_spend (0.94) and sales (0.93)
+- This means seasonality could be driving both variables simultaneously
+
+For example, companies typically increase ad spending during high-sales seasons (holidays, back-to-school, etc.). Both ad_spend and sales rise together not because one causes the other, but because both respond to seasonal patterns. Without controlling for seasonality or using experimental/quasi-experimental methods (like randomized trials or natural experiments), we cannot conclude that ad_spend causes sales based solely on these correlations.",no,False,True
+2026-02-04T11:49:10.638682,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","**No**
+
+The correlation between social_posts and revenue (0.78) does not establish causation. The data suggests a confounding variable problem: product_launches is highly correlated with both social_posts (0.9) and revenue (0.91). 
+
+This pattern indicates that product_launches likely drives both increased social media activity AND increased revenue. The relationship between social_posts and revenue may be spurious - both variables could be responding to the common cause of product launches rather than social_posts directly causing revenue.
+
+To establish causation, we would need experimental data (e.g., randomized controlled trial) or additional analysis controlling for confounders like product_launches.",no,False,True
+2026-02-04T11:49:15.686720,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.85) between support calls and churn, this could be explained by:
+
+1. **Reverse causation**: Customers experiencing problems that lead them to churn also prompt them to make support calls first.
+
+2. **Common cause (confounding)**: The high correlations involving product bugs (0.91 with support calls, 0.93 with churn) suggest that product bugs are likely a common underlying cause of both support calls AND churn. Customers encounter bugs → they call support AND they churn.
+
+The correlation alone doesn't establish that support calls *cause* churn. More likely, both are symptoms of underlying product quality issues.",no,False,True
+2026-02-04T11:49:22.329706,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation (0.8) between training hours and sales performance, we cannot conclude causation from correlation alone. The data suggests a classic confounding variable problem:
+
+Employee experience is highly correlated with both training hours (0.89) and sales performance (0.92). This means experienced employees likely receive more training AND perform better at sales. The relationship between training and performance could be spurious - both may simply be consequences of employee experience.
+
+To establish causation, we would need:
+- A controlled experiment (randomized assignment to training)
+- Statistical controls for confounders like experience
+- Temporal evidence that training precedes performance improvements
+- A theoretical mechanism explaining how training causes better performance
+
+The correlational data alone cannot distinguish whether training causes performance, experience causes both, or some other causal structure exists.",no,False,True
+2026-02-04T11:49:27.849800,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation (0.79) between influencer_posts and brand_awareness, correlation does not imply causation. The data suggests a potential confounding variable problem: market_trend is highly correlated with both influencer_posts (0.88) and brand_awareness (0.91). 
+
+This means the observed relationship between influencer_posts and brand_awareness could be spurious - both variables may simply be responding to the same underlying market trend rather than one causing the other. For example, when market trends favor a product category, both influencer activity and brand awareness might increase independently.
+
+To establish causation, we would need:
+- Experimental or quasi-experimental design (e.g., randomized controlled trial)
+- Temporal precedence evidence
+- Control for confounding variables like market_trend
+- Additional evidence ruling out reverse causation",no,False,True
+2026-02-04T11:49:33.127757,reverse_1,reverse_causation,product_quality → customer_reviews,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.92) between customer reviews and product quality, this alone cannot establish a causal relationship. 
+
+There are several possible explanations for this correlation:
+
+1. **Reverse causation**: Product quality may cause customer reviews (products with higher quality receive better reviews)
+
+2. **Bidirectional relationship**: Both could influence each other
+
+3. **Confounding variables**: Other factors (e.g., brand reputation, price, marketing) could influence both variables
+
+4. **Measurement issue**: Customer reviews might simply be measuring/reflecting product quality rather than causing it
+
+To establish causation, we would need experimental data, temporal precedence, or causal inference methods (e.g., randomized controlled trials, instrumental variables, natural experiments) - not just correlation.",no,False,True
+2026-02-04T11:49:37.507513,reverse_2,reverse_causation,user_frustration → support_tickets,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+Correlation does not imply causation. While there is a strong positive correlation (0.91) between support tickets and user frustration, this relationship could exist for several reasons:
+
+1. **Reverse causation**: User frustration likely causes support tickets (users contact support *because* they are frustrated)
+
+2. **Bidirectional relationship**: Support tickets might increase frustration if resolution is slow, while frustration also drives ticket creation
+
+3. **Common cause**: Both variables could be driven by a third factor (e.g., product bugs, poor UX design)
+
+The correlation alone cannot establish the direction of causality. Based on logical reasoning, it's more plausible that user frustration causes support tickets rather than the reverse.",no,False,True
+2026-02-04T11:49:43.463954,reverse_3,reverse_causation,customer_satisfaction → referrals,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.92) between referrals and customer satisfaction, this alone cannot establish a causal relationship. 
+
+There are several possible explanations for this correlation:
+
+1. **Reverse causation**: Customer satisfaction might cause referrals (satisfied customers are more likely to refer others)
+2. **Bidirectional relationship**: They might influence each other mutually
+3. **Confounding variables**: A third factor (e.g., product quality, service excellence) might cause both high satisfaction and high referrals
+4. **Coincidence**: Though less likely with such a strong correlation
+
+To establish causation, we would need experimental data (e.g., randomized controlled trials), temporal evidence showing referrals precede satisfaction changes, or more sophisticated causal inference methods that rule out alternative explanations.",no,False,True
+2026-02-04T11:49:47.374339,reverse_4,reverse_causation,product_value → repeat_purchases,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No.
+
+Correlation does not imply causation. While there is a strong positive correlation (0.88) between repeat purchases and product value, this alone cannot tell us the direction of causality or whether a causal relationship exists at all.
+
+Possible alternative explanations include:
+- **Reverse causation**: Higher product value might cause more repeat purchases (customers buy again because the product is valuable)
+- **Confounding variables**: A third factor (e.g., product quality, customer satisfaction, brand loyalty) could be driving both variables
+- **Bidirectional relationship**: They might influence each other simultaneously
+
+To establish causation, we would need experimental data, temporal precedence, or causal inference methods (e.g., instrumental variables, natural experiments), not just correlation.",no,False,True
+2026-02-04T12:11:44.613386,reverse_5,reverse_causation,content_virality → social_shares,claude-sonnet-4-5-20250929,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","No.
+
+Correlation does not imply causation. While there is a strong positive correlation (0.88) between social shares and content virality, this alone cannot establish a causal relationship. The causation could go in either direction (viral content may cause more shares, OR more shares may cause content to become viral), or both variables could be influenced by a third confounding variable (e.g., content quality, timing, audience size). To establish causation, we would need experimental data, temporal precedence, or additional causal inference methods beyond simple correlation.",no,False,True
+2026-02-04T12:11:51.945016,direct_1,direct_causation,ad_spend → website_traffic → sales,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.79
+corr(ad, spend_website_traffic) = 0.9
+corr(website, traffic_sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**No**
+
+## Explanation
+
+Correlation does not imply causation. While there is a strong correlation (0.79) between ad spend and sales, this alone cannot establish a causal relationship.
+
+Several issues prevent us from concluding causality:
+
+1. **Confounding variables**: There may be unmeasured factors (e.g., seasonality, economic conditions, competitor actions) driving both ad spend and sales simultaneously.
+
+2. **Reverse causality**: Companies with higher sales may simply have more budget to spend on advertising, meaning sales could be driving ad spend rather than the reverse.
+
+3. **Mediation without causation**: The data shows ad spend correlates with website traffic (0.9), and website traffic correlates with sales (0.85). But this chain of correlations doesn't prove ad spend *causes* the traffic that *causes* sales.
+
+4. **No experimental design**: With only observational correlational data (no randomization, control group, or intervention), we cannot rule out alternative explanations.
+
+To establish causation, we would need a randomized controlled experiment, a natural experiment, or appropriate causal inference methods (e.g., instrumental variables, regression discontinuity, or difference-in-differences).",no,True,False
+2026-02-04T12:11:58.610967,direct_2,direct_causation,email_opens → click_throughs → purchases,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(email, opens_purchases) = 0.83
+corr(email, opens_click_throughs) = 0.91
+corr(click, throughs_purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.83) between email opens and purchases, this alone cannot establish a causal relationship.
+
+Several alternative explanations exist:
+
+1. **Common cause (confounding):** A third variable (e.g., customer engagement level, brand loyalty, or prior purchase intent) could drive both email opens AND purchases independently.
+
+2. **Reverse causation:** People who are already inclined to purchase may be more likely to open emails from that brand.
+
+3. **Mediation without direct causation:** The data shows email_opens → click_throughs (0.91) and click_throughs → purchases (0.89). Email opens may only be associated with purchases *through* click-throughs, not directly causing them.
+
+To establish causation, you would need:
+- A randomized controlled experiment (A/B test)
+- Or rigorous causal inference methods controlling for confounders
+
+The correlational data provided, regardless of how strong, cannot answer causal questions.",no,True,False
+2026-02-04T12:12:05.483778,direct_3,direct_causation,discount_rate → cart_additions → conversion,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(discount, rate_conversion) = 0.85
+corr(discount, rate_cart_additions) = 0.93
+corr(cart, additions_conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.85) between discount and conversion rate, this alone cannot establish a causal relationship.
+
+Several issues prevent us from concluding causality:
+
+1. **Confounding variables**: The high correlations among all three variables (discount, cart additions, and conversion) suggest potential confounders. For example, seasonal effects, promotional campaigns, or customer segments could drive all variables simultaneously.
+
+2. **Mediation**: Cart additions might mediate the relationship between discounts and conversion (discount → cart additions → conversion), meaning the direct causal effect of discount on conversion could be much smaller or even zero.
+
+3. **Reverse causality**: We cannot rule out that pages/products with historically higher conversion rates are strategically given more discounts.
+
+4. **No experimental design**: With only observational data and correlations, we lack the controlled conditions needed to isolate causal effects.
+
+To establish causation, we would need a randomized controlled experiment (A/B test) or appropriate causal inference methods with valid assumptions.",no,True,False
+2026-02-04T12:12:11.443855,direct_4,direct_causation,content_quality → time_on_page → engagement,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(content, quality_engagement) = 0.81
+corr(content, quality_time_on_page) = 0.91
+corr(time, on_page_engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.81) between content quality and engagement, this alone cannot establish a causal relationship. Several issues prevent a causal conclusion:
+
+1. **Possible confounding variables**: Other unmeasured factors (e.g., audience targeting, time of posting, platform algorithms) could be driving both content quality and engagement.
+
+2. **Reverse causality**: It's possible that content receiving high engagement gets rated as ""higher quality"" (reverse direction).
+
+3. **Spurious correlation**: The relationship could be mediated entirely through time_on_page, which correlates highly with both variables (0.91 with content_quality, 0.84 with engagement).
+
+To establish causation, you would need experimental data (A/B testing with randomized content quality levels) or rigorous causal inference methods that account for confounders.",no,True,False
+2026-02-04T12:12:17.575700,direct_5,direct_causation,personalization → user_satisfaction → retention,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user, satisfaction_retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.83) between personalization and retention, several issues prevent us from concluding causality:
+
+1. **Confounding variables**: User satisfaction is highly correlated with both personalization (0.92) and retention (0.88). User satisfaction could be driving both, or it could be a mediating variable.
+
+2. **Reverse causality**: It's possible that retained users receive more personalization (because the system has more data on them), rather than personalization causing retention.
+
+3. **Third variable problem**: Unmeasured factors (e.g., user engagement, product quality, user demographics) could be causing both higher personalization and higher retention.
+
+4. **No experimental design**: With only observational correlation data (n=100), we cannot establish the temporal precedence or rule out alternative explanations needed for causal inference.
+
+To establish causation, we would need a randomized controlled experiment (A/B test) or rigorous causal inference methods with appropriate controls.",no,True,False
+2026-02-04T12:12:22.634614,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(ad, spend_sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+The high correlation between ad_spend and sales (0.88) is likely spurious due to **confounding by seasonality**.
+
+Seasonality is highly correlated with both:
+- ad_spend (r = 0.94)
+- sales (r = 0.93)
+
+This pattern suggests that seasonality drives both variables simultaneously. Companies likely increase ad spending during peak seasons (holidays, etc.) when sales are naturally higher anyway. The apparent relationship between ad_spend and sales may simply reflect their common dependence on seasonal patterns rather than a true causal effect.
+
+To establish causation, we would need experimental data (randomized ad spending) or proper causal inference methods that control for seasonality.",no,False,True
+2026-02-04T12:12:28.255413,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, posts_revenue) = 0.78
+corr(product, launches_social_posts) = 0.9
+corr(product, launches_revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+The correlation between social_posts and revenue (0.78) does not establish causation. The data suggests that **product_launches** is likely a confounding variable:
+
+- product_launches is highly correlated with social_posts (0.90)
+- product_launches is highly correlated with revenue (0.91)
+
+This pattern suggests that product launches likely drive *both* increased social media activity (to promote the launches) *and* increased revenue (from new product sales). The observed correlation between social_posts and revenue is likely spurious—a result of both variables being driven by product launches rather than social_posts directly causing revenue.
+
+To establish causation, you would need controlled experiments or causal inference methods that account for confounders.",no,False,True
+2026-02-04T12:12:33.656301,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, calls_churn) = 0.85
+corr(product, bugs_support_calls) = 0.91
+corr(product, bugs_churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.85) between support calls and churn, the additional information suggests a confounding variable is likely at play.
+
+Looking at the pattern:
+- Product bugs are highly correlated with support calls (0.91)
+- Product bugs are highly correlated with churn (0.93)
+
+This suggests **product bugs** is likely a common cause (confounder) that drives both support calls AND churn. Customers experiencing buggy products both contact support more AND are more likely to churn—but the support calls themselves aren't causing the churn.
+
+The causal structure is likely: **Product Bugs → Support Calls** and **Product Bugs → Churn**, rather than **Support Calls → Churn**.",no,False,True
+2026-02-04T12:12:38.419154,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(training, hours_sales_performance) = 0.8
+corr(employee, experience_training_hours) = 0.89
+corr(employee, experience_sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong correlation (0.8) between training hours and sales performance, the data also shows that employee experience is highly correlated with both training hours (0.89) and sales performance (0.92).
+
+This suggests **employee experience is likely a confounding variable** - more experienced employees may both receive more training AND have better sales performance. The observed correlation between training and sales performance could be largely (or entirely) explained by this common cause, rather than training directly causing improved sales.
+
+To establish causation, we would need:
+- A controlled experiment (randomized training assignment)
+- Or statistical techniques to control for confounders (e.g., partial correlation, regression analysis)",no,False,True
+2026-02-04T12:12:44.014015,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(influencer, posts_brand_awareness) = 0.79
+corr(market, trend_influencer_posts) = 0.88
+corr(market, trend_brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+The high correlation (0.79) between influencer posts and brand awareness does not establish causation. The additional information reveals a classic **confounding/spurious correlation** problem:
+
+- Market trend correlates strongly with influencer posts (0.88)
+- Market trend correlates strongly with brand awareness (0.91)
+
+This suggests that **market trend is a common cause (confounder)** driving both variables. When the market is trending upward, companies naturally increase influencer posts AND brand awareness tends to rise independently due to overall market conditions.
+
+The observed correlation between influencer posts and brand awareness is likely largely (or entirely) explained by this shared relationship with market trends, rather than a direct causal effect. To establish causation, you would need controlled experiments or proper causal inference methods that adjust for the market trend confounder.",no,False,True
+2026-02-04T12:12:49.775361,reverse_1,reverse_causation,product_quality → customer_reviews,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(customer, reviews_product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Correlation does not imply causation. While there is a strong positive correlation (0.92) between customer reviews and product quality, this alone cannot establish a causal relationship.
+
+Several issues prevent a causal conclusion:
+
+1. **Reverse causality**: Product quality likely causes customer reviews (better products → better reviews), not the other way around.
+
+2. **Confounding variables**: Other factors (brand reputation, price, marketing) could influence both variables simultaneously.
+
+3. **No experimental design**: This is observational data with no manipulation or control, so we cannot isolate cause and effect.
+
+4. **Logical direction**: Conceptually, reviews are *responses* to product quality, not determinants of it. Reviews measure/reflect quality rather than create it.
+
+To establish causation, you would need experimental manipulation, temporal precedence data, or rigorous causal inference methods (e.g., instrumental variables, randomized controlled trials).",no,False,True
+2026-02-04T12:12:54.826883,reverse_2,reverse_causation,user_frustration → support_tickets,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(support, tickets_user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+A correlation of 0.91 between support tickets and user frustration does not establish causation. Several issues prevent this conclusion:
+
+1. **Reverse causality**: User frustration likely causes people to submit support tickets, not the other way around. The causal direction is probably opposite to what's suggested.
+
+2. **Common cause**: Both variables could be driven by a third factor (e.g., product bugs, poor UX, or service outages) that simultaneously increases frustration AND support tickets.
+
+3. **Correlation ≠ Causation**: Even a strong correlation (0.91) only indicates the variables move together—it cannot tell us *why* or establish a causal mechanism.
+
+To establish causation, you would need experimental manipulation or proper causal inference methods (e.g., instrumental variables, randomized controlled trials).",no,False,True
+2026-02-04T12:13:00.063976,reverse_3,reverse_causation,customer_satisfaction → referrals,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+A correlation of 0.92, while very strong, does not establish causation. Several issues prevent us from concluding that referrals cause customer satisfaction:
+
+1. **Reverse causation is more plausible**: It's actually more likely that customer satisfaction causes referrals (satisfied customers refer others), not the other way around.
+
+2. **Common causes**: Both variables could be driven by confounding factors like product quality, customer service, or overall brand experience.
+
+3. **No experimental design**: With only observational correlation data, we cannot isolate the causal effect of one variable on another.
+
+4. **Temporal ambiguity**: We have no information about which variable precedes the other in time.
+
+The strong correlation suggests these variables are related, but correlation alone—regardless of strength—cannot establish causal direction.",no,False,True
+2026-02-04T12:13:06.077581,reverse_4,reverse_causation,product_value → repeat_purchases,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(repeat, purchases_product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+A correlation of 0.88 between repeat purchases and product value only indicates a strong statistical association, not causation. Several issues prevent us from concluding causality:
+
+1. **Correlation ≠ Causation**: The relationship could be explained by:
+   - **Reverse causation**: Higher product value might cause more repeat purchases (not the other way around)
+   - **Confounding variables**: Other factors (e.g., customer satisfaction, brand loyalty, income level, marketing efforts) could drive both variables
+
+2. **No experimental design**: With only observational data showing correlation, we cannot establish the directionality or rule out alternative explanations
+
+3. **The causal direction is likely reversed**: Logically, it's more plausible that product value drives repeat purchases, rather than repeat purchases causing a product to have higher value
+
+To establish causation, we would need controlled experiments, longitudinal data with temporal precedence, or proper causal inference methods.",no,False,True
+2026-02-04T12:13:11.250217,reverse_5,reverse_causation,content_virality → social_shares,claude-opus-4-5-20251101,"You are given information about relationships between marketing variables.
+
+n = 100 observations
+corr(social, shares_content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","No
+
+A correlation of 0.88 between social shares and content virality, while strong, does not establish causation. Several issues prevent a causal conclusion:
+
+1. **Reverse causality**: Content virality could cause more social shares, rather than the other way around (viral content gets shared more).
+
+2. **Confounding variables**: A third factor (e.g., content quality, timing of posting, influencer involvement) could drive both social shares and virality simultaneously.
+
+3. **Correlation ≠ Causation**: Without experimental manipulation, temporal ordering, or proper causal inference methods (e.g., randomized controlled trials, instrumental variables), we cannot determine if one variable causes the other.
+
+The observed correlation only tells us these variables move together, not that one produces the other.",no,False,True

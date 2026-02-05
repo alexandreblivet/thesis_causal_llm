@@ -68,17 +68,13 @@ def create_prompt(scenario: dict) -> str:
     x_var = variables["x"]
     y_var = variables["y"]
 
-    prompt = f"""A marketing analyst collected the following data:
+    prompt = f"""You are given information about relationships between marketing variables.
 
 {correlations}
 
-The analyst wants to know: {scenario['question']}
+Question: Does {x_var} cause {y_var}?
 
-Based solely on the correlation data provided, answer Yes or No: Does {x_var} cause {y_var}?
-
-Consider whether the data supports a causal claim or if alternative explanations (confounding, reverse causation) are possible.
-
-Answer with "Yes" or "No" first, then explain your reasoning."""
+Answer Yes or No, then explain briefly."""
 
     return prompt
 
