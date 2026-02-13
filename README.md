@@ -1,45 +1,84 @@
 # Causal Reasoning in LLMs: Marketing Context
 
-MSc Thesis Project - Evaluating small language models' ability to distinguish correlation from causation in marketing scenarios.
+MSc Thesis Project - Evaluating whether small LLMs can correctly identify when correlations do (or don't) imply causation in marketing contexts. Uses DAG-generated synthetic data with known ground truth to test causal reasoning capabilities. The experiment varies prompt framing and variable naming to diagnose why models fail.
 
 ## Research Question
 
 Can small LLMs correctly identify when correlations do (or don't) imply causation in marketing contexts?
 
-## Key Finding
+## Key Findings
 
-**Phi-3 Mini shows a systematic "no" bias:** The model correctly rejects spurious correlations (confounding: 100%, reverse causation: 100%) but incorrectly rejects ALL genuine causal relationships (direct causation: 0%).
+**All models exhibit a strong "correlation ≠ causation" skepticism bias.** Every model tested — from Llama 3.1 8B to Claude Opus — correctly rejects spurious correlations (confounding, reverse causation) but struggles to recognise genuine direct causation, especially under neutral prompting where **no model scores above 0%** on direct causation.
 
-**Implication:** Small LLMs trained on "correlation ≠ causation" heuristics overgeneralize and miss real causal effects, leading to false negatives in marketing analytics.
+**Prompt framing matters.** Providing the true causal structure or framing data as from an RCT substantially improves performance on direct causation for Claude models (Opus reaches 100%), but has no effect on Llama 3.1 8B (stays at 0%).
+
+**Variable naming affects open-source models disproportionately.** Llama 3.1 8B drops from 66.7% accuracy on abstract variables to 10.5% on marketing-named variables, suggesting domain-specific terms trigger different heuristics. Claude models show minimal sensitivity.
+
+### Results Summary
+
+**Overall Accuracy: 71.1% (197/277)**
+
+| Model | Confounding | Direct Causation | Reverse Causation | Overall |
+|---|---|---|---|---|
+| Claude Opus | 100% | 66.7% | 83.3% | 81.2% |
+| Claude Sonnet | 100% | 43.3% | 100% | 78.8% |
+| Claude Haiku | 100% | 16.7% | 100% | 68.8% |
+| Llama 3.1 8B | 78.6% | 0% | 100% | 37.8% |
+
+### Direct Causation Breakdown (where models fail)
+
+| Model | Neutral | Structure-Given | Experiment-Stated |
+|---|---|---|---|
+| Claude Opus | 0% | 100% | 100% |
+| Claude Sonnet | 0% | 70% | 60% |
+| Claude Haiku | 0% | 20% | 30% |
+| Llama 3.1 8B | 0% | 0% | 0% |
+
+**Key Insight:** Models have over-learned the "correlation ≠ causation" heuristic. They default to "no" when presented with correlational data, even when the correlation reflects genuine causation. Larger Claude models can overcome this bias when given structural information or experimental framing, but smaller models cannot.
 
 ## Experimental Design
 
-### DAG-Based Synthetic Data
-- Generate numerical datasets from known causal structures
-- Present correlation coefficients (not text descriptions)
-- Ground truth derived from underlying DAG
+### Factorial Design: 3 Structures × 3 Prompt Conditions × 2 Variable Types
 
-### Causal Structures (3 types, 5 scenarios each)
-1. **Direct Causation** (X → M → Y): Mediated causation through intermediate variable
-2. **Confounding** (Z → X, Z → Y): Spurious correlation
-3. **Reverse Causation** (Y → X): Correlation exists but direction is wrong
+**3 causal structures** (5 scenarios each = 15 per variable type, 30 total):
+1. **Direct Causation** (X → M → Y) — ground truth: yes, correlation implies causation
+2. **Confounding** (Z → X, Z → Y) — ground truth: no, spurious correlation
+3. **Reverse Causation** (Y → X) — ground truth: no, direction is reversed
+
+**3 prompt conditions:**
+- **Neutral** — presents correlation data only, asks if X causes Y
+- **Structure-given** — provides the true DAG alongside correlation data
+- **Experiment-stated** — frames data as from a randomized controlled experiment
+
+**2 variable types:**
+- **Marketing** — domain-specific names (ad_spend, sales, etc.)
+- **Abstract** — generic names (A, B, C / X1, Y1, etc.)
+
+**Exclusion:** Experiment-stated × confounding combinations are excluded (RCTs eliminate confounding by design), yielding 80 test cases per model.
 
 ### Models Tested
-- **Phi-3 Mini** (3.8B params, local via Ollama)
-- Future: Llama 3.1 8B, Mistral 7B, Qwen 2.5 7B
+
+| Model | Type | Parameters |
+|---|---|---|
+| Llama 3.1 8B Instruct | Open-source (HuggingFace API) | 8B |
+| Claude Haiku 4.5 | Anthropic API | — |
+| Claude Sonnet 4.5 | Anthropic API | — |
+| Claude Opus 4.5 | Anthropic API | — |
+
+Additional models defined but not yet run: Gemma 2 9B, Qwen 2.5 7B.
 
 ### Methodology
-- Zero-shot prompting only
-- Binary evaluation (correct/incorrect causal identification)
-- 15 scenarios per model
+- Zero-shot prompting with correlation statistics (no few-shot examples)
+- Temperature: 0.0 (deterministic inference)
+- Max tokens: 1024
+- Binary evaluation: correct/incorrect against known ground truth
 
 ## Setup
 
 ### Prerequisites
-- WSL2 with Ubuntu
 - Python 3.12+
-- uv (Python package manager)
-- Ollama (for local models)
+- [uv](https://docs.astral.sh/uv/) (Python package manager)
+- API keys: `HF_TOKEN` (HuggingFace) and `ANTHROPIC_API_KEY` in a `.env` file
 
 ### Installation
 
@@ -51,36 +90,32 @@ cd thesis_causal_llm
 # Install dependencies with uv
 uv sync
 
-# Install and start Ollama
-curl -fsSL https://ollama.com/install.sh | sh
-ollama serve &
-
-# Pull models (start with smallest)
-ollama pull phi3:mini          # 3.8B params, 2.3GB RAM
-# ollama pull llama3.1:8b      # Requires 8GB WSL memory
-# ollama pull mistral:7b
-# ollama pull qwen2.5:7b
-```
-
-**Note:** If using WSL with limited RAM, start with `phi3:mini`. To use larger models, increase WSL memory in `.wslconfig`:
-```ini
-[wsl2]
-memory=8GB
+# Create .env file with API keys
+echo "HF_TOKEN=your_token_here" >> .env
+echo "ANTHROPIC_API_KEY=your_key_here" >> .env
 ```
 
 ## Usage
 
 ```bash
-# Generate DAG-based scenarios (already done, but reproducible)
+# Generate the 30 synthetic scenarios (writes to data/scenarios.json)
 uv run python -m thesis_causal_llm.generate_scenarios
 
-# Test single scenario
-uv run python -m thesis_causal_llm.test_single
-
-# Run full experiment (15 scenarios, ~15 minutes)
+# Run the full experiment across all scenarios, models, and prompt conditions
 uv run python -m thesis_causal_llm.run_experiment
 
-# Results saved to data/results/results_TIMESTAMP.csv
+# Test a single scenario with a specific prompt condition
+uv run python -m thesis_causal_llm.test_single --scenario direct_1 --model claude-haiku --prompt-condition neutral
+
+# Filter by variable type
+uv run python -m thesis_causal_llm.test_single -s direct_1 -m claude-haiku -vt marketing
+
+# List available scenarios and models
+uv run python -m thesis_causal_llm.test_single --list-scenarios
+uv run python -m thesis_causal_llm.test_single --list-models
+
+# Run the analysis notebook
+uv run jupyter notebook notebooks/analysis.ipynb
 ```
 
 ## Project Structure
@@ -88,43 +123,20 @@ uv run python -m thesis_causal_llm.run_experiment
 ```
 thesis-causal-llm/
 ├── data/
-│   ├── scenarios.json          # 15 marketing scenarios
-│   └── results/                # Experiment outputs
-├── src/
-│   ├── models.py               # LLM interface
-│   └── run_experiment.py       # Main runner
-├── tests/
+│   ├── scenarios.json          # 30 synthetic scenarios (15 marketing + 15 abstract)
+│   └── results/                # Experiment output CSVs
+├── src/thesis_causal_llm/
+│   ├── generate_scenarios.py   # DAG-based synthetic data generation
+│   ├── models.py               # LLM abstraction (HuggingFace + Anthropic APIs)
+│   ├── run_experiment.py       # Main experiment runner
+│   └── test_single.py          # CLI tool for debugging individual scenarios
 ├── notebooks/
-│   └── analysis.ipynb          # Results analysis
+│   └── analysis.ipynb          # Results analysis and visualisation
+├── tests/
 ├── pyproject.toml
+├── CLAUDE.md
 └── README.md
 ```
-
-## Results (Phi-3 Mini)
-
-**Overall Accuracy: 66.67% (10/15)**
-
-| Causal Structure    | Accuracy | Pattern |
-|---------------------|----------|---------|
-| Confounding         | 100% (5/5) | ✅ Correctly rejects spurious correlation |
-| Reverse Causation   | 100% (5/5) | ✅ Correctly rejects wrong causal direction |
-| Direct Causation    | 0% (0/5)   | ❌ Incorrectly rejects genuine causation |
-
-**Key Insight:** Model has learned "correlation ≠ causation, always doubt" heuristic, leading to:
-- High precision (no false positives)
-- Low recall (misses all true causal relationships)
-
-See `data/results/results_20260203_115706.csv` for detailed responses.
-
-## Next Steps
-
-1. **Add more models** (Llama 3.1 8B, Mistral 7B, Qwen 2.5 7B) - requires 8GB WSL memory
-2. **Test prompt variations:**
-   - Add "consider mediated causation" hint
-   - Few-shot examples with correct direct causation cases
-3. **Human baseline:** Test if humans also struggle with mediated causation
-4. **Analysis notebook:** Visualize confusion matrices and response patterns
-5. **CI/CD:** Add GitHub Actions for automated testing
 
 ## License
 
