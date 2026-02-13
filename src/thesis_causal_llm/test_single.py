@@ -12,38 +12,61 @@ from .run_experiment import (
     create_prompt,
     parse_response,
     evaluate_answer,
+    PROMPT_CONDITIONS,
 )
 
 
-def test_single_scenario(scenario_id: str | None = None, model_filter: str | None = None):
+def test_single_scenario(
+    scenario_id: str | None = None,
+    model_filter: str | None = None,
+    prompt_condition: str = "neutral",
+    variable_type: str | None = None,
+):
     """
     Test a single scenario against available models.
 
     Args:
         scenario_id: Specific scenario ID to test (default: first scenario)
         model_filter: Test only this specific model
+        prompt_condition: Prompt condition to use (neutral, structure_given, experiment_stated)
+        variable_type: Filter scenarios by variable type (marketing or abstract)
     """
     # Load scenarios
     scenarios = load_scenarios()
+
+    # Filter by variable type if specified
+    if variable_type:
+        scenarios = [s for s in scenarios if s.get("variable_type") == variable_type]
+        if not scenarios:
+            print(f"Error: No scenarios with variable_type '{variable_type}'.")
+            sys.exit(1)
 
     # Select scenario
     if scenario_id:
         scenario = next((s for s in scenarios if s["id"] == scenario_id), None)
         if not scenario:
+            all_scenarios = load_scenarios()
             print(f"Error: Scenario '{scenario_id}' not found.")
-            print(f"Available scenarios: {[s['id'] for s in scenarios]}")
+            print(f"Available scenarios: {[s['id'] for s in all_scenarios]}")
             sys.exit(1)
     else:
         scenario = scenarios[0]
+
+    # Validate prompt condition vs structure
+    if prompt_condition == "experiment_stated" and scenario["structure"] == "confounding":
+        print(f"Warning: experiment_stated × confounding is excluded by design (RCTs eliminate confounding).")
+        print("Running anyway for inspection purposes.\n")
 
     print("=" * 70)
     print(f"SCENARIO: {scenario['id']}")
     print(f"Structure: {scenario['structure']}")
     print(f"DAG: {scenario['dag']}")
+    print(f"Variable type: {scenario.get('variable_type', 'marketing')}")
+    print(f"Prompt condition: {prompt_condition}")
     print("=" * 70)
 
     # Create prompt
-    prompt = create_prompt(scenario)
+    prompt = create_prompt(scenario, prompt_condition)
     print("\n--- PROMPT ---")
     print(prompt)
     print("-" * 70)
@@ -89,12 +112,13 @@ def list_scenarios():
     """Print all available scenarios."""
     scenarios = load_scenarios()
     print("\nAvailable scenarios:")
-    print("-" * 60)
-    print(f"{'ID':<20} {'Structure':<20} {'Ground Truth'}")
-    print("-" * 60)
+    print("-" * 75)
+    print(f"{'ID':<25} {'Structure':<20} {'Var Type':<12} {'Ground Truth'}")
+    print("-" * 75)
     for s in scenarios:
         gt = "Yes (causal)" if s["ground_truth"] else "No (not causal)"
-        print(f"{s['id']:<20} {s['structure']:<20} {gt}")
+        vt = s.get("variable_type", "marketing")
+        print(f"{s['id']:<25} {s['structure']:<20} {vt:<12} {gt}")
 
 
 def list_models():
@@ -129,6 +153,18 @@ def main():
         action="store_true",
         help="List all available models"
     )
+    parser.add_argument(
+        "--prompt-condition", "-pc",
+        choices=PROMPT_CONDITIONS,
+        default="neutral",
+        help="Prompt condition (default: neutral)"
+    )
+    parser.add_argument(
+        "--variable-type", "-vt",
+        choices=["marketing", "abstract"],
+        default=None,
+        help="Filter scenarios by variable type"
+    )
 
     args = parser.parse_args()
 
@@ -140,7 +176,7 @@ def main():
         list_models()
         return
 
-    test_single_scenario(args.scenario, args.model)
+    test_single_scenario(args.scenario, args.model, args.prompt_condition, args.variable_type)
 
 
 if __name__ == "__main__":

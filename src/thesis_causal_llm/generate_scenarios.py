@@ -22,7 +22,7 @@ import numpy as np
 RANDOM_SEED = 42
 
 # Marketing domain variable sets for realistic scenarios
-VARIABLE_SETS = {
+MARKETING_VARIABLE_SETS = {
     "direct": [
         {"x": "ad_spend", "y": "sales", "m": "website_traffic"},
         {"x": "email_opens", "y": "purchases", "m": "click_throughs"},
@@ -46,6 +46,31 @@ VARIABLE_SETS = {
     ],
 }
 
+# Abstract variable sets (generic names to test reasoning without domain cues)
+ABSTRACT_VARIABLE_SETS = {
+    "direct": [
+        {"x": "A", "y": "B", "m": "C"},
+        {"x": "X1", "y": "Y1", "m": "M1"},
+        {"x": "P", "y": "Q", "m": "R"},
+        {"x": "V1", "y": "V2", "m": "V3"},
+        {"x": "alpha", "y": "beta", "m": "gamma"},
+    ],
+    "confounding": [
+        {"x": "A", "y": "B", "z": "C"},
+        {"x": "X1", "y": "Y1", "z": "Z1"},
+        {"x": "P", "y": "Q", "z": "R"},
+        {"x": "V1", "y": "V2", "z": "V3"},
+        {"x": "alpha", "y": "beta", "z": "gamma"},
+    ],
+    "reverse": [
+        {"x": "A", "y": "B"},
+        {"x": "X1", "y": "Y1"},
+        {"x": "P", "y": "Q"},
+        {"x": "V1", "y": "V2"},
+        {"x": "alpha", "y": "beta"},
+    ],
+}
+
 
 @dataclass
 class Scenario:
@@ -54,6 +79,7 @@ class Scenario:
     structure: str
     dag: str
     variables: dict[str, str]
+    variable_type: str  # "marketing" or "abstract"
     data_summary: dict
     question: str
     ground_truth: bool
@@ -164,6 +190,7 @@ def compute_correlation(a: np.ndarray, b: np.ndarray) -> float:
 def create_direct_scenario(
     scenario_num: int,
     variables: dict[str, str],
+    variable_type: str,
     n_samples: int = 100
 ) -> Scenario:
     """Create a direct causation scenario."""
@@ -173,16 +200,19 @@ def create_direct_scenario(
     m_name = variables["m"]
     y_name = variables["y"]
 
+    type_prefix = "abs_" if variable_type == "abstract" else ""
+
     return Scenario(
-        id=f"direct_{scenario_num}",
+        id=f"{type_prefix}direct_{scenario_num}",
         structure="direct_causation",
         dag=f"{x_name} → {m_name} → {y_name}",
         variables=variables,
+        variable_type=variable_type,
         data_summary={
             "n_samples": n_samples,
-            f"corr_{x_name}_{y_name}": compute_correlation(x, y),
-            f"corr_{x_name}_{m_name}": compute_correlation(x, m),
-            f"corr_{m_name}_{y_name}": compute_correlation(m, y),
+            f"corr_{x_name}__{y_name}": compute_correlation(x, y),
+            f"corr_{x_name}__{m_name}": compute_correlation(x, m),
+            f"corr_{m_name}__{y_name}": compute_correlation(m, y),
         },
         question=f"Given these correlations, does {x_name} cause {y_name}?",
         ground_truth=True,
@@ -194,6 +224,7 @@ def create_direct_scenario(
 def create_confounding_scenario(
     scenario_num: int,
     variables: dict[str, str],
+    variable_type: str,
     n_samples: int = 100
 ) -> Scenario:
     """Create a confounding scenario."""
@@ -203,16 +234,19 @@ def create_confounding_scenario(
     y_name = variables["y"]
     z_name = variables["z"]
 
+    type_prefix = "abs_" if variable_type == "abstract" else ""
+
     return Scenario(
-        id=f"confounding_{scenario_num}",
+        id=f"{type_prefix}confounding_{scenario_num}",
         structure="confounding",
         dag=f"{z_name} → {x_name}, {z_name} → {y_name}",
         variables=variables,
+        variable_type=variable_type,
         data_summary={
             "n_samples": n_samples,
-            f"corr_{x_name}_{y_name}": compute_correlation(x, y),
-            f"corr_{z_name}_{x_name}": compute_correlation(z, x),
-            f"corr_{z_name}_{y_name}": compute_correlation(z, y),
+            f"corr_{x_name}__{y_name}": compute_correlation(x, y),
+            f"corr_{z_name}__{x_name}": compute_correlation(z, x),
+            f"corr_{z_name}__{y_name}": compute_correlation(z, y),
         },
         question=f"Given these correlations, does {x_name} cause {y_name}?",
         ground_truth=False,
@@ -224,6 +258,7 @@ def create_confounding_scenario(
 def create_reverse_scenario(
     scenario_num: int,
     variables: dict[str, str],
+    variable_type: str,
     n_samples: int = 100
 ) -> Scenario:
     """Create a reverse causation scenario."""
@@ -232,14 +267,17 @@ def create_reverse_scenario(
     x_name = variables["x"]
     y_name = variables["y"]
 
+    type_prefix = "abs_" if variable_type == "abstract" else ""
+
     return Scenario(
-        id=f"reverse_{scenario_num}",
+        id=f"{type_prefix}reverse_{scenario_num}",
         structure="reverse_causation",
         dag=f"{y_name} → {x_name}",
         variables=variables,
+        variable_type=variable_type,
         data_summary={
             "n_samples": n_samples,
-            f"corr_{x_name}_{y_name}": compute_correlation(x, y),
+            f"corr_{x_name}__{y_name}": compute_correlation(x, y),
         },
         question=f"Given this correlation, does {x_name} cause {y_name}?",
         ground_truth=False,
@@ -250,7 +288,10 @@ def create_reverse_scenario(
 
 def generate_all_scenarios(n_samples: int = 100) -> list[dict]:
     """
-    Generate all 15 scenarios (5 per structure type).
+    Generate all 30 scenarios (5 per structure × 2 variable types).
+
+    Each of the 15 base scenarios gets a marketing and an abstract twin,
+    using the same random seed so both share identical data distributions.
 
     Args:
         n_samples: Number of data points per scenario
@@ -258,23 +299,26 @@ def generate_all_scenarios(n_samples: int = 100) -> list[dict]:
     Returns:
         List of scenario dictionaries
     """
-    set_seed(RANDOM_SEED)
     scenarios = []
 
-    # Direct causation scenarios
-    for i, variables in enumerate(VARIABLE_SETS["direct"], 1):
-        scenario = create_direct_scenario(i, variables, n_samples)
-        scenarios.append(scenario)
+    for var_type, var_sets in [("marketing", MARKETING_VARIABLE_SETS), ("abstract", ABSTRACT_VARIABLE_SETS)]:
+        # Reset seed for each variable type so data distributions match
+        set_seed(RANDOM_SEED)
 
-    # Confounding scenarios
-    for i, variables in enumerate(VARIABLE_SETS["confounding"], 1):
-        scenario = create_confounding_scenario(i, variables, n_samples)
-        scenarios.append(scenario)
+        # Direct causation scenarios
+        for i, variables in enumerate(var_sets["direct"], 1):
+            scenario = create_direct_scenario(i, variables, var_type, n_samples)
+            scenarios.append(scenario)
 
-    # Reverse causation scenarios
-    for i, variables in enumerate(VARIABLE_SETS["reverse"], 1):
-        scenario = create_reverse_scenario(i, variables, n_samples)
-        scenarios.append(scenario)
+        # Confounding scenarios
+        for i, variables in enumerate(var_sets["confounding"], 1):
+            scenario = create_confounding_scenario(i, variables, var_type, n_samples)
+            scenarios.append(scenario)
+
+        # Reverse causation scenarios
+        for i, variables in enumerate(var_sets["reverse"], 1):
+            scenario = create_reverse_scenario(i, variables, var_type, n_samples)
+            scenarios.append(scenario)
 
     # Convert to dictionaries
     return [
@@ -283,6 +327,7 @@ def generate_all_scenarios(n_samples: int = 100) -> list[dict]:
             "structure": s.structure,
             "dag": s.dag,
             "variables": s.variables,
+            "variable_type": s.variable_type,
             "data_summary": s.data_summary,
             "question": s.question,
             "ground_truth": s.ground_truth,
@@ -317,11 +362,13 @@ def main():
 
     # Print summary
     print("\nScenario Summary:")
-    print("-" * 40)
-    for structure in ["direct_causation", "confounding", "reverse_causation"]:
-        count = sum(1 for s in scenarios if s["structure"] == structure)
-        gt_true = sum(1 for s in scenarios if s["structure"] == structure and s["ground_truth"])
-        print(f"  {structure}: {count} scenarios (ground_truth=True: {gt_true})")
+    print("-" * 50)
+    for var_type in ["marketing", "abstract"]:
+        print(f"\n  [{var_type}]")
+        for structure in ["direct_causation", "confounding", "reverse_causation"]:
+            count = sum(1 for s in scenarios if s["structure"] == structure and s["variable_type"] == var_type)
+            gt_true = sum(1 for s in scenarios if s["structure"] == structure and s["variable_type"] == var_type and s["ground_truth"])
+            print(f"    {structure}: {count} scenarios (ground_truth=True: {gt_true})")
 
     print("\nSample scenario:")
     print(json.dumps(scenarios[0], indent=2))

@@ -41,40 +41,68 @@ def format_correlations(data_summary: dict) -> str:
 
     for key, value in data_summary.items():
         if key.startswith("corr_"):
-            # Convert corr_x_y to corr(X, Y) format
-            parts = key.replace("corr_", "").split("_")
-            if len(parts) >= 2:
-                var1 = parts[0]
-                var2 = "_".join(parts[1:])  # Handle multi-word variable names
-                lines.append(f"corr({var1}, {var2}) = {value}")
+            # Convert corr_var1__var2 to corr(var1, var2) format
+            # Uses __ as separator between variable names
+            raw = key[len("corr_"):]
+            parts = raw.split("__")
+            if len(parts) == 2:
+                lines.append(f"corr({parts[0]}, {parts[1]}) = {value}")
 
     return "\n".join(lines)
 
 
-def create_prompt(scenario: dict) -> str:
+PROMPT_CONDITIONS = ["neutral", "structure_given", "experiment_stated"]
+
+
+def create_prompt(scenario: dict, prompt_condition: str = "neutral") -> str:
     """
-    Create zero-shot prompt from scenario with correlation data.
+    Create prompt from scenario with correlation data under a given condition.
 
     Args:
         scenario: Dictionary containing scenario details
+        prompt_condition: One of "neutral", "structure_given", "experiment_stated"
 
     Returns:
         Formatted prompt string
     """
     correlations = format_correlations(scenario["data_summary"])
 
-    # Get variable names for context
     variables = scenario["variables"]
     x_var = variables["x"]
     y_var = variables["y"]
 
-    prompt = f"""You are given information about relationships between marketing variables.
+    if prompt_condition == "neutral":
+        prompt = f"""You are given data about relationships between variables.
 
 {correlations}
 
 Question: Does {x_var} cause {y_var}?
 
 Answer Yes or No, then explain briefly."""
+
+    elif prompt_condition == "structure_given":
+        dag = scenario["dag"]
+        prompt = f"""You are given data about relationships between variables.
+
+The true causal structure is: {dag}
+
+{correlations}
+
+Question: Does {x_var} cause {y_var}?
+
+Answer Yes or No, then explain briefly."""
+
+    elif prompt_condition == "experiment_stated":
+        prompt = f"""You are given data from a randomized controlled experiment where {x_var} was randomly assigned.
+
+{correlations}
+
+Question: Does {x_var} cause {y_var}?
+
+Answer Yes or No, then explain briefly."""
+
+    else:
+        raise ValueError(f"Unknown prompt condition: {prompt_condition}")
 
     return prompt
 
@@ -153,16 +181,28 @@ def run_experiment(output_dir: str | None = None):
     results_file = output_dir / f"results_{timestamp}.csv"
 
     fieldnames = [
-        "timestamp", "scenario_id", "structure", "dag", "model_name",
-        "prompt", "response", "predicted_answer", "ground_truth", "correct"
+        "timestamp", "scenario_id", "structure", "dag", "variable_type",
+        "prompt_condition", "model_name", "prompt", "response",
+        "predicted_answer", "ground_truth", "correct"
     ]
+
+    # Build list of (scenario, prompt_condition) pairs, skipping invalid combos
+    test_cases = []
+    for scenario in scenarios:
+        for condition in PROMPT_CONDITIONS:
+            # RCTs eliminate confounding by design — skip this combination
+            if condition == "experiment_stated" and scenario["structure"] == "confounding":
+                continue
+            test_cases.append((scenario, condition))
 
     # Run experiment
     results = []
-    total_queries = len(scenarios) * len(models)
+    total_queries = len(test_cases) * len(models)
 
-    print(f"Running experiment: {len(scenarios)} scenarios x {len(models)} models = {total_queries} queries")
-    print(f"Models: {', '.join(models)}\n")
+    print(f"Running experiment: {len(test_cases)} test cases x {len(models)} models = {total_queries} queries")
+    print(f"  Scenarios: {len(scenarios)} ({len([s for s in scenarios if s['variable_type'] == 'marketing'])} marketing + {len([s for s in scenarios if s['variable_type'] == 'abstract'])} abstract)")
+    print(f"  Prompt conditions: {', '.join(PROMPT_CONDITIONS)}")
+    print(f"  Models: {', '.join(models)}\n")
 
     with open(results_file, "w", newline="", encoding="utf-8") as f:
         writer = csv.DictWriter(f, fieldnames=fieldnames)
@@ -175,14 +215,14 @@ def run_experiment(output_dir: str | None = None):
                     llm = LLMInterface(model_name)
                 except Exception as e:
                     print(f"\nError initializing {model_name}: {e}")
-                    pbar.update(len(scenarios))
+                    pbar.update(len(test_cases))
                     continue
 
-                for scenario in scenarios:
-                    pbar.set_postfix(model=model_name, scenario=scenario["id"])
+                for scenario, condition in test_cases:
+                    pbar.set_postfix(model=model_name, scenario=scenario["id"], cond=condition)
 
                     # Create prompt and query model
-                    prompt = create_prompt(scenario)
+                    prompt = create_prompt(scenario, condition)
 
                     try:
                         response = llm.query(prompt)
@@ -198,6 +238,8 @@ def run_experiment(output_dir: str | None = None):
                             "scenario_id": scenario["id"],
                             "structure": scenario["structure"],
                             "dag": scenario["dag"],
+                            "variable_type": scenario.get("variable_type", "marketing"),
+                            "prompt_condition": condition,
                             "model_name": model_name,
                             "prompt": prompt,
                             "response": parsed["raw_response"],
@@ -211,7 +253,7 @@ def run_experiment(output_dir: str | None = None):
                         f.flush()  # Save incrementally
 
                     except Exception as e:
-                        print(f"\nError querying {model_name} on {scenario['id']}: {e}")
+                        print(f"\nError querying {model_name} on {scenario['id']} ({condition}): {e}")
 
                     pbar.update(1)
 
@@ -222,14 +264,14 @@ def run_experiment(output_dir: str | None = None):
 
 
 def print_summary(results: list):
-    """Print accuracy summary by model and structure."""
+    """Print accuracy summary by model, structure, prompt condition, and variable type."""
     if not results:
         print("No results to summarize")
         return
 
-    print("\n" + "=" * 60)
+    print("\n" + "=" * 70)
     print("RESULTS SUMMARY")
-    print("=" * 60)
+    print("=" * 70)
 
     # Overall accuracy
     correct = sum(1 for r in results if r["correct"])
@@ -237,59 +279,68 @@ def print_summary(results: list):
     accuracy = correct / total if total > 0 else 0
     print(f"\nOverall Accuracy: {accuracy:.2%} ({correct}/{total})")
 
+    # Helper to compute accuracy for a filtered subset
+    def _acc(subset):
+        if not subset:
+            return "N/A"
+        c = sum(1 for r in subset if r["correct"])
+        return f"{c / len(subset):5.1%} ({c}/{len(subset)})"
+
     # By model
     print("\nAccuracy by Model:")
     print("-" * 40)
-    models = {}
-    for r in results:
-        model = r["model_name"]
-        if model not in models:
-            models[model] = {"correct": 0, "total": 0}
-        models[model]["total"] += 1
-        if r["correct"]:
-            models[model]["correct"] += 1
-
-    for model, stats in sorted(models.items()):
-        acc = stats["correct"] / stats["total"]
-        print(f"  {model:20} {acc:6.1%} ({stats['correct']}/{stats['total']})")
+    model_names = sorted({r["model_name"] for r in results})
+    for model in model_names:
+        subset = [r for r in results if r["model_name"] == model]
+        print(f"  {model:20} {_acc(subset)}")
 
     # By causal structure
     print("\nAccuracy by Causal Structure:")
     print("-" * 40)
-    structures = {}
-    for r in results:
-        struct = r["structure"]
-        if struct not in structures:
-            structures[struct] = {"correct": 0, "total": 0}
-        structures[struct]["total"] += 1
-        if r["correct"]:
-            structures[struct]["correct"] += 1
+    struct_names = sorted({r["structure"] for r in results})
+    for struct in struct_names:
+        subset = [r for r in results if r["structure"] == struct]
+        print(f"  {struct:20} {_acc(subset)}")
 
-    for struct, stats in sorted(structures.items()):
-        acc = stats["correct"] / stats["total"]
-        print(f"  {struct:20} {acc:6.1%} ({stats['correct']}/{stats['total']})")
+    # By prompt condition
+    print("\nAccuracy by Prompt Condition:")
+    print("-" * 40)
+    cond_names = sorted({r["prompt_condition"] for r in results})
+    for cond in cond_names:
+        subset = [r for r in results if r["prompt_condition"] == cond]
+        print(f"  {cond:20} {_acc(subset)}")
 
-    # Cross-tabulation: Model x Structure
-    print("\nModel x Structure Breakdown:")
-    print("-" * 60)
+    # By variable type
+    print("\nAccuracy by Variable Type:")
+    print("-" * 40)
+    var_types = sorted({r["variable_type"] for r in results})
+    for vt in var_types:
+        subset = [r for r in results if r["variable_type"] == vt]
+        print(f"  {vt:20} {_acc(subset)}")
 
-    # Header
-    struct_names = sorted(structures.keys())
-    header = f"{'Model':20}" + "".join(f"{s[:12]:>14}" for s in struct_names)
-    print(header)
+    # Cross-tabulation: Model x Structure x Prompt Condition
+    print("\nModel x Structure x Prompt Condition Breakdown:")
+    print("-" * 70)
 
-    for model in sorted(models.keys()):
-        row = f"{model:20}"
-        for struct in struct_names:
-            model_struct = [r for r in results if r["model_name"] == model and r["structure"] == struct]
-            if model_struct:
-                acc = sum(1 for r in model_struct if r["correct"]) / len(model_struct)
-                row += f"{acc:13.1%} "
-            else:
-                row += f"{'N/A':>14}"
-        print(row)
+    for model in model_names:
+        print(f"\n  {model}:")
+        header = f"    {'':20}" + "".join(f"{s[:12]:>14}" for s in struct_names)
+        print(header)
+        for cond in cond_names:
+            row = f"    {cond:20}"
+            for struct in struct_names:
+                subset = [r for r in results
+                          if r["model_name"] == model
+                          and r["structure"] == struct
+                          and r["prompt_condition"] == cond]
+                if subset:
+                    acc = sum(1 for r in subset if r["correct"]) / len(subset)
+                    row += f"{acc:13.1%} "
+                else:
+                    row += f"{'—':>14}"
+            print(row)
 
-    print("=" * 60 + "\n")
+    print("=" * 70 + "\n")
 
 
 if __name__ == "__main__":
