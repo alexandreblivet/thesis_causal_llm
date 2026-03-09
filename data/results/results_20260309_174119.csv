@@ -1,0 +1,3155 @@
+timestamp,scenario_id,structure,dag,variable_type,prompt_condition,model_name,prompt,response,predicted_answer,ground_truth,correct
+2026-03-09T17:41:21.754765,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation (0.79) between ad_spend and sales, correlation does not establish causation. Several alternative explanations are plausible:
+
+1. **Confounding variable**: website_traffic appears to be a common cause. Notice that:
+   - ad_spend correlates strongly with website_traffic (0.9)
+   - website_traffic correlates strongly with sales (0.85)
+   - This suggests website_traffic may be the actual driver of sales, with ad_spend merely increasing traffic as a side effect
+
+2. **Reverse causation**: Companies with higher sales may have more budget to spend on advertising, rather than ad spending causing sales.
+
+3. **Other unmeasured factors**: Market conditions, seasonality, product quality, or competitor activity could drive both variables.
+
+To establish causation, you would need experimental evidence (randomized controlled trials) or stronger causal inference methods that account for confounders.",no,True,False
+2026-03-09T17:41:23.940486,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: ad_spend → website_traffic → sales
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While ad_spend and sales are strongly correlated (r = 0.79), ad_spend does **not directly cause** sales according to the true causal structure provided.
+
+Instead, the causal pathway is:
+**ad_spend → website_traffic → sales**
+
+Ad_spend causes sales *indirectly* through website_traffic, which is the direct causal mechanism. The high correlation between ad_spend and sales exists because:
+1. Ad_spend causes website_traffic (r = 0.9)
+2. Website_traffic causes sales (r = 0.85)
+3. This creates an indirect causal chain
+
+If you were to control for (hold constant) website_traffic, the direct effect of ad_spend on sales would disappear or become negligible. This is the key distinction between correlation and direct causation.",no,True,False
+2026-03-09T17:41:27.253474,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where ad_spend was randomly assigned.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: Yes
+
+## Explanation:
+
+Since **ad_spend was randomly assigned** in this experiment, we can make causal claims about its effects.
+
+The key evidence:
+
+1. **Random assignment eliminates confounding**: By randomly assigning ad_spend, the experiment breaks any spurious correlations that might exist in observational data. This is the gold standard for causal inference.
+
+2. **Strong correlation (0.79)**: The correlation between ad_spend and sales is substantial and positive, consistent with a causal effect.
+
+3. **The mediation pathway is plausible but doesn't undermine causality**: The even stronger correlation between ad_spend and website_traffic (0.9) suggests that ad_spend may work *through* increased website traffic to boost sales. This is a causal mechanism, not a reason to doubt the causal effect.
+
+**Important caveat**: The causal effect may be *partially* or *fully* mediated through website_traffic, but ad_spend still causes sales (either directly or indirectly through this pathway). The randomization ensures we can confidently say the relationship is causal.",yes,True,True
+2026-03-09T17:41:32.616661,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation (0.83) between email_opens and purchases, correlation does not imply causation. Several alternative explanations are plausible:
+
+1. **Common cause**: A third variable (e.g., customer engagement level, product quality, or marketing campaign quality) could drive both email opens and purchases independently.
+
+2. **Reverse causation**: Customers who are already inclined to purchase might be more engaged with emails, rather than opens causing purchases.
+
+3. **Mediation**: The relationship appears to be largely mediated through click_throughs. Notice that:
+   - corr(email_opens, click_throughs) = 0.91
+   - corr(click_throughs, purchases) = 0.89
+   
+   This suggests click_throughs may be the actual causal mechanism, not email_opens directly.
+
+To establish causation, you would need experimental evidence (e.g., randomized controlled trials where some customers receive emails and others don't) or stronger causal inference methods.",no,True,False
+2026-03-09T17:41:35.232589,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: email_opens → click_throughs → purchases
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While email_opens and purchases are strongly correlated (r = 0.83), email_opens does **not directly cause** purchases according to the true causal structure.
+
+Instead, the causal chain is:
+**email_opens → click_throughs → purchases**
+
+Email opens only influence purchases *indirectly* through click-throughs. The high correlation between email_opens and purchases exists because:
+1. Email opens cause click-throughs (r = 0.91)
+2. Click-throughs cause purchases (r = 0.89)
+3. This creates a transitive correlation between email_opens and purchases
+
+This is an important distinction: **correlation does not imply direct causation**. If you intervened to increase email_opens without affecting click-throughs, purchases would not increase. The actual causal mechanism requires the intermediate step of click-throughs.",no,True,False
+2026-03-09T17:41:38.177951,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where email_opens was randomly assigned.
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Even though this is a randomized controlled experiment (which normally supports causal inference), the extremely high correlations suggest **email_opens does not directly cause purchases**.
+
+Here's why:
+
+1. **email_opens → click_throughs → purchases**: The correlation pattern shows:
+   - email_opens → click_throughs: 0.91
+   - click_throughs → purchases: 0.89
+   - email_opens → purchases: 0.83
+
+2. **Mediation**: The relationship between email_opens and purchases appears to be *mediated* by click_throughs. The correlation drops from 0.91 (opens to clicks) to 0.83 (opens to purchases), suggesting click_throughs are the actual mechanism driving purchases.
+
+3. **Causal pathway**: The data is consistent with: **email_opens → click_throughs → purchases**, not a direct effect of opens on purchases.
+
+**Conclusion**: While email_opens may be randomly assigned, it appears to influence purchases *through* click_throughs, not directly. The causal mechanism runs through user engagement (clicks), not merely opening emails.",no,True,False
+2026-03-09T17:41:41.172399,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation (0.85) between discount_rate and conversion, the correlation data alone cannot establish causation. Here's why:
+
+1. **Confounding variable**: The extremely high correlation between discount_rate and cart_additions (0.93), combined with the high correlation between cart_additions and conversion (0.9), suggests that **cart_additions may be the actual causal driver**.
+
+2. **Alternative explanation**: It's plausible that:
+   - Higher discounts → more cart additions (0.93 correlation)
+   - More cart additions → higher conversion (0.9 correlation)
+   - Therefore, the discount_rate → conversion relationship may be **mediated through cart_additions** rather than direct
+
+3. **Correlation ≠ Causation**: Strong correlation alone cannot prove causation without:
+   - Experimental evidence (randomized controlled trials)
+   - Temporal ordering confirmation
+   - Elimination of alternative explanations
+
+To establish causation, you would need experimental data (e.g., randomized A/B testing of different discount rates) or causal inference methods that account for potential mediating variables.",no,True,False
+2026-03-09T17:41:44.333328,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: discount_rate → cart_additions → conversion
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While discount_rate and conversion are highly correlated (0.85), discount_rate does **not directly cause** conversion according to the true causal structure.
+
+Instead, the causal pathway is:
+**discount_rate → cart_additions → conversion**
+
+The high correlation between discount_rate and conversion exists, but it is **mediated entirely through cart_additions**. Discount_rate influences conversion only *indirectly* by first affecting cart_additions, which then affects conversion.
+
+This is a classic case of **confounding through a mediator**. The strong correlations are consistent with this indirect causal structure:
+- discount_rate strongly predicts cart_additions (0.93)
+- cart_additions strongly predicts conversion (0.90)
+- These combine to produce a strong correlation between the endpoints (0.85)
+
+If you controlled for (or stratified by) cart_additions, the direct association between discount_rate and conversion would disappear.",no,True,False
+2026-03-09T17:41:46.977077,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where discount_rate was randomly assigned.
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between discount_rate and conversion (0.85), this correlation is **entirely mediated by cart_additions**.
+
+Here's why:
+
+1. **The causal chain**: discount_rate → cart_additions → conversion
+   - discount_rate has a very strong effect on cart_additions (0.93)
+   - cart_additions has a very strong effect on conversion (0.9)
+   - These two effects together produce the observed 0.85 correlation between discount_rate and conversion
+
+2. **The key insight**: If we were to control for cart_additions (i.e., compare conversions among customers with the same number of cart additions but different discount rates), the effect of discount_rate would disappear or become negligible.
+
+3. **What actually causes conversion**: The data suggests that cart_additions is the direct cause of conversion, while discount_rate only influences conversion *indirectly* by increasing cart additions.
+
+**In causal terms**: discount_rate is a cause of cart_additions, which is a cause of conversion, but discount_rate is not a direct cause of conversion itself.",no,True,False
+2026-03-09T17:41:49.354985,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation (0.81) between content_quality and engagement, correlation does not establish causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: High engagement might lead to content being perceived as higher quality, rather than quality causing engagement.
+
+2. **Common cause**: Both variables could be driven by a third factor. For example, the data suggests time_on_page is strongly correlated with both (0.91 and 0.84). Users who spend more time on a page might rate content as higher quality *and* show more engagement—with time_on_page being the actual driver.
+
+3. **Confounding variables**: Other unmeasured factors (topic relevance, user interest, design, etc.) could influence both variables independently.
+
+To establish causation, you would need experimental evidence (randomized controlled trials manipulating content quality) or stronger causal inference methods, not just observational correlations.",no,True,False
+2026-03-09T17:41:51.505639,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: content_quality → time_on_page → engagement
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","# Answer: Yes
+
+## Explanation
+
+Content quality does cause engagement, but **indirectly** through time_on_page.
+
+The causal structure shows: **content_quality → time_on_page → engagement**
+
+This means:
+- Content quality directly influences how long users spend on the page
+- Time on page then directly influences engagement
+- Content quality's effect on engagement is **mediated** by time on page
+
+The high correlations support this chain:
+- Strong correlation between content_quality and time_on_page (0.91) ✓
+- Strong correlation between time_on_page and engagement (0.84) ✓
+- Resulting correlation between content_quality and engagement (0.81) ✓
+
+So yes, content quality causes engagement—just not directly. It works through the mechanism of increasing time spent on the page, which then drives engagement.",yes,True,True
+2026-03-09T17:41:53.576151,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where content_quality was randomly assigned.
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","# Answer: Yes
+
+## Explanation:
+
+Since **content_quality was randomly assigned** in this experiment, we can infer causality. Random assignment eliminates confounding—it ensures content_quality is independent of other variables that might affect engagement.
+
+The strong correlation (0.81) between content_quality and engagement, combined with random assignment, supports a causal interpretation: higher content quality causes higher engagement.
+
+**Note on the third correlation:** The correlation between time_on_page and engagement (0.84) is interesting but doesn't change the causal conclusion. Time_on_page may be a *mechanism* through which content_quality affects engagement (i.e., better content → more time spent → more engagement), but this doesn't negate the causal effect of content_quality on engagement.",yes,True,True
+2026-03-09T17:41:55.962338,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While personalization shows a strong positive correlation with retention (r = 0.83), correlation does not establish causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Retained users might be more engaged, making it easier/more worthwhile for the system to personalize for them.
+
+2. **Common cause**: User satisfaction appears to be a strong mediator here. Notice that:
+   - personalization → user_satisfaction (r = 0.92)
+   - user_satisfaction → retention (r = 0.88)
+   
+   User satisfaction could be the primary driver of retention, with personalization merely contributing to satisfaction.
+
+3. **Confounding variables**: Unmeasured factors (e.g., product quality, user demographics, or engagement level) could drive both personalization and retention independently.
+
+To establish causation, you would need experimental evidence (e.g., randomized controlled trials comparing personalized vs. non-personalized experiences while controlling for other factors).",no,True,False
+2026-03-09T17:41:58.279396,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: personalization → user_satisfaction → retention
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While personalization and retention are strongly correlated (r = 0.83), personalization does **not directly cause** retention according to the true causal structure.
+
+Instead, the causal pathway is:
+**personalization → user_satisfaction → retention**
+
+This means:
+- Personalization causes user satisfaction (r = 0.92)
+- User satisfaction causes retention (r = 0.88)
+- The correlation between personalization and retention is **indirect**, mediated entirely through user satisfaction
+
+If you controlled for (held constant) user satisfaction, the direct effect of personalization on retention would disappear. The high correlation between personalization and retention exists only because personalization influences the mediator (user satisfaction), which in turn influences retention.
+
+This is an important distinction in causal inference: **correlation does not imply direct causation**, especially when there are intermediate variables in the causal chain.",no,True,False
+2026-03-09T17:42:01.210920,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where personalization was randomly assigned.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While personalization is strongly correlated with retention (r = 0.83), the high correlation between user_satisfaction and both variables suggests **user satisfaction is a confounder or mediator** that explains much of this relationship.
+
+Key observations:
+- personalization ↔ user_satisfaction: r = 0.92 (very strong)
+- user_satisfaction ↔ retention: r = 0.88 (very strong)
+- personalization ↔ retention: r = 0.83 (strong, but weaker than the above)
+
+**The causal story likely is:**
+personalization → user_satisfaction → retention
+
+Even though this is a randomized experiment (which normally supports causal claims), the correlation pattern suggests personalization's effect on retention operates *through* user satisfaction, not directly. The direct causal effect of personalization on retention is likely smaller than the raw correlation indicates.
+
+To definitively answer whether personalization *directly* causes retention, you would need to:
+- Conduct mediation analysis
+- Examine the direct effect after controlling for user_satisfaction
+- Check if the treatment effect on retention persists when satisfaction is held constant",no,True,False
+2026-03-09T17:42:06.657143,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While ad_spend and sales are strongly correlated (0.88), the data does not establish causation. The key issue is **confounding**: seasonality is highly correlated with both variables:
+
+- corr(seasonality, ad_spend) = 0.94
+- corr(seasonality, sales) = 0.93
+
+This suggests that **seasonality is driving both ad_spend and sales**. Companies likely increase advertising spending during peak seasons, and sales naturally increase during those same seasons—not necessarily because of the ad spending itself.
+
+The strong correlation between ad_spend and sales could be entirely spurious, mediated through seasonality. To establish causation, you would need:
+- Experimental design (randomized ad spend allocation)
+- Causal inference methods (controlling for seasonality, instrumental variables, etc.)
+- Temporal evidence (ad spend changes *before* sales changes)
+
+**Correlation ≠ Causation**, especially with confounding variables present.",no,False,True
+2026-03-09T17:42:09.336464,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: seasonality → ad_spend, seasonality → sales
+
+n = 100 observations
+corr(ad_spend, sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The high correlation between ad_spend and sales (0.88) does not indicate a causal relationship. Instead, both variables are caused by a common cause: **seasonality**.
+
+This is a classic case of **confounding**. The causal structure shows:
+- Seasonality → ad_spend
+- Seasonality → sales
+
+The strong correlations we observe are explained by the fact that:
+- When seasonality is high, companies increase ad_spend
+- When seasonality is high, sales naturally increase
+- This creates a spurious correlation between ad_spend and sales
+
+To determine whether ad_spend actually causes sales, we would need to control for seasonality (e.g., through regression or stratification). Once seasonality is held constant, the correlation between ad_spend and sales would likely be much weaker or disappear entirely, revealing that the original correlation was due to confounding rather than causation.",no,False,True
+2026-03-09T17:42:12.194756,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(social_posts, revenue) = 0.78
+corr(product_launches, social_posts) = 0.9
+corr(product_launches, revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between social_posts and revenue (0.78), the correlation data alone cannot establish causation. 
+
+The key insight is that **product_launches appears to be a confounder**:
+
+- product_launches correlates very strongly with social_posts (0.9)
+- product_launches correlates very strongly with revenue (0.91)
+- social_posts correlates with revenue (0.78)
+
+This pattern suggests that **product_launches is driving both social_posts and revenue**, rather than social_posts causing revenue. When companies launch products, they naturally:
+1. Increase social media activity
+2. Generate revenue from the new product
+
+The correlation between social_posts and revenue could be entirely explained by their mutual relationship with product_launches, making it a **spurious correlation**.
+
+To establish causation, you would need experimental evidence (e.g., randomized controlled trials) or causal inference methods that account for confounders.",no,False,True
+2026-03-09T17:42:14.699176,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: product_launches → social_posts, product_launches → revenue
+
+n = 100 observations
+corr(social_posts, revenue) = 0.78
+corr(product_launches, social_posts) = 0.9
+corr(product_launches, revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The high correlation between social_posts and revenue (0.78) is spurious. Both variables are caused by a common parent: product_launches.
+
+The true causal structure shows:
+- product_launches → social_posts
+- product_launches → revenue
+
+When product_launches increases, it directly causes both social_posts and revenue to increase, creating the appearance of a relationship between them. However, social_posts does not causally influence revenue—they are both consequences of the same underlying cause.
+
+This is a classic case of **confounding**. To determine causality, we would need to control for product_launches. Once we condition on product_launches, the correlation between social_posts and revenue would disappear (or become much weaker), revealing that social_posts has no independent causal effect on revenue.",no,False,True
+2026-03-09T17:42:17.138410,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(support_calls, churn) = 0.85
+corr(product_bugs, support_calls) = 0.91
+corr(product_bugs, churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While support_calls and churn are strongly correlated (r = 0.85), the correlation data suggests that **product_bugs is the likely common cause** of both variables.
+
+Key observations:
+- product_bugs correlates even more strongly with churn (0.93) than support_calls does (0.85)
+- product_bugs correlates very strongly with support_calls (0.91)
+- The high correlation between support_calls and churn appears to be largely explained by their shared relationship with product_bugs
+
+**Causal interpretation:** More product bugs → more support calls AND more churn. Support calls are a symptom/consequence of bugs, not a cause of churn. Customers churn because of bugs, and those bugs also generate support calls.
+
+This is a classic case where correlation does not imply causation—the correlation between support_calls and churn is confounded by product_bugs.",no,False,True
+2026-03-09T17:42:20.775204,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: product_bugs → support_calls, product_bugs → churn
+
+n = 100 observations
+corr(support_calls, churn) = 0.85
+corr(product_bugs, support_calls) = 0.91
+corr(product_bugs, churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While support_calls and churn are highly correlated (r = 0.85), this correlation is **spurious**. Both are caused by a common upstream variable: **product_bugs**.
+
+The true causal structure shows:
+- product_bugs → support_calls
+- product_bugs → churn
+
+When product_bugs increases, it simultaneously increases both support_calls and churn, creating the high correlation between them. However, support_calls does not causally influence churn—they are both consequences of the same root cause.
+
+This is a classic case of **confounding**. To determine causation, we would need to control for product_bugs. If we did so, the correlation between support_calls and churn would disappear or become negligible, revealing that the original correlation was entirely due to their shared cause.",no,False,True
+2026-03-09T17:42:23.932685,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(training_hours, sales_performance) = 0.8
+corr(employee_experience, training_hours) = 0.89
+corr(employee_experience, sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong positive correlation between training_hours and sales_performance (r = 0.8), this does not establish causation. 
+
+The correlation data suggests that **employee_experience is likely a confounding variable**:
+
+- employee_experience correlates very strongly with both training_hours (r = 0.89) and sales_performance (r = 0.92)
+- The correlation between training_hours and sales_performance could be largely explained by the fact that more experienced employees both receive more training AND perform better in sales
+
+The high correlation between training_hours and sales_performance may be spurious—driven by the common influence of employee_experience rather than training_hours directly causing better sales performance.
+
+**To establish causation, you would need:**
+- Experimental design (randomized training assignment)
+- Temporal evidence (training precedes performance improvement)
+- Control for confounding variables like experience
+- Elimination of alternative explanations
+
+Correlation alone, especially with potential confounders present, cannot prove causation.",no,False,True
+2026-03-09T17:42:26.458371,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: employee_experience → training_hours, employee_experience → sales_performance
+
+n = 100 observations
+corr(training_hours, sales_performance) = 0.8
+corr(employee_experience, training_hours) = 0.89
+corr(employee_experience, sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlation of 0.8 between training_hours and sales_performance is **spurious** — it exists because both variables are causally influenced by a common cause: employee_experience.
+
+According to the true causal structure:
+- employee_experience → training_hours
+- employee_experience → sales_performance
+- training_hours does NOT → sales_performance
+
+The high correlations we observe are explained by this confounding:
+- More experienced employees receive more training (corr = 0.89)
+- More experienced employees have better sales performance (corr = 0.92)
+- Therefore, training_hours and sales_performance appear correlated (0.8), even though training doesn't cause better sales
+
+To verify this, if you controlled for employee_experience (e.g., through regression or stratification), the correlation between training_hours and sales_performance would drop substantially or disappear entirely.",no,False,True
+2026-03-09T17:42:29.291867,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(influencer_posts, brand_awareness) = 0.79
+corr(market_trend, influencer_posts) = 0.88
+corr(market_trend, brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation between influencer_posts and brand_awareness (r = 0.79), the data does not establish causation. Here's why:
+
+1. **Confounding variable**: market_trend is strongly correlated with both variables:
+   - corr(market_trend, influencer_posts) = 0.88
+   - corr(market_trend, brand_awareness) = 0.91
+
+2. **Alternative explanation**: The relationship between influencer_posts and brand_awareness could be entirely explained by market_trend. When market trends are favorable, both influencer activity and brand awareness may increase together, without one causing the other.
+
+3. **Correlation ≠ Causation**: Correlation alone cannot establish causality. You would need:
+   - Temporal evidence (influencer_posts preceding brand_awareness)
+   - Experimental manipulation
+   - Control for confounding variables
+   - A plausible causal mechanism
+
+The strong correlation with market_trend suggests it's a confounding variable that should be controlled for before drawing causal conclusions.",no,False,True
+2026-03-09T17:42:31.500752,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: market_trend → influencer_posts, market_trend → brand_awareness
+
+n = 100 observations
+corr(influencer_posts, brand_awareness) = 0.79
+corr(market_trend, influencer_posts) = 0.88
+corr(market_trend, brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The correlation between influencer_posts and brand_awareness (0.79) is spurious—it arises because both variables are causally influenced by a common cause: market_trend.
+
+According to the true causal structure:
+- market_trend → influencer_posts
+- market_trend → brand_awareness
+
+This means market_trend is a confounder. When market trends are strong, both influencer posts and brand awareness increase together, creating the observed correlation. However, influencer_posts does not directly cause brand_awareness; rather, they are both consequences of the same underlying market conditions.
+
+To properly test causation, you would need to control for market_trend. Once you condition on market_trend, the association between influencer_posts and brand_awareness should disappear (or be substantially reduced), revealing that there is no direct causal effect.",no,False,True
+2026-03-09T17:42:33.766957,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.92 indicates a very strong *association* between customer_reviews and product_quality, but correlation alone cannot establish causation.
+
+**Key reasons:**
+
+1. **Reverse causality**: Higher product_quality likely *causes* better customer_reviews, not the other way around. This is the more plausible causal direction.
+
+2. **Confounding variables**: Both variables could be influenced by a third factor (e.g., manufacturing standards, brand reputation, or price point).
+
+3. **Correlation ≠ Causation**: Even a very strong correlation (0.92) only shows that variables move together; it doesn't prove one causes the other.
+
+To establish causation, you would need additional evidence such as:
+- Temporal ordering (cause must precede effect)
+- Experimental design or natural experiments
+- Ruling out alternative explanations
+- Theoretical justification",no,False,True
+2026-03-09T17:42:36.123501,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: product_quality → customer_reviews
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is specified as: product_quality → customer_reviews
+
+This means product_quality is the cause and customer_reviews is the effect. The high correlation (0.92) is consistent with this causal direction—better product quality leads to better customer reviews.
+
+However, correlation alone cannot determine causality or its direction. The high correlation could theoretically support either direction. What determines the answer here is the **true causal structure** you've stated: product_quality causes customer_reviews, not the reverse.
+
+In reality, it makes logical sense that product quality would influence reviews (not the other way around)—a product's inherent quality affects how customers rate it, rather than customer opinions retroactively changing the product's quality.",no,False,True
+2026-03-09T17:42:41.586742,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where customer_reviews was randomly assigned.
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Even though customer_reviews was randomly assigned (which is excellent for causal inference), a correlation of 0.92 does not establish causation in this direction.
+
+**Key issue:** The high correlation could reflect:
+
+1. **Reverse causation** - Higher product_quality likely causes better customer_reviews (not the other way around)
+2. **The assignment mechanism** - If customer_reviews was randomly assigned to products, the strong correlation suggests that better products received higher review assignments, which then naturally correlates with quality
+
+**What random assignment does:** It allows us to estimate the *causal effect of assigning customer_reviews* on product_quality. However, logically, displaying or assigning reviews to a product doesn't change the product's actual quality.
+
+**What we can likely conclude:** If anything, the causal arrow probably runs the opposite direction—product_quality causes customer_reviews—or they share a common cause. Random assignment of reviews is useful for studying whether reviews *affect consumer behavior*, not whether they affect the actual product quality itself.",no,False,True
+2026-03-09T17:42:44.212305,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.91 indicates a strong *association* between support_tickets and user_frustration, but correlation alone cannot establish causation.
+
+**Alternative explanations for this relationship:**
+
+1. **Reverse causation**: User frustration may *cause* more support tickets (frustrated users are more likely to submit tickets)
+
+2. **Common cause**: A third variable could drive both—for example:
+   - Product bugs → more frustration AND more support tickets
+   - System outages → both metrics spike together
+
+3. **Coincidence**: With only 100 observations, strong correlations can occur by chance
+
+**To establish causation, you would need:**
+- Temporal evidence (support tickets preceding frustration)
+- Controlled experiments or natural experiments
+- Elimination of confounding variables
+- Theoretical mechanism explaining the causal pathway
+
+The most plausible explanation here is actually *reverse causation*: frustrated users generate support tickets, not the other way around.",no,False,True
+2026-03-09T17:42:46.127330,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: user_frustration → support_tickets
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is explicitly given as: user_frustration → support_tickets
+
+This means user_frustration is the cause and support_tickets is the effect. The causal arrow points in one direction only.
+
+While the high correlation (0.91) shows a strong relationship between these variables, correlation alone cannot determine causation or its direction. The causal direction is specified by the true causal structure, which shows that frustrated users generate support tickets, not the reverse.
+
+If support_tickets caused user_frustration, the arrow would point the opposite way: support_tickets → user_frustration.",no,False,True
+2026-03-09T17:42:51.866186,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where support_tickets was randomly assigned.
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a very strong positive correlation (0.91) between support_tickets and user_frustration, correlation does not establish causation—even in a randomized controlled experiment.
+
+The critical issue is the **direction of causality**. The random assignment of support_tickets tells us the relationship is not confounded by other variables, but it doesn't tell us *which variable causes which*.
+
+The most plausible interpretation is the **reverse causal direction**: higher user_frustration likely *causes* more support_tickets to be filed. Users who are frustrated are more likely to contact support.
+
+It's also possible that support_tickets and user_frustration are both consequences of some underlying issue (e.g., product bugs), though the random assignment design helps rule out some confounding.
+
+**To establish that support_tickets causes user_frustration**, you would need to show that *increasing* support_tickets (perhaps through better support availability) actually *reduces* frustration—which seems unlikely given the data pattern.",no,False,True
+2026-03-09T17:42:56.538385,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.92 indicates a very strong *relationship* between referrals and customer_satisfaction, but correlation alone cannot establish causation.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: High customer satisfaction might *cause* more referrals (customers who are satisfied are more likely to recommend the business)
+
+2. **Common cause**: A third variable might drive both—for example, product quality could independently increase both satisfaction and referrals
+
+3. **Coincidence**: With only 100 observations, a strong correlation could arise by chance
+
+To determine causation, you would need:
+- Experimental design (randomized control)
+- Temporal evidence (referrals occurring *before* satisfaction increases)
+- Mechanism explanation
+- Control for confounding variables
+
+The strong correlation is certainly worth investigating further, but it's not sufficient to claim causation.",no,False,True
+2026-03-09T17:42:58.765952,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: customer_satisfaction → referrals
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is specified as: customer_satisfaction → referrals
+
+This means customer_satisfaction is the cause and referrals is the effect. The high correlation (0.92) is consistent with this causal direction—satisfied customers are more likely to refer others.
+
+However, correlation alone cannot determine causality. The causal structure given in the problem explicitly states that the arrow points FROM customer_satisfaction TO referrals, meaning customer_satisfaction causes referrals, not the reverse.
+
+If referrals caused customer_satisfaction, we would expect the causal arrow to point in the opposite direction: referrals → customer_satisfaction. The data provided does not support this reversed causal claim.",no,False,True
+2026-03-09T17:43:01.771264,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where referrals was randomly assigned.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While the correlation is very strong (0.92), **correlation does not imply causation**, even in a randomized controlled experiment.
+
+The critical issue here is the **direction of causality**. There are three possible causal relationships:
+
+1. **Referrals → Customer Satisfaction** (your hypothesis)
+2. **Customer Satisfaction → Referrals** (reverse causation)
+3. **Both directions** (bidirectional feedback)
+
+The data alone cannot distinguish between these possibilities. A customer who is highly satisfied is more likely to refer others, which would create the strong correlation you observe—but this would mean satisfaction causes referrals, not the reverse.
+
+**To establish causation, you would need:**
+- A clear temporal ordering (referrals must precede satisfaction)
+- A plausible mechanism explaining how referrals improve satisfaction
+- Evidence ruling out reverse causation
+
+The fact that referrals were ""randomly assigned"" helps rule out confounding variables, but it doesn't resolve the fundamental ambiguity about causal direction.",no,False,True
+2026-03-09T17:43:04.158341,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.88 indicates a strong *association* between repeat_purchases and product_value, but correlation alone cannot establish causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Higher product_value might *cause* repeat_purchases (customers buy valuable products repeatedly)
+
+2. **Confounding variables**: A third variable could drive both (e.g., product quality, customer satisfaction, or brand reputation could increase both repeat purchases and perceived value)
+
+3. **Coincidence**: The correlation could be spurious
+
+To determine causation, you would need:
+- Experimental evidence (randomized controlled trials)
+- Temporal evidence (repeat_purchases occurring *after* product_value changes)
+- Theoretical mechanism explaining the causal pathway
+- Control for confounding variables",no,False,True
+2026-03-09T17:43:06.642582,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: product_value → repeat_purchases
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is specified as: product_value → repeat_purchases
+
+This means product_value is the cause and repeat_purchases is the effect. The high correlation (0.88) is consistent with this causal direction—better products lead to more repeat purchases.
+
+For repeat_purchases to cause product_value would require the reverse causal direction, which contradicts the given causal structure. Correlation alone cannot determine causality; the direction must come from domain knowledge or the specified causal model, which clearly indicates product_value is upstream of repeat_purchases.",no,False,True
+2026-03-09T17:43:09.370607,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where repeat_purchases was randomly assigned.
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While there is a strong correlation (0.88) between repeat_purchases and product_value, **correlation does not imply causation**, even in a randomized controlled experiment.
+
+The key issue is that **repeat_purchases was randomly assigned** (the treatment), but we're observing a correlation with product_value. This strong correlation most likely reflects:
+
+1. **Reverse causation**: Products with higher value naturally generate more repeat purchases
+2. **Confounding**: Both variables may be driven by unmeasured factors (e.g., product quality, customer satisfaction)
+
+To establish that repeat_purchases *causes* product_value, you would need to:
+- Show that randomly assigning repeat_purchases actually changes product_value
+- Have a clear causal mechanism explaining how encouraging repeat purchases would increase a product's inherent value
+
+The randomization helps us determine if *product_value* causes *repeat_purchases*, but the direction of causality you're asking about runs the opposite direction and cannot be established from this correlation alone.",no,False,True
+2026-03-09T17:43:15.097590,reverse_5,reverse_causation,content_virality → social_shares,marketing,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.88 indicates a strong *association* between social_shares and content_virality, but correlation alone cannot establish causation. Several alternative explanations are plausible:
+
+1. **Reverse causation**: Content that becomes viral (high virality) naturally generates more social shares, rather than shares causing virality.
+
+2. **Common cause**: A third variable (e.g., content quality, celebrity endorsement, trending topic) could drive both social shares and virality independently.
+
+3. **Bidirectional relationship**: The two variables may reinforce each other in a feedback loop rather than one causing the other.
+
+To establish causation, you would need:
+- Experimental design (randomized control)
+- Temporal evidence (shares occurring *before* virality)
+- Causal mechanisms and theory
+- Control for confounding variables",no,False,True
+2026-03-09T17:43:17.020889,reverse_5,reverse_causation,content_virality → social_shares,marketing,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: content_virality → social_shares
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is explicitly stated as: content_virality → social_shares
+
+This means content_virality is the cause and social_shares is the effect. The causal arrow points FROM content_virality TO social_shares, indicating that virality drives shares, not the other way around.
+
+While the high correlation (0.88) shows a strong relationship between these variables, correlation alone cannot determine causation. The causal direction is already specified in the problem: social_shares is the dependent variable caused by content_virality, not its cause.",no,False,True
+2026-03-09T17:43:19.939146,reverse_5,reverse_causation,content_virality → social_shares,marketing,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where social_shares was randomly assigned.
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While the correlation is very strong (0.88), **correlation does not imply causation**, even in a randomized controlled experiment.
+
+The critical issue here is the **direction of causality**. There are two plausible causal directions:
+
+1. **social_shares → content_virality** (social shares cause virality)
+2. **content_virality → social_shares** (virality causes shares)
+
+The second direction is actually more plausible: content that is inherently more viral is *more likely to be shared*, not the other way around. Virality is typically a characteristic of the content itself (how engaging, novel, or emotionally resonant it is), while shares are a *consequence* of that virality.
+
+Even though social_shares was randomly assigned in the experiment, this doesn't establish that shares cause virality—it only means the assignment of shares was random. The strong correlation likely reflects that viral content gets shared more, not that shares make content viral.
+
+To establish causation, you would need to show that *increasing* social shares leads to *increased* virality, which seems conceptually backwards.",no,False,True
+2026-03-09T17:43:28.420902,abs_direct_1,direct_causation,A → C → B,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: High correlations (0.79 between A and B) indicate a relationship but not a causal direction or mechanism.
+
+2. **Confounding Variable**: The data suggests C may be a confounding variable:
+   - C is highly correlated with both A (0.9) and B (0.85)
+   - C could be causing both A and B, making them appear related
+   - The relationship between A and B could be entirely explained by their mutual relationship with C
+
+3. **Alternative Explanations**:
+   - B could cause A
+   - A third (or fourth) unmeasured variable could cause both
+   - The relationship could be bidirectional
+
+To determine causation, you would need:
+- Temporal evidence (A precedes B)
+- Experimental manipulation
+- Causal mechanism explanation
+- Control for confounders like C",no,True,False
+2026-03-09T17:43:30.616576,abs_direct_1,direct_causation,A → C → B,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: A → C → B
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While A and B are strongly correlated (r = 0.79), **A does not directly cause B** according to the true causal structure.
+
+The causal path is: **A → C → B**
+
+This means:
+- A causes C (corr = 0.9)
+- C causes B (corr = 0.85)
+- A's effect on B is **indirect**, mediated entirely through C
+
+The correlation between A and B exists because of this indirect causal pathway, not because of a direct causal effect. If we were to condition on (control for) C, the direct association between A and B would disappear, confirming that C is the sole mechanism through which A influences B.",no,True,False
+2026-03-09T17:43:33.467114,abs_direct_1,direct_causation,A → C → B,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where A was randomly assigned.
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Since A was randomly assigned, we can rule out reverse causality (B causing A) and confounding that would bias the causal effect of A on B.
+
+However, the high correlations alone—particularly corr(A,C) = 0.9 and corr(C,B) = 0.85—suggest that **C may be a mediator or the primary driver of any association between A and B**.
+
+The correlation between A and B (0.79) could be entirely explained by:
+- A → C → B (mediation)
+- Or C being a common cause of both A and B (though this is less likely given A's random assignment)
+
+**To determine if A causes B, we would need to:**
+- Test whether the A→B relationship persists after controlling for C
+- If the effect disappears or becomes negligible when C is controlled, then A does not directly cause B
+- The data provided is insufficient to make this determination
+
+The random assignment of A is valuable, but correlation patterns alone cannot establish causation without additional analysis.",no,True,False
+2026-03-09T17:43:36.436099,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: **No** (or more precisely: **Cannot be determined from this data**)
+
+## Explanation:
+
+While the correlations are strong, **correlation alone cannot establish causation**. The high correlations you observe are consistent with several possible causal structures:
+
+1. **X1 → Y1** (direct causation) ✓ Possible
+2. **X1 → M1 → Y1** (indirect causation through M1) ✓ Possible
+3. **M1 → X1 and M1 → Y1** (M1 causes both) ✓ Possible
+4. **Common cause** (unmeasured variable causes all three) ✓ Possible
+5. **Reverse causation** (Y1 → X1) ✓ Possible
+
+The notably high correlation between X1 and M1 (0.91) and between M1 and Y1 (0.89), combined with the slightly lower X1-Y1 correlation (0.83), suggests **M1 may be a mediator** in the relationship. However, this still doesn't prove causation.
+
+**To establish causation, you would need:**
+- Experimental design with random assignment
+- Temporal precedence (X1 measured before Y1)
+- Ruling out alternative explanations
+- Theoretical justification",no,True,False
+2026-03-09T17:43:39.061051,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: X1 → M1 → Y1
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: Yes
+
+## Explanation:
+
+X1 does cause Y1, but **indirectly through the mediator M1**.
+
+The evidence supports this causal structure (X1 → M1 → Y1):
+
+1. **Strong correlation between X1 and M1** (r = 0.91): X1 strongly predicts M1, consistent with X1 affecting M1.
+
+2. **Strong correlation between M1 and Y1** (r = 0.89): M1 strongly predicts Y1, consistent with M1 affecting Y1.
+
+3. **Strong correlation between X1 and Y1** (r = 0.83): X1 and Y1 are correlated, which is explained by the causal chain through M1.
+
+The correlation between X1 and Y1 is primarily a **mediated effect** rather than a direct effect. If you were to control for M1 (the mediator), the direct effect of X1 on Y1 would be substantially reduced or eliminated, while the indirect effect (X1 → M1 → Y1) would account for most of the observed association.",yes,True,True
+2026-03-09T17:43:41.543269,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where X1 was randomly assigned.
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: Yes
+
+## Explanation:
+
+Since **X1 was randomly assigned**, it is exogenous—any correlation between X1 and Y1 reflects a causal effect, not confounding.
+
+The strong correlation (0.83) between X1 and Y1 indicates a causal relationship. The high correlations with M1 (0.91 with X1, and 0.89 with M1 to Y1) suggest that M1 may be a **mediator** through which X1 affects Y1, but this doesn't negate the causal effect—it just explains the mechanism.
+
+Random assignment eliminates the possibility that unmeasured confounders explain the X1-Y1 relationship, which is the key requirement for causal inference.",yes,True,True
+2026-03-09T17:43:44.702635,abs_direct_3,direct_causation,P → R → Q,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The high correlation between P and Q (0.85) does not establish causation. Several alternative explanations are more consistent with the data:
+
+1. **R causes both P and Q**: The very high correlations of R with both P (0.93) and Q (0.90) suggest R may be a common cause. If R influences both P and Q, their correlation would be induced by this common cause rather than P causing Q.
+
+2. **Confounding**: R appears to be a confounding variable that explains much of the relationship between P and Q.
+
+3. **Correlation ≠ Causation**: Correlation alone cannot establish causal direction or causation itself.
+
+To determine if P causes Q, you would need:
+- Temporal precedence (P occurs before Q)
+- Experimental manipulation of P
+- Control for confounders like R
+- A plausible causal mechanism
+
+The data pattern is most consistent with **R → P** and **R → Q** rather than **P → Q**.",no,True,False
+2026-03-09T17:43:49.887640,abs_direct_3,direct_causation,P → R → Q,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: P → R → Q
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While P and Q are strongly correlated (0.85), **P does not directly cause Q** according to the true causal structure given.
+
+The causal structure P → R → Q indicates that:
+- P causes R
+- R causes Q
+- P's effect on Q is **indirect**, mediated entirely through R
+
+This is a classic case of **mediation**. The correlation between P and Q exists, but it arises because P influences R, which in turn influences Q. If we were to control for R (condition on R's value), the direct effect of P on Q would disappear.
+
+The high correlations are consistent with this structure:
+- corr(P, R) = 0.93 (strong, P directly causes R)
+- corr(R, Q) = 0.9 (strong, R directly causes Q)
+- corr(P, Q) = 0.85 (strong, but only through the R pathway)
+
+**In causal inference, correlation does not imply direct causation.** P causes Q only indirectly through R.",no,True,False
+2026-03-09T17:43:54.671578,abs_direct_3,direct_causation,P → R → Q,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where P was randomly assigned.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Since P was randomly assigned, we can interpret correlations involving P as causal effects. However, the high correlation between P and Q (0.85) appears to be **mediated entirely through R**.
+
+Here's why:
+
+- P → R: correlation of 0.93 (very strong)
+- R → Q: correlation of 0.9 (very strong)
+- The product of these effects (0.93 × 0.9 ≈ 0.84) nearly equals corr(P,Q) = 0.85
+
+This pattern suggests that **R is a mediator**: P causes R, and R causes Q, but P has no direct causal effect on Q once R is accounted for.
+
+If P directly caused Q independent of R, we would expect the correlation between P and Q to be substantially larger than what the indirect path through R alone would produce. The near-perfect alignment of these correlations indicates the causal pathway runs through R, not directly from P to Q.",no,True,False
+2026-03-09T17:43:57.908419,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. While V1 and V2 are strongly correlated (r = 0.81), this alone cannot establish that V1 causes V2. Several alternative explanations are equally plausible:
+
+1. **V2 causes V1** (reverse causation)
+2. **V3 causes both** (common cause): The correlation pattern is consistent with V3 being a confounder—V3 is highly correlated with both V1 (0.91) and V2 (0.84), which could explain their mutual correlation
+3. **Other unmeasured variables** drive the relationship
+4. **Pure coincidence** in the sample
+
+To establish causation, you would need:
+- Temporal precedence (V1 occurs before V2)
+- Experimental manipulation or quasi-experimental design
+- Control for confounders like V3
+- Theoretical justification
+
+The data pattern actually suggests V3 might be the underlying driver of the V1-V2 relationship.",no,True,False
+2026-03-09T17:44:00.520298,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: V1 → V3 → V2
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While V1 and V2 are strongly correlated (r = 0.81), V1 does **not directly cause** V2 according to the true causal structure.
+
+The causal path is: **V1 → V3 → V2**
+
+This means:
+- V1 causes V3 (corr = 0.91, strong)
+- V3 causes V2 (corr = 0.84, strong)
+- V1's association with V2 is **entirely mediated through V3**
+
+The high correlation between V1 and V2 is an indirect effect—it exists because V1 influences V3, which in turn influences V2. If we were to control for V3 (condition on its value), the direct association between V1 and V2 would disappear.
+
+This is a classic example of how correlation does not imply direct causation, and why understanding the causal structure is essential.",no,True,False
+2026-03-09T17:44:03.627886,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where V1 was randomly assigned.
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While V1 and V2 are highly correlated (0.81), the correlation pattern reveals that **V3 is likely the common cause** of both V1 and V2.
+
+Key observations:
+- V1 is very strongly correlated with V3 (0.91)
+- V3 is very strongly correlated with V2 (0.84)
+- V1 and V2's correlation (0.81) can be largely explained by their mutual relationship with V3
+
+Even though V1 was randomly assigned (which would normally support causality), the extremely high correlation between V1 and V3 (0.91) suggests that V3 is a confounding variable. The correlation between V1 and V2 appears to be **mediated through V3** rather than V1 directly causing V2.
+
+To establish that V1 causes V2, we would need to show that the V1→V2 relationship persists after controlling for V3. Given the correlation structure, controlling for V3 would likely eliminate or substantially reduce the V1→V2 association.",no,True,False
+2026-03-09T17:44:06.292165,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: High correlations (0.83 between alpha and beta) indicate association, not causal direction or mechanism.
+
+2. **Confounding**: The pattern of correlations suggests **gamma may be a common cause** of both alpha and beta:
+   - corr(alpha, gamma) = 0.92 (very strong)
+   - corr(gamma, beta) = 0.88 (very strong)
+   - corr(alpha, beta) = 0.83 (strong, but weaker than the others)
+
+3. **Partial correlation test**: If gamma were removed/controlled for, the correlation between alpha and beta would likely diminish substantially, suggesting their relationship is largely mediated through gamma rather than direct causation.
+
+To determine causation, you would need:
+- Temporal precedence (alpha occurs before beta)
+- Experimental manipulation
+- Theoretical justification
+- Control for confounders like gamma",no,True,False
+2026-03-09T17:44:08.667975,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: alpha → gamma → beta
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While alpha and beta are strongly correlated (r = 0.83), alpha does **not** directly cause beta according to the true causal structure.
+
+Instead, the causal pathway is: **alpha → gamma → beta**
+
+This means:
+- Alpha causes gamma (r = 0.92)
+- Gamma causes beta (r = 0.88)
+- The correlation between alpha and beta is **indirect**, mediated entirely through gamma
+
+The high correlation between alpha and beta exists because of this chain of causation, not because of a direct causal effect. If you were to condition on (control for) gamma, the direct association between alpha and beta would disappear or become negligible.
+
+This illustrates an important principle: **correlation does not imply direct causation**—variables can be correlated through intermediate causal pathways.",no,True,False
+2026-03-09T17:44:11.127211,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where alpha was randomly assigned.
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Since alpha was randomly assigned, we can interpret correlations involving alpha as causal effects. However, the high correlation between alpha and beta (0.83) appears to be **mediated through gamma**.
+
+Here's why:
+
+- Alpha is randomly assigned, so corr(alpha, beta) = 0.83 could reflect a causal effect
+- But gamma is very highly correlated with alpha (0.92) and also highly correlated with beta (0.88)
+- This pattern suggests gamma is a **mediator**: alpha → gamma → beta
+
+If alpha caused beta *directly*, we would expect the correlation between alpha and beta to substantially decrease after controlling for gamma. Given that:
+- corr(alpha, gamma) = 0.92 is very high
+- corr(gamma, beta) = 0.88 is very high
+- The relationship between alpha and beta is likely almost entirely explained by their mutual relationship with gamma
+
+Therefore, alpha does not appear to have a direct causal effect on beta; rather, alpha influences beta through gamma.",no,True,False
+2026-03-09T17:44:14.211468,abs_confounding_1,confounding,"C → A, C → B",abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(A, B) = 0.88
+corr(C, A) = 0.94
+corr(C, B) = 0.93
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The high correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: A correlation of 0.88 between A and B indicates a strong linear relationship, but this could arise from multiple scenarios:
+   - A causes B
+   - B causes A
+   - Both are caused by a common third variable
+   - The relationship is coincidental
+
+2. **Evidence of a Common Cause**: The data actually suggests a **confounding variable**:
+   - corr(C, A) = 0.94 (very strong)
+   - corr(C, B) = 0.93 (very strong)
+   - corr(A, B) = 0.88 (strong)
+
+   Variable C is highly correlated with both A and B. This pattern is consistent with C being a common cause of both A and B, which would explain their mutual correlation without A directly causing B.
+
+3. **What Would Be Needed**: To establish causation, you would need:
+   - Temporal precedence (A occurs before B)
+   - Experimental manipulation or causal inference methods
+   - Ruling out confounding variables like C",no,False,True
+2026-03-09T17:44:16.871714,abs_confounding_1,confounding,"C → A, C → B",abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: C → A, C → B
+
+n = 100 observations
+corr(A, B) = 0.88
+corr(C, A) = 0.94
+corr(C, B) = 0.93
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The true causal structure shows that C is a common cause of both A and B (C → A and C → B). This means:
+
+- A and B are correlated (0.88) not because A causes B, but because they share a common cause C
+- Both A and B have strong correlations with C (0.94 and 0.93 respectively), which explains their mutual correlation
+- This is a classic case of **confounding**: C confounds the relationship between A and B
+
+If A actually caused B, we would expect the correlation between A and B to persist even after accounting for C. However, in this causal structure, the correlation between A and B is entirely spurious—it exists only because of their shared dependence on C.
+
+To verify this, conditioning on C (controlling for C statistically) would eliminate or substantially reduce the correlation between A and B, confirming that A does not have a direct causal effect on B.",no,False,True
+2026-03-09T17:44:22.329181,abs_confounding_2,confounding,"Z1 → X1, Z1 → Y1",abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(X1, Y1) = 0.78
+corr(Z1, X1) = 0.9
+corr(Z1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: High correlation (0.78) between X1 and Y1 indicates a strong linear relationship, but this could arise from multiple scenarios:
+   - X1 → Y1 (X1 causes Y1)
+   - Y1 → X1 (reverse causation)
+   - Z1 → both X1 and Y1 (common cause)
+
+2. **Evidence of Confounding**: The data strongly suggests Z1 is a **common cause**:
+   - Z1 is highly correlated with both X1 (0.9) and Y1 (0.91)
+   - Z1's correlations are actually *stronger* than the X1-Y1 correlation
+   - This pattern is consistent with Z1 driving both variables
+
+3. **What's needed for causation**: Establishing causation would require:
+   - Experimental design (randomized control)
+   - Temporal precedence (X1 occurs before Y1)
+   - Ruling out confounders (like Z1)
+   - Causal mechanisms
+
+**Conclusion**: The observed correlations are consistent with Z1 being a confounding variable rather than X1 causing Y1.",no,False,True
+2026-03-09T17:44:25.297279,abs_confounding_2,confounding,"Z1 → X1, Z1 → Y1",abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: Z1 → X1, Z1 → Y1
+
+n = 100 observations
+corr(X1, Y1) = 0.78
+corr(Z1, X1) = 0.9
+corr(Z1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlation between X1 and Y1 (0.78) is **spurious** — it arises entirely from their common cause Z1, not from a direct causal effect of X1 on Y1.
+
+**Key evidence:**
+- Z1 has strong causal effects on both X1 (r = 0.9) and Y1 (r = 0.91)
+- The true causal structure shows Z1 → X1 and Z1 → Y1, with no arrow from X1 to Y1
+- The observed correlation between X1 and Y1 is explained by their shared dependence on Z1
+
+**Why this matters:**
+If you were to condition on (control for) Z1, the correlation between X1 and Y1 would drop to near zero, revealing that X1 has no independent causal effect on Y1. This is a classic case of **confounding** — Z1 is a confounder that creates the illusion of a relationship between X1 and Y1.",no,False,True
+2026-03-09T17:44:29.091884,abs_confounding_3,confounding,"R → P, R → Q",abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(R, P) = 0.91
+corr(R, Q) = 0.93
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: High correlations (0.85, 0.91, 0.93) indicate strong linear relationships, but they don't reveal the direction or mechanism of causation.
+
+2. **Alternative explanations**: The data is consistent with several scenarios:
+   - **R causes both P and Q**: The very high correlations of R with both P (0.91) and Q (0.93) suggest R might be a common cause, making P and Q correlated without P causing Q
+   - **Q causes P**: The correlation could run in the opposite direction
+   - **Bidirectional relationship**: P and Q might influence each other
+   - **Confounding**: An unmeasured variable could drive both
+
+3. **What's needed for causation**: To establish that P causes Q, you would need:
+   - Temporal precedence (P occurs before Q)
+   - Experimental manipulation or causal inference methods
+   - Ruling out confounders and reverse causation
+   - Theoretical justification
+
+The pattern here (with R being more strongly correlated with both variables) actually suggests R might be the causal driver rather than P causing Q.",no,False,True
+2026-03-09T17:44:31.532302,abs_confounding_3,confounding,"R → P, R → Q",abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: R → P, R → Q
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(R, P) = 0.91
+corr(R, Q) = 0.93
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The true causal structure shows that R is a common cause of both P and Q (R → P and R → Q). This means:
+
+- P and Q are correlated (0.85) not because one causes the other, but because they share a common cause (R)
+- This is a case of **confounding**: R confounds the relationship between P and Q
+- The high correlations of both P and Q with R (0.91 and 0.93) explain their mutual correlation
+
+If P actually caused Q, we would expect the correlation between P and Q to remain strong even after accounting for R. However, the causal structure indicates that P does not directly cause Q—rather, both are consequences of R. The observed correlation between P and Q is spurious, arising entirely from their common cause.",no,False,True
+2026-03-09T17:44:33.799792,abs_confounding_4,confounding,"V3 → V1, V3 → V2",abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(V1, V2) = 0.8
+corr(V3, V1) = 0.89
+corr(V3, V2) = 0.92
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. While V1 and V2 are strongly correlated (r = 0.8), this alone cannot establish that V1 causes V2. 
+
+The correlation pattern here actually suggests a **confounding explanation**: V3 is highly correlated with both V1 (r = 0.89) and V2 (r = 0.92). This indicates that V3 likely explains much of the observed correlation between V1 and V2. In other words, V3 may be a common cause driving both V1 and V2, rather than V1 directly causing V2.
+
+To determine causation, you would need:
+- Temporal evidence (V1 preceding V2)
+- Experimental manipulation
+- Causal reasoning based on domain knowledge
+- Analysis controlling for confounders like V3",no,False,True
+2026-03-09T17:44:36.085573,abs_confounding_4,confounding,"V3 → V1, V3 → V2",abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: V3 → V1, V3 → V2
+
+n = 100 observations
+corr(V1, V2) = 0.8
+corr(V3, V1) = 0.89
+corr(V3, V2) = 0.92
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The true causal structure shows that V3 is a **common cause** of both V1 and V2 (V3 → V1 and V3 → V2). This explains the observed correlation between V1 and V2.
+
+The high correlation between V1 and V2 (0.8) is **spurious** — it arises because both variables are causally influenced by V3, not because V1 causes V2. This is a classic case of **confounding**.
+
+We can verify this reasoning:
+- V3 has strong correlations with both V1 (0.89) and V2 (0.92)
+- If we were to condition on (control for) V3, the correlation between V1 and V2 would be substantially reduced or eliminated
+- The causal structure explicitly shows no direct arrow from V1 to V2
+
+Therefore, V1 does not cause V2; their association is entirely explained by their common cause V3.",no,False,True
+2026-03-09T17:44:38.714138,abs_confounding_5,confounding,"gamma → alpha, gamma → beta",abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(alpha, beta) = 0.79
+corr(gamma, alpha) = 0.88
+corr(gamma, beta) = 0.91
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The correlations alone cannot establish causation. Here's why:
+
+1. **Correlation ≠ Causation**: High correlation (0.79) between alpha and beta indicates they move together, but this could result from:
+   - Alpha causing beta
+   - Beta causing alpha
+   - Both being caused by a third variable
+   - Coincidence
+
+2. **Evidence of confounding**: The data suggests a likely **common cause** explanation:
+   - gamma is highly correlated with both alpha (0.88) and beta (0.91)
+   - This pattern is consistent with gamma being a common cause of both alpha and beta
+   - The relationship between alpha and beta may be entirely mediated through gamma
+
+3. **What would be needed for causation**: To establish that alpha causes beta, you would need:
+   - Temporal precedence (alpha occurs before beta)
+   - Experimental manipulation or causal inference methods
+   - Evidence ruling out confounding variables like gamma
+
+The correlational data presented is insufficient to determine causality.",no,False,True
+2026-03-09T17:44:40.727617,abs_confounding_5,confounding,"gamma → alpha, gamma → beta",abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: gamma → alpha, gamma → beta
+
+n = 100 observations
+corr(alpha, beta) = 0.79
+corr(gamma, alpha) = 0.88
+corr(gamma, beta) = 0.91
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The true causal structure shows that both alpha and beta are caused by gamma (a common cause), but alpha does not cause beta. The high correlation between alpha and beta (0.79) is entirely due to their shared dependence on gamma, not due to a direct causal relationship between them.
+
+This is a classic case of **confounding**: gamma is a confounder that creates spurious correlation between alpha and beta. If we were to condition on (control for) gamma, the correlation between alpha and beta would disappear or become negligible, revealing that there is no direct causal effect of alpha on beta.",no,False,True
+2026-03-09T17:44:43.638220,abs_reverse_1,reverse_causation,B → A,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(A, B) = 0.92
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. While A and B have a strong positive correlation (0.92), this alone cannot establish that A causes B.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: B could cause A
+2. **Common cause**: A third variable C could cause both A and B
+3. **Coincidence**: The correlation could be spurious, especially with only 100 observations
+4. **Confounding**: Other unmeasured variables could explain the relationship
+
+To determine causation, you would need:
+- Temporal evidence (A occurs before B)
+- A plausible mechanism
+- Experimental evidence or strong causal reasoning
+- Control for confounding variables
+- Ideally, a randomized controlled experiment",no,False,True
+2026-03-09T17:44:45.689619,abs_reverse_1,reverse_causation,B → A,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: B → A
+
+n = 100 observations
+corr(A, B) = 0.92
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The true causal structure is B → A, meaning B causes A, not the other way around. While A and B are highly correlated (r = 0.92), correlation alone does not establish causation. The causal direction is determined by the underlying data-generating process, which in this case flows from B to A.
+
+A high correlation is consistent with this causal relationship (B influences A), but it would also be consistent with A causing B, or both being caused by a common factor. The correlation itself cannot tell us the direction of causality—that requires knowledge of the true causal structure, which you've been given.",no,False,True
+2026-03-09T17:44:48.593057,abs_reverse_1,reverse_causation,B → A,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where A was randomly assigned.
+
+n = 100 observations
+corr(A, B) = 0.92
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Random assignment of A ensures that A is **exogenous** (not confounded with other variables), which is necessary for causal inference. However, random assignment alone does not establish causation.
+
+The high correlation (0.92) between A and B could arise from several scenarios:
+
+1. **A causes B** ✓ (possible)
+2. **B causes A** ✓ (equally possible with this data)
+3. **A and B are both caused by a third variable** ✓ (possible despite random assignment of A)
+4. **Reverse causality or feedback loops** ✓ (possible)
+
+**What random assignment does:** It eliminates confounding—we can be confident any relationship isn't due to A and B both being driven by some unmeasured prior cause.
+
+**What random assignment doesn't do:** It doesn't tell us the *direction* of causality or rule out reverse causality.
+
+To establish that A causes B, you would need additional evidence such as:
+- Temporal precedence (A measured before B)
+- A plausible causal mechanism
+- Dose-response relationship
+- Experimental manipulation showing B changes when A changes",no,False,True
+2026-03-09T17:44:50.718644,abs_reverse_2,reverse_causation,Y1 → X1,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(X1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A correlation of 0.91 indicates a **strong statistical relationship** between X1 and Y1, but correlation alone cannot establish causation.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Y1 could cause X1 instead
+2. **Confounding variables**: A third variable could cause both X1 and Y1
+3. **Coincidence**: The relationship could be spurious, especially with only 100 observations
+
+To establish causation, you would need:
+- **Temporal precedence** (X1 occurs before Y1)
+- **Experimental design** (random assignment and control of confounds)
+- **Theoretical mechanism** (logical explanation for why X1 causes Y1)
+- **Ruling out alternatives** (evidence against competing explanations)
+
+**Remember**: ""Correlation does not imply causation"" is a fundamental principle in statistics.",no,False,True
+2026-03-09T17:44:52.560935,abs_reverse_2,reverse_causation,Y1 → X1,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: Y1 → X1
+
+n = 100 observations
+corr(X1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+The true causal structure is Y1 → X1, meaning Y1 causes X1, not the other way around. 
+
+The high correlation (0.91) between X1 and Y1 reflects their causal relationship, but correlation alone cannot determine the direction of causality. The correlation is symmetric—it's equally strong whether we say ""X1 causes Y1"" or ""Y1 causes X1""—but the actual causal direction flows from Y1 to X1.
+
+To answer this question correctly requires knowing the true causal structure (which was provided), not just the correlation coefficient.",no,False,True
+2026-03-09T17:44:57.948719,abs_reverse_2,reverse_causation,Y1 → X1,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where X1 was randomly assigned.
+
+n = 100 observations
+corr(X1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+A high correlation (0.91) between X1 and Y1 does **not** establish causation, even though X1 was randomly assigned.
+
+**Key issue:** The question asks whether X1 *causes* Y1, but we're only given information about correlation. Random assignment of X1 is valuable for causal inference, but we need additional information to draw causal conclusions:
+
+1. **We need to see the experimental results** - Did the randomized assignment of X1 produce a statistically significant difference in Y1 across treatment groups? A high correlation alone doesn't tell us this.
+
+2. **Correlation ≠ Causation** - Even with random assignment, a correlation coefficient alone doesn't establish the causal effect. We would need to conduct a proper causal analysis (e.g., comparing mean outcomes between treatment and control groups).
+
+3. **Missing context** - We don't know if X1 was actually manipulated as a treatment, or if this is observational data where X1 just happens to be uncorrelated with confounders.
+
+**To answer ""Yes"":** We would need to see that random assignment of X1 produced significantly different outcomes in Y1 between treatment groups, with appropriate statistical testing.",no,False,True
+2026-03-09T17:45:00.084013,abs_reverse_3,reverse_causation,Q → P,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(P, Q) = 0.92
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. While P and Q have a strong positive correlation (0.92), this alone cannot establish that P causes Q.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Q could cause P instead
+2. **Common cause**: A third variable could cause both P and Q
+3. **Coincidence**: The correlation could be spurious, especially with only 100 observations
+
+To determine causation, you would need:
+- **Temporal precedence**: Evidence that P occurs before Q
+- **Experimental design**: Ideally, a randomized controlled experiment
+- **Mechanism**: A plausible theoretical explanation for *how* P causes Q
+- **Alternative explanations ruled out**: Evidence against confounding variables
+
+A strong correlation is necessary but not sufficient for establishing causation.",no,False,True
+2026-03-09T17:45:01.350565,abs_reverse_3,reverse_causation,Q → P,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: Q → P
+
+n = 100 observations
+corr(P, Q) = 0.92
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is Q → P, meaning Q causes P, not the other way around. While P and Q are strongly correlated (r = 0.92), correlation alone does not determine causation. The direction of causation is specified by the true causal structure: changes in Q produce changes in P. Therefore, P does not cause Q; rather, Q causes P.",no,False,True
+2026-03-09T17:45:04.571590,abs_reverse_3,reverse_causation,Q → P,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where P was randomly assigned.
+
+n = 100 observations
+corr(P, Q) = 0.92
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Random assignment of P ensures that P is **exogenous** — it is not caused by Q or by any confounding variables. This is excellent for causal inference.
+
+However, **random assignment alone does not establish causation**. We also need evidence that P *affects* Q. The correlation of 0.92 is very high, but correlation does not imply causation, even with random assignment.
+
+The high correlation could arise because:
+- P causes Q (possible)
+- Q causes P (possible, despite random assignment — P could be assigned based on initial values, then Q responds, then we measure both)
+- Both are affected by unmeasured post-assignment factors
+- The relationship is spurious in some other way
+
+**To conclude that P causes Q, we would need additional evidence**, such as:
+- A plausible causal mechanism
+- Temporal evidence that P precedes Q
+- Robustness checks ruling out alternative explanations
+- Ideally, a statistically significant treatment effect from a regression analysis
+
+Random assignment is a necessary condition for causal inference, but not sufficient by itself.",no,False,True
+2026-03-09T17:45:07.008231,abs_reverse_4,reverse_causation,V2 → V1,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(V1, V2) = 0.88
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. A correlation of 0.88 indicates a strong *association* between V1 and V2, but this alone cannot establish that V1 causes V2.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: V2 could cause V1
+2. **Confounding**: A third variable could cause both V1 and V2
+3. **Coincidence**: The correlation could be spurious
+
+To establish causation, you would need:
+- **Temporal precedence** (V1 occurs before V2)
+- **Experimental design** (random assignment and manipulation of V1)
+- **Elimination of alternative explanations** (ruling out confounders)
+- **Theoretical mechanism** (a plausible explanation for *how* V1 causes V2)
+
+Observational data with correlation alone cannot provide this evidence.",no,False,True
+2026-03-09T17:45:08.386637,abs_reverse_4,reverse_causation,V2 → V1,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: V2 → V1
+
+n = 100 observations
+corr(V1, V2) = 0.88
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The causal structure is V2 → V1, meaning V2 causes V1, not the other way around. While V1 and V2 are strongly correlated (r = 0.88), correlation alone does not determine causation. The causal direction is specified by the true causal structure: changes in V2 produce changes in V1. Therefore, V1 does not cause V2; rather, V2 causes V1.",no,False,True
+2026-03-09T17:45:11.733494,abs_reverse_4,reverse_causation,V2 → V1,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where V1 was randomly assigned.
+
+n = 100 observations
+corr(V1, V2) = 0.88
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+While V1 and V2 are highly correlated (0.88), correlation alone does not establish causation. Even though V1 was randomly assigned (which is excellent for causal inference), we cannot conclude that V1 causes V2 based solely on this information.
+
+**Key reasons:**
+
+1. **Random assignment of V1 helps, but isn't sufficient** - Random assignment eliminates confounding for V1, but doesn't tell us the direction of causality between V1 and V2.
+
+2. **High correlation is bidirectional** - A correlation of 0.88 could mean:
+   - V1 → V2 (V1 causes V2)
+   - V2 → V1 (V2 causes V1)
+   - Both are driven by a third variable
+   - Some combination of the above
+
+3. **Missing information** - To establish causation, we would need:
+   - Temporal precedence (V1 measured before V2)
+   - A plausible causal mechanism
+   - Experimental manipulation showing V1 changes lead to V2 changes
+   - Ruling out reverse causality
+
+**To answer ""yes,"" you would need additional evidence** such as V1 being measured before V2, or a regression/treatment effect analysis showing that changes in V1 predict changes in V2.",no,False,True
+2026-03-09T17:45:14.248482,abs_reverse_5,reverse_causation,beta → alpha,abstract,neutral,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(alpha, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+Correlation does not imply causation. A correlation of 0.88 indicates a strong *association* between alpha and beta, but this alone cannot establish that alpha causes beta.
+
+Several alternative explanations are possible:
+
+1. **Reverse causation**: Beta might cause alpha
+2. **Confounding**: A third variable might cause both alpha and beta
+3. **Coincidence**: The correlation could be spurious, especially with only 100 observations
+
+To determine causation, you would need:
+- Temporal evidence (alpha precedes beta)
+- A plausible mechanism
+- Experimental design or causal inference methods
+- Control for confounding variables
+- Robustness checks
+
+The correlation is useful evidence to *investigate* a potential causal relationship, but it is not sufficient to establish causation on its own.",no,False,True
+2026-03-09T17:45:15.438802,abs_reverse_5,reverse_causation,beta → alpha,abstract,structure_given,claude-haiku-4-5-20251001,"You are given data about relationships between variables.
+
+The true causal structure is: beta → alpha
+
+n = 100 observations
+corr(alpha, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","**No.**
+
+**Explanation:**
+
+The true causal structure is beta → alpha, meaning beta causes alpha, not the other way around. While alpha and beta are strongly correlated (r = 0.88), correlation alone does not determine causation. The causal direction is specified by the true causal structure: changes in beta produce changes in alpha. Therefore, alpha does not cause beta; rather, beta causes alpha.",no,False,True
+2026-03-09T17:45:18.433214,abs_reverse_5,reverse_causation,beta → alpha,abstract,experiment_stated,claude-haiku-4-5-20251001,"You are given data from a randomized controlled experiment where alpha was randomly assigned.
+
+n = 100 observations
+corr(alpha, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","# Answer: No
+
+## Explanation
+
+The high correlation (0.88) between alpha and beta does **not** establish causation, even though alpha was randomly assigned.
+
+Here's why:
+
+1. **Random assignment of alpha doesn't guarantee it causes beta** — Random assignment ensures alpha is exogenous (not confounded with other variables), which is necessary for causal inference, but it's not sufficient. We also need to establish that alpha actually *affects* beta.
+
+2. **Correlation ≠ Causation** — A high correlation could arise from:
+   - Beta causing alpha (reverse causality)
+   - Both being driven by a third variable
+   - Coincidence
+
+3. **What we'd actually need** — To conclude alpha causes beta, we would need:
+   - Evidence that changes in alpha *precede* changes in beta
+   - A plausible causal mechanism
+   - Ideally, experimental results showing that *manipulating* alpha changes beta
+   - Ruling out alternative explanations
+
+The random assignment of alpha is a good foundation for causal analysis, but the correlation alone doesn't prove causation without additional evidence about the direction and mechanism of the relationship.",no,False,True
+2026-03-09T17:45:25.220535,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong positive correlation (0.79) between ad_spend and sales, correlation does not imply causation. Based on the data provided, we can only observe that these variables move together, but we cannot determine the causal direction or rule out alternative explanations such as:
+
+1. **Reverse causation**: Higher sales might lead to larger advertising budgets
+2. **Confounding variables**: An unmeasured third variable (e.g., seasonality, economic conditions, brand reputation) could be driving both ad spending and sales
+3. **Mediation**: The relationship might work through website_traffic, but we still can't confirm causation without experimental or quasi-experimental design
+
+To establish causation, we would need:
+- A randomized controlled experiment
+- Natural experiment or instrumental variables
+- Time-series analysis showing ad_spend changes precede sales changes
+- Theoretical justification and ruling out confounders
+
+The correlational data alone is insufficient to make a causal claim.",no,True,False
+2026-03-09T17:45:31.129708,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: ad_spend → website_traffic → sales
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","Yes
+
+**Explanation:**
+
+Ad_spend does cause sales, but *indirectly* through website_traffic. According to the true causal structure (ad_spend → website_traffic → sales), ad_spend is a cause of sales via the mediating variable website_traffic. 
+
+The correlation data supports this:
+- Strong correlation between ad_spend and website_traffic (0.9)
+- Strong correlation between website_traffic and sales (0.85)
+- The correlation between ad_spend and sales (0.79) is somewhat lower than the product of the path correlations, consistent with mediation
+
+So while ad_spend causes sales, it does so through the causal chain rather than directly.",yes,True,True
+2026-03-09T17:45:36.366392,direct_1,direct_causation,ad_spend → website_traffic → sales,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where ad_spend was randomly assigned.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.79
+corr(ad_spend, website_traffic) = 0.9
+corr(website_traffic, sales) = 0.85
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+Since ad_spend was **randomly assigned** in this experiment, we can infer causation from the observed correlation. Random assignment ensures that ad_spend is independent of any confounding variables, so the strong positive correlation (0.79) between ad_spend and sales reflects a causal effect.
+
+The randomized controlled experiment design is specifically intended to establish causality, unlike observational studies where correlation doesn't imply causation. The high correlation with website_traffic (0.9) suggests a potential causal mechanism, but the randomization alone is sufficient to conclude that ad_spend causes sales.",yes,True,True
+2026-03-09T17:45:41.182248,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong positive correlation (0.83) between email_opens and purchases, correlation does not imply causation. 
+
+The data shows that all three variables are highly correlated with each other. This pattern suggests several alternative explanations:
+
+1. **Confounding variables**: An unmeasured factor (e.g., customer engagement level, interest in products) could be causing both email opens and purchases.
+
+2. **Reverse causation**: People who are already planning to purchase might be more likely to open emails.
+
+3. **Mediation**: The relationship might work through click_throughs (email_opens → click_throughs → purchases), meaning email opens don't directly cause purchases.
+
+To establish causation, we would need experimental data (like a randomized controlled trial) or additional analytical techniques (like causal inference methods), not just correlational data.",no,True,False
+2026-03-09T17:45:45.247348,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: email_opens → click_throughs → purchases
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+According to the true causal structure provided, email_opens causes purchases through a causal chain: email_opens → click_throughs → purchases. 
+
+While email_opens does not *directly* cause purchases, it does cause purchases *indirectly* through its effect on click_throughs. The high correlations support this causal chain:
+- email_opens strongly correlates with click_throughs (0.91)
+- click_throughs strongly correlates with purchases (0.89)
+- The resulting correlation between email_opens and purchases (0.83) reflects this indirect causal pathway
+
+So yes, email_opens is a cause of purchases, just mediated by click_throughs.",yes,True,True
+2026-03-09T17:45:50.039523,direct_2,direct_causation,email_opens → click_throughs → purchases,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where email_opens was randomly assigned.
+
+n = 100 observations
+corr(email_opens, purchases) = 0.83
+corr(email_opens, click_throughs) = 0.91
+corr(click_throughs, purchases) = 0.89
+
+Question: Does email_opens cause purchases?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+**Explanation:**
+
+Since email_opens was randomly assigned in this experiment, we can make causal inferences. The randomization breaks any confounding relationships between email_opens and other variables, ensuring that any systematic difference in purchases between the treatment (emails opened) and control groups can be attributed to the email opens themselves.
+
+The strong positive correlation (0.83) between email_opens and purchases, combined with the experimental design where email_opens was randomly assigned, provides evidence that email_opens causes purchases. Random assignment is the key factor that allows us to interpret this correlation causally rather than as mere association.",yes,True,True
+2026-03-09T17:45:54.638915,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","No.
+
+While there is a strong positive correlation (0.85) between discount_rate and conversion, correlation does not imply causation. The data suggests a potential confounding variable problem: cart_additions is highly correlated with both discount_rate (0.93) and conversion (0.9). 
+
+It's possible that:
+1. Discount rate causes cart additions, which then causes conversion (indirect effect)
+2. Some unmeasured variable causes all three
+3. The relationship is bidirectional or spurious
+
+Without experimental data (e.g., randomized controlled trials) or additional causal inference techniques (e.g., controlling for confounders, temporal ordering, instrumental variables), we cannot conclude that discount_rate *causes* conversion based solely on correlational data.",no,True,False
+2026-03-09T17:45:58.457130,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: discount_rate → cart_additions → conversion
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","Yes
+
+**Explanation:**
+
+According to the given true causal structure, discount_rate → cart_additions → conversion, discount_rate does cause conversion, but *indirectly* through cart_additions (as a mediator). 
+
+The causal effect flows from discount_rate to cart_additions, and then from cart_additions to conversion. This makes discount_rate a causal ancestor of conversion. The strong correlation (0.85) between discount_rate and conversion is consistent with this causal pathway, where discount_rate influences conversion through its effect on cart_additions.
+
+So while the effect is mediated rather than direct, discount_rate is indeed a cause of conversion in the causal chain.",yes,True,True
+2026-03-09T17:46:05.559625,direct_3,direct_causation,discount_rate → cart_additions → conversion,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where discount_rate was randomly assigned.
+
+n = 100 observations
+corr(discount_rate, conversion) = 0.85
+corr(discount_rate, cart_additions) = 0.93
+corr(cart_additions, conversion) = 0.9
+
+Question: Does discount_rate cause conversion?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+**Explanation:**
+
+Since discount_rate was randomly assigned in a controlled experiment, we can infer causation from the strong positive correlation (0.85). Random assignment breaks any confounding relationships between discount_rate and other variables, ensuring that the observed correlation reflects a true causal effect.
+
+The high correlation between discount_rate and cart_additions (0.93) suggests that discounts work through a mechanism: they encourage cart additions, which in turn lead to conversions. However, the direct correlation of 0.85 between discount_rate and conversion indicates that discount_rate causally affects conversion, whether directly or mediated through cart_additions (or both).",yes,True,True
+2026-03-09T17:46:10.806807,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong positive correlation (0.81) between content_quality and engagement, correlation does not imply causation. Based on the data provided, there are several possible explanations:
+
+1. **Reverse causation**: Engagement could cause perceived content quality (e.g., popular content gets rated as higher quality)
+
+2. **Confounding variable**: time_on_page is correlated with both variables (0.91 and 0.84) and could be a mediating factor or common cause
+
+3. **Third variables**: Other unmeasured factors could be driving both content_quality and engagement
+
+To establish causation, we would need:
+- Experimental manipulation (randomly assigning content quality levels)
+- Temporal precedence (showing content_quality changes before engagement)
+- Ruling out alternative explanations through controlled studies
+
+The correlational data alone cannot establish a causal relationship.",no,True,False
+2026-03-09T17:46:14.793323,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: content_quality → time_on_page → engagement
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+According to the given causal structure, content_quality → time_on_page → engagement, content_quality does cause engagement, but *indirectly* through time_on_page as a mediator.
+
+Content_quality has a direct causal effect on time_on_page (0.91 correlation), and time_on_page has a direct causal effect on engagement (0.84 correlation). The strong correlation between content_quality and engagement (0.81) is explained by this causal chain. So while content_quality causes engagement, it does so through the mediating variable time_on_page rather than through a direct causal path.",yes,True,True
+2026-03-09T17:46:19.518531,direct_4,direct_causation,content_quality → time_on_page → engagement,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where content_quality was randomly assigned.
+
+n = 100 observations
+corr(content_quality, engagement) = 0.81
+corr(content_quality, time_on_page) = 0.91
+corr(time_on_page, engagement) = 0.84
+
+Question: Does content_quality cause engagement?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+**Explanation:**
+
+Since content_quality was randomly assigned in this experiment, we can make causal inferences. The strong positive correlation (0.81) between content_quality and engagement reflects a causal relationship because:
+
+1. **Random assignment** eliminates confounding variables - any differences in engagement can be attributed to the manipulated content_quality rather than other factors
+
+2. The correlation of 0.81 indicates a substantial effect size, suggesting content_quality has a meaningful causal impact on engagement
+
+The fact that time_on_page is also correlated with both variables suggests it may be a mediator in the causal pathway (content_quality → time_on_page → engagement), but this doesn't negate the direct causal effect of content_quality on engagement - it simply helps explain the mechanism.",yes,True,True
+2026-03-09T17:46:23.995337,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation (0.83) between personalization and retention, correlation does not imply causation. Based on the data provided, there are several possible explanations:
+
+1. **Confounding variable**: User satisfaction is highly correlated with both personalization (0.92) and retention (0.88), suggesting it could be a mediating variable or common cause.
+
+2. **Reverse causality**: Retained users might engage more with personalization features, rather than personalization causing retention.
+
+3. **Third variables**: Other unmeasured factors could be driving all three variables.
+
+To establish causation, we would need experimental data (e.g., a randomized controlled trial) or causal inference methods (e.g., instrumental variables, natural experiments), not just correlational data.",no,True,False
+2026-03-09T17:46:28.442333,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: personalization → user_satisfaction → retention
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","No
+
+While personalization and retention are strongly correlated (0.83), personalization does not *directly* cause retention according to the given causal structure. Instead, personalization causes user_satisfaction, which in turn causes retention. This makes personalization an *indirect* cause of retention, mediated through user_satisfaction. The causal effect flows through the chain: personalization → user_satisfaction → retention.
+
+If the question asks about direct causation, the answer is No. If it asks whether personalization has any causal influence (direct or indirect) on retention, the answer would be Yes, but through mediation.",no,True,False
+2026-03-09T17:46:33.020607,direct_5,direct_causation,personalization → user_satisfaction → retention,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where personalization was randomly assigned.
+
+n = 100 observations
+corr(personalization, retention) = 0.83
+corr(personalization, user_satisfaction) = 0.92
+corr(user_satisfaction, retention) = 0.88
+
+Question: Does personalization cause retention?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+**Explanation:**
+
+Since personalization was **randomly assigned** in this experiment, we can make causal claims. Random assignment ensures that personalization is independent of any confounding variables, so the observed correlation of 0.83 between personalization and retention reflects a causal effect.
+
+The high correlations with user_satisfaction (0.92 and 0.88) suggest that user satisfaction may be a mediator in the causal pathway from personalization to retention, but this doesn't negate the causal relationship—it potentially explains the mechanism through which personalization causes retention.
+
+The randomized experimental design is the key factor that allows us to conclude causation rather than mere correlation.",yes,True,True
+2026-03-09T17:46:40.035543,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(ad_spend, sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation between ad_spend and sales (0.88), this does not establish causation. The data suggests a classic confounding variable problem:
+
+- Seasonality is highly correlated with both ad_spend (0.94) and sales (0.93)
+- This means seasonality could be driving both variables simultaneously
+
+For example, companies often increase ad spending during high-sales seasons (holidays, back-to-school, etc.). The observed correlation between ad_spend and sales may largely reflect the fact that both increase during these seasonal periods, rather than ad_spend actually causing sales increases.
+
+To determine causation, we would need:
+- Controlled experiments (randomized ad spend levels)
+- Regression analysis controlling for seasonality
+- Temporal precedence evidence (ad_spend changes before sales changes)
+
+The correlation alone, especially with such a strong confounding variable present, is insufficient to conclude causation.",no,False,True
+2026-03-09T17:46:44.999640,confounding_1,confounding,"seasonality → ad_spend, seasonality → sales",marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: seasonality → ad_spend, seasonality → sales
+
+n = 100 observations
+corr(ad_spend, sales) = 0.88
+corr(seasonality, ad_spend) = 0.94
+corr(seasonality, sales) = 0.93
+
+Question: Does ad_spend cause sales?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+Although ad_spend and sales are highly correlated (0.88), this correlation is spurious and due to a common cause: seasonality. The causal structure shows that seasonality causes both ad_spend and sales, making them confounded variables.
+
+The high correlations of seasonality with both ad_spend (0.94) and sales (0.93) explain why ad_spend and sales appear related. This is a classic case of confounding where:
+- Seasonality drives companies to spend more on ads during certain periods (e.g., holidays)
+- Seasonality independently drives higher sales during those same periods
+
+The correlation between ad_spend and sales does not imply causation here; it merely reflects their shared dependence on the common cause (seasonality).",no,False,True
+2026-03-09T17:46:49.980862,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(social_posts, revenue) = 0.78
+corr(product_launches, social_posts) = 0.9
+corr(product_launches, revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong correlation between social_posts and revenue (0.78), correlation does not imply causation. The data suggests a likely confounding variable problem: product_launches is strongly correlated with both social_posts (0.9) and revenue (0.91).
+
+The most plausible explanation is that product_launches is driving both variables:
+- New product launches naturally generate more social media posts
+- New product launches directly increase revenue
+
+In this scenario, social_posts and revenue move together because they're both caused by product_launches, not because social_posts causes revenue. The relationship between social_posts and revenue may be spurious, mediated entirely through the common cause (product_launches).
+
+To establish causation, we would need experimental data (e.g., randomly varying social posts independent of product launches) or more sophisticated causal analysis techniques.",no,False,True
+2026-03-09T17:46:54.016920,confounding_2,confounding,"product_launches → social_posts, product_launches → revenue",marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: product_launches → social_posts, product_launches → revenue
+
+n = 100 observations
+corr(social_posts, revenue) = 0.78
+corr(product_launches, social_posts) = 0.9
+corr(product_launches, revenue) = 0.91
+
+Question: Does social_posts cause revenue?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Social posts do not cause revenue. Both social_posts and revenue are caused by product_launches (a common cause or ""confounder""). The correlation between social_posts and revenue (0.78) exists because they share a common cause, not because one causes the other.
+
+This is a classic case of ""correlation does not imply causation."" When product_launches increases, it causes both more social_posts (correlation 0.9) and more revenue (correlation 0.91). The relationship between social_posts and revenue is spurious - it disappears or greatly diminishes when controlling for product_launches.",no,False,True
+2026-03-09T17:46:58.467282,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(support_calls, churn) = 0.85
+corr(product_bugs, support_calls) = 0.91
+corr(product_bugs, churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While support_calls and churn are highly correlated (0.85), the data suggests that both variables may be caused by a common underlying factor: product_bugs.
+
+Product_bugs has even stronger correlations with both support_calls (0.91) and churn (0.93). This pattern is consistent with product_bugs being a confounding variable that drives both support calls (customers call about bugs) and churn (customers leave due to bugs). 
+
+The relationship could be: product_bugs → support_calls AND product_bugs → churn, rather than support_calls → churn. Without experimental data or causal inference methods (like controlling for product_bugs), we cannot conclude that support_calls causes churn.",no,False,True
+2026-03-09T17:47:03.215991,confounding_3,confounding,"product_bugs → support_calls, product_bugs → churn",marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: product_bugs → support_calls, product_bugs → churn
+
+n = 100 observations
+corr(support_calls, churn) = 0.85
+corr(product_bugs, support_calls) = 0.91
+corr(product_bugs, churn) = 0.93
+
+Question: Does support_calls cause churn?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Although support_calls and churn are highly correlated (0.85), support_calls does not cause churn. Both variables are effects of a common cause: product_bugs. 
+
+The causal structure shows that:
+- product_bugs → support_calls (correlation 0.91)
+- product_bugs → churn (correlation 0.93)
+
+The high correlation between support_calls and churn exists because they share product_bugs as a common cause (a confounding variable). When products have more bugs, this independently leads to both more support calls AND more churn. The support calls themselves are not causing the churn; rather, both are symptoms of the underlying problem (buggy products).
+
+This is a classic example of ""correlation does not imply causation"" where a confounding variable creates spurious correlation between two effects.",no,False,True
+2026-03-09T17:47:07.572510,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(training_hours, sales_performance) = 0.8
+corr(employee_experience, training_hours) = 0.89
+corr(employee_experience, sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+While there is a strong correlation (0.8) between training_hours and sales_performance, correlation does not imply causation. The data suggests that employee_experience is a likely confounding variable, as it has even stronger correlations with both training_hours (0.89) and sales_performance (0.92).
+
+It's plausible that more experienced employees both seek out/receive more training AND perform better at sales independently. The relationship between training and performance could be spurious, driven primarily by experience level. Without experimental data (e.g., randomly assigning training hours) or controlling for confounders, we cannot conclude that training causes improved sales performance from correlational data alone.",no,False,True
+2026-03-09T17:47:13.420750,confounding_4,confounding,"employee_experience → training_hours, employee_experience → sales_performance",marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: employee_experience → training_hours, employee_experience → sales_performance
+
+n = 100 observations
+corr(training_hours, sales_performance) = 0.8
+corr(employee_experience, training_hours) = 0.89
+corr(employee_experience, sales_performance) = 0.92
+
+Question: Does training_hours cause sales_performance?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+The high correlation between training_hours and sales_performance (0.8) is likely due to a **confounding variable** (employee_experience), not a causal relationship.
+
+According to the true causal structure, employee_experience causes both training_hours and sales_performance. This creates a spurious correlation between training_hours and sales_performance. More experienced employees both:
+1. Accumulate more training hours (corr = 0.89)
+2. Achieve better sales performance (corr = 0.92)
+
+This common cause (employee_experience) explains why training_hours and sales_performance are correlated, even though training_hours doesn't actually cause sales_performance. If we controlled for employee_experience, the correlation between training_hours and sales_performance would likely disappear or be greatly reduced.",no,False,True
+2026-03-09T17:47:19.582369,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(influencer_posts, brand_awareness) = 0.79
+corr(market_trend, influencer_posts) = 0.88
+corr(market_trend, brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","**No**
+
+While there is a strong positive correlation (0.79) between influencer_posts and brand_awareness, correlation does not imply causation. 
+
+The data suggests a potential confounding variable problem: market_trend is highly correlated with both influencer_posts (0.88) and brand_awareness (0.91). This pattern indicates that market_trend could be driving both variables. For example, when market trends favor a product category, brands may increase influencer posts AND simultaneously experience increased brand awareness through multiple channels.
+
+The relationship could be:
+- Spurious (both driven by market_trend)
+- Reverse causation (brand awareness leads to more influencer posts)
+- Part of a complex system with bidirectional effects
+
+To establish causation, we would need experimental data (e.g., randomized controlled trials) or causal inference methods that control for confounders, not just correlational data.",no,False,True
+2026-03-09T17:47:23.954485,confounding_5,confounding,"market_trend → influencer_posts, market_trend → brand_awareness",marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: market_trend → influencer_posts, market_trend → brand_awareness
+
+n = 100 observations
+corr(influencer_posts, brand_awareness) = 0.79
+corr(market_trend, influencer_posts) = 0.88
+corr(market_trend, brand_awareness) = 0.91
+
+Question: Does influencer_posts cause brand_awareness?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+According to the true causal structure, `market_trend` is a common cause of both `influencer_posts` and `brand_awareness`. The observed correlation between `influencer_posts` and `brand_awareness` (0.79) is due to confounding by `market_trend`, not because `influencer_posts` causes `brand_awareness`.
+
+Both variables are caused by `market_trend` (with strong correlations of 0.88 and 0.91 respectively), which creates a spurious correlation between them. This is a classic case of confounding where two effects of a common cause appear correlated with each other, even though there is no direct causal relationship between them.",no,False,True
+2026-03-09T17:47:27.536202,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:** While there is a strong positive correlation (0.92) between customer reviews and product quality, correlation does not imply causation. It is more plausible that the causal direction is reversed—product quality causes (influences) customer reviews. Customers typically review products *after* experiencing their quality, so higher quality products tend to receive better reviews. The product quality exists independently before customers review it, making it the more likely causal factor rather than the effect.",no,False,True
+2026-03-09T17:47:31.207741,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: product_quality → customer_reviews
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+The true causal structure shows that product_quality → customer_reviews, meaning product quality causes customer reviews, not the other way around. While the correlation of 0.92 indicates a strong relationship between the variables, correlation does not imply causation direction. The causal arrow goes from product quality to customer reviews because logically, the quality of a product influences what customers write in their reviews, not vice versa. Customer reviews are a response to or reflection of product quality, not a cause of it.",no,False,True
+2026-03-09T17:47:36.378123,reverse_1,reverse_causation,product_quality → customer_reviews,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where customer_reviews was randomly assigned.
+
+n = 100 observations
+corr(customer_reviews, product_quality) = 0.92
+
+Question: Does customer_reviews cause product_quality?
+
+Answer Yes or No, then explain briefly.","No.
+
+Even though customer_reviews was randomly assigned in this experiment, the direction of causality is reversed. Random assignment of customer_reviews allows us to identify whether customer_reviews causally affects outcomes, but product_quality is not a downstream outcome of reviews—it's a characteristic of the product itself.
+
+The high correlation (0.92) most likely indicates that customer_reviews *reflect* or are caused by product_quality, not the other way around. You cannot cause a product to have higher quality by randomly assigning it to receive customer reviews. The causal arrow runs from product_quality → customer_reviews.",no,False,True
+2026-03-09T17:47:41.963454,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No.
+
+While there is a strong positive correlation (0.91) between support_tickets and user_frustration, correlation does not imply causation. The relationship could work in multiple ways:
+
+1. **Reverse causation**: User frustration might cause more support tickets (frustrated users are more likely to contact support)
+
+2. **Bidirectional relationship**: They could reinforce each other in a feedback loop
+
+3. **Common cause**: Both variables might be caused by a third factor (e.g., poor product quality causes both user frustration AND support tickets)
+
+Without additional evidence such as temporal data, experimental manipulation, or controlling for confounding variables, we cannot conclude that support tickets cause user frustration based solely on correlation.",no,False,True
+2026-03-09T17:47:47.270967,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: user_frustration → support_tickets
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","No.
+
+The true causal structure shows that user_frustration → support_tickets, meaning user frustration causes support tickets, not the other way around. While there is a strong correlation (0.91) between the variables, correlation does not imply causation. The causal direction is from user frustration to support tickets - frustrated users submit support tickets as a result of their frustration. Support tickets are the effect, not the cause.",no,False,True
+2026-03-09T17:47:53.498686,reverse_2,reverse_causation,user_frustration → support_tickets,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where support_tickets was randomly assigned.
+
+n = 100 observations
+corr(support_tickets, user_frustration) = 0.91
+
+Question: Does support_tickets cause user_frustration?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though the correlation is very strong (0.91) and support_tickets was randomly assigned, the causal direction is likely reversed. 
+
+In a randomized experiment, we can infer causation *from* the randomly assigned variable *to* the outcome. However, the question asks whether support_tickets causes user_frustration, when the more plausible causal mechanism is that **user_frustration causes support_tickets** (frustrated users submit more tickets).
+
+Random assignment of support_tickets would be unusual and potentially unethical (forcing users to submit tickets they don't need), and even if done, artificially creating tickets wouldn't logically cause genuine user frustration. The high correlation likely reflects that the randomization captured the natural variation in user frustration levels, which then drove ticket submission behavior.",no,False,True
+2026-03-09T17:47:59.211298,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:** Correlation does not imply causation. While there is a strong positive correlation (0.92) between referrals and customer satisfaction, this alone cannot tell us the direction of causality. It's equally plausible that:
+1. Customer satisfaction causes referrals (satisfied customers are more likely to refer others)
+2. Referrals cause customer satisfaction (as the question suggests)
+3. A third variable causes both (e.g., product quality)
+4. The relationship is bidirectional
+
+In fact, the most intuitive explanation is typically the reverse: satisfied customers generate referrals, not the other way around. To establish causation, we would need experimental data, temporal information, or additional causal inference methods.",no,False,True
+2026-03-09T17:48:02.521538,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: customer_satisfaction → referrals
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","No.
+
+The true causal structure shows that customer_satisfaction → referrals, meaning customer satisfaction causes referrals, not the other way around. While the correlation of 0.92 indicates a strong relationship between the variables, correlation does not imply causation direction. The causal arrow goes from customer satisfaction to referrals, which makes logical sense: satisfied customers are more likely to refer others, rather than making referrals causing customers to become satisfied.",no,False,True
+2026-03-09T17:48:07.263230,reverse_3,reverse_causation,customer_satisfaction → referrals,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where referrals was randomly assigned.
+
+n = 100 observations
+corr(referrals, customer_satisfaction) = 0.92
+
+Question: Does referrals cause customer_satisfaction?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though referrals was randomly assigned, the causal direction is likely reversed. The more plausible mechanism is that **customer_satisfaction causes referrals**, not the other way around. Satisfied customers are more likely to refer others.
+
+Random assignment of referrals allows us to make causal claims about the effect of referrals on *other* outcomes, but it doesn't change the logical relationship between these two variables. You cannot cause someone to be satisfied by forcing them to make a referral—rather, their satisfaction level determines whether they naturally refer others.
+
+The high correlation (0.92) likely reflects that customers who were randomly prompted/incentivized to make referrals only actually did so if they were already satisfied.",no,False,True
+2026-03-09T17:48:11.001394,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No.
+
+While there is a strong positive correlation (0.88) between repeat_purchases and product_value, correlation does not imply causation. The direction of causality is more likely reversed: product_value (quality, usefulness, satisfaction with the product) likely causes repeat_purchases, as customers tend to repurchase products they find valuable. Alternatively, there could be confounding variables affecting both, or a bidirectional relationship. The correlation alone cannot establish that repeat purchases cause product value.",no,False,True
+2026-03-09T17:48:14.794480,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: product_value → repeat_purchases
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No.
+
+The true causal structure shows that product_value → repeat_purchases, meaning product_value causes repeat_purchases, not the other way around. While the correlation of 0.88 indicates a strong relationship between the variables, correlation does not imply causation direction. The causal arrow goes from product_value to repeat_purchases, so repeat_purchases does not cause product_value. This makes intuitive sense: the value of a product influences whether customers make repeat purchases, rather than repeat purchases somehow creating the product's value.",no,False,True
+2026-03-09T17:48:22.213178,reverse_4,reverse_causation,product_value → repeat_purchases,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where repeat_purchases was randomly assigned.
+
+n = 100 observations
+corr(repeat_purchases, product_value) = 0.88
+
+Question: Does repeat_purchases cause product_value?
+
+Answer Yes or No, then explain briefly.","No.
+
+Even though repeat_purchases was randomly assigned, it cannot cause product_value in this scenario. The causal direction must go from product_value to repeat_purchases, not the reverse. 
+
+Logically, customers make repeat purchases *because* they perceive high product value, not the other way around. A product's value is an inherent characteristic that exists before and influences whether customers choose to purchase again. Random assignment of repeat_purchases doesn't change this fundamental causal ordering—you cannot make a product valuable by forcing customers to buy it repeatedly.
+
+The random assignment here would be artificial (perhaps incentivizing repeat purchases) and while it allows us to estimate the effect of repeat purchases on other outcomes, it doesn't reverse the natural causal relationship where product quality/value drives customer behavior.",no,False,True
+2026-03-09T17:48:26.850076,reverse_5,reverse_causation,content_virality → social_shares,marketing,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:** Correlation does not imply causation. While there is a strong positive correlation (0.88) between social_shares and content_virality, this alone cannot establish a causal relationship. The causation could go in the opposite direction (content_virality causes social_shares), there could be a third confounding variable affecting both, or they could have a bidirectional relationship. In fact, it's more intuitive that viral content leads to more social shares rather than shares causing virality. To establish causation, we would need experimental data, temporal precedence, or additional causal inference methods.",no,False,True
+2026-03-09T17:48:31.643492,reverse_5,reverse_causation,content_virality → social_shares,marketing,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: content_virality → social_shares
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","No.
+
+The true causal structure shows that content_virality → social_shares, meaning content virality causes social shares, not the other way around. While the correlation of 0.88 indicates a strong relationship between the variables, correlation does not imply causation direction. The causal arrow goes from content_virality to social_shares, so social_shares does not cause content_virality. This makes intuitive sense: content must first be viral (have viral qualities) before it generates social shares, rather than shares somehow retroactively causing content to become viral.",no,False,True
+2026-03-09T17:48:37.804943,reverse_5,reverse_causation,content_virality → social_shares,marketing,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where social_shares was randomly assigned.
+
+n = 100 observations
+corr(social_shares, content_virality) = 0.88
+
+Question: Does social_shares cause content_virality?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though social_shares was randomly assigned, the causal direction is backwards. The question asks whether social_shares causes content_virality, but logically, content virality is a property or quality of the content itself that would *cause* more social shares, not the other way around.
+
+Virality refers to the inherent potential or quality of content to spread. You cannot make content become viral in nature by artificially assigning it social shares. The random assignment of social_shares would allow us to test whether social_shares cause some *outcome* (like revenue, engagement, or reach), but content_virality appears to be a characteristic of the content that precedes and drives sharing behavior.
+
+The high correlation (0.88) likely reflects that when you experimentally give content more social shares, you can better observe/measure its true underlying virality, but you're not causing the virality itself.",no,False,True
+2026-03-09T17:48:42.125488,abs_direct_1,direct_causation,A → C → B,abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Correlation does not imply causation. While A and B are strongly correlated (0.79), this could be explained by several alternative scenarios:
+
+1. **Reverse causation**: B might cause A instead
+2. **Confounding variable**: C is highly correlated with both A (0.9) and B (0.85), suggesting C could be driving the relationship between A and B
+3. **Indirect relationship**: A might influence B through C, rather than directly causing it
+4. **Spurious correlation**: All three variables might be influenced by unmeasured factors
+
+The correlation data alone cannot establish a causal relationship. We would need additional evidence such as temporal ordering, experimental manipulation, or causal inference methods to determine if A actually causes B.",no,True,False
+2026-03-09T17:48:47.054438,abs_direct_1,direct_causation,A → C → B,abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: A → C → B
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+
+According to the true causal structure A → C → B, A does not *directly* cause B. Instead, A causes C, which in turn causes B. The relationship between A and B is mediated entirely through C.
+
+While A has a causal influence on B *indirectly* (through the causal chain), A does not cause B directly. The strong correlation between A and B (0.79) exists because of this indirect pathway, not because of a direct causal link.
+
+If the question is asking about whether A has *any* causal influence (direct or indirect) on B, then the answer would be Yes. But in standard causal terminology, ""A causes B"" typically refers to a direct causal relationship, which does not exist here.",no,True,False
+2026-03-09T17:48:56.188278,abs_direct_1,direct_causation,A → C → B,abstract,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where A was randomly assigned.
+
+n = 100 observations
+corr(A, B) = 0.79
+corr(A, C) = 0.9
+corr(C, B) = 0.85
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though A and B are strongly correlated (0.79), we cannot conclude that A causes B from this information alone.
+
+The key issue is that C is highly correlated with both A (0.9) and B (0.85). Despite A being randomly assigned, the strong correlations suggest that C might be a **collider** or **mediator** in the causal pathway, or there could be selection bias in the sample we're observing.
+
+Most importantly: if A was truly randomly assigned in the experiment, we would need to see the **direct effect** of A on B, controlling for potential mediators. The correlation alone doesn't distinguish between:
+1. A → B (direct causation)
+2. A → C → B (C mediates the effect)
+3. A and B both cause C (collider bias if we're conditioning on C)
+
+To establish causation, we'd need to either:
+- See the experimental protocol and confirm nothing went wrong with randomization
+- Examine the causal structure more carefully
+- Look at the effect of A on B controlling for or not controlling for C, depending on the true causal structure
+
+The correlations alone are insufficient to conclude causation.",no,True,False
+2026-03-09T17:49:01.144851,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While X1 and Y1 are strongly correlated (0.83), this alone cannot establish a causal relationship. The correlations are consistent with multiple scenarios:
+
+1. **X1 causes Y1** (direct causation)
+2. **Y1 causes X1** (reverse causation)
+3. **M1 is a common cause** of both X1 and Y1 (confounding)
+4. **M1 is a mediator** through which X1 affects Y1 (indirect causation)
+5. Some other unmeasured variable causes both
+
+The high correlations between all three variables suggest M1 may be involved in the relationship, but correlation data alone cannot determine the direction of causality or rule out confounding variables. Establishing causation requires additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that account for confounders.",no,True,False
+2026-03-09T17:49:05.102325,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: X1 → M1 → Y1
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","Yes
+
+**Explanation:** X1 does cause Y1, but *indirectly* through the mediator M1. The true causal structure X1 → M1 → Y1 shows that X1 has a causal effect on Y1 that is fully mediated by M1. The strong correlations support this: X1 strongly affects M1 (0.91), M1 strongly affects Y1 (0.89), and the resulting correlation between X1 and Y1 (0.83) reflects this indirect causal pathway. So while X1 causes Y1, it does so through M1 rather than directly.",yes,True,True
+2026-03-09T17:49:09.685195,abs_direct_2,direct_causation,X1 → M1 → Y1,abstract,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where X1 was randomly assigned.
+
+n = 100 observations
+corr(X1, Y1) = 0.83
+corr(X1, M1) = 0.91
+corr(M1, Y1) = 0.89
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","**Yes**
+
+Since X1 was randomly assigned in a controlled experiment, and there is a strong positive correlation (0.83) between X1 and Y1, we can conclude that X1 causes Y1. 
+
+The random assignment of X1 eliminates confounding variables, meaning any systematic relationship between X1 and Y1 can be interpreted causally. The high correlation of 0.83 provides strong evidence of this causal effect. The presence of M1 (which appears to be a mediator given its high correlations with both X1 and Y1) doesn't negate the causal relationship—it may simply be part of the causal pathway through which X1 affects Y1.",yes,True,True
+2026-03-09T17:49:14.720781,abs_direct_3,direct_causation,P → R → Q,abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While P and Q are strongly correlated (0.85), this could be due to several alternative explanations:
+
+1. **Reverse causation**: Q might cause P instead
+2. **Confounding variable**: R is highly correlated with both P (0.93) and Q (0.9), suggesting R could be a common cause of both P and Q, making their correlation spurious
+3. **Indirect relationship**: P might influence Q only through R, or vice versa
+
+The high correlations with R are particularly suggestive that R may be confounding the P-Q relationship. Correlation alone cannot establish causal direction or rule out confounding factors. We would need additional information (temporal ordering, experimental manipulation, or causal inference methods) to determine causation.",no,True,False
+2026-03-09T17:49:18.281556,abs_direct_3,direct_causation,P → R → Q,abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: P → R → Q
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","Yes
+
+**Explanation:** 
+
+According to the true causal structure P → R → Q, P does cause Q, but *indirectly* through R. P is a causal ancestor of Q in the causal chain. When we ask ""does P cause Q,"" the answer is yes because manipulating P would change Q (via the mediating variable R). The high correlation between P and Q (0.85) is consistent with this causal relationship, as the effect of P propagates through R to Q.",yes,True,True
+2026-03-09T17:49:24.732054,abs_direct_3,direct_causation,P → R → Q,abstract,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where P was randomly assigned.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(P, R) = 0.93
+corr(R, Q) = 0.9
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though P and Q are highly correlated (0.85), correlation does not imply causation. The high correlations among all three variables suggest that R might be a common cause (confounder) of both P and Q, or that R mediates the relationship between P and Q.
+
+Wait, let me reconsider: The problem states that **P was randomly assigned** in a randomized controlled experiment. Random assignment should break any incoming causal links to P, eliminating confounders.
+
+**Revised answer: Yes**
+
+In a randomized controlled experiment with P randomly assigned, the strong correlation (0.85) between P and Q provides evidence that P causes Q. Random assignment ensures that any correlation between P and Q cannot be due to confounding variables causing both. The high correlation with R (which correlates 0.9 with Q) suggests R might be a mediator through which P affects Q, or R might be affected by both P and Q, but this doesn't negate the causal effect of P on Q established through randomization.",no,True,False
+2026-03-09T17:49:31.039046,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While V1 and V2 are strongly correlated (0.81), this correlation alone cannot establish a causal relationship. There are several possible explanations for this correlation:
+
+1. **Reverse causation**: V2 might cause V1 instead
+2. **Confounding variable**: V3 is highly correlated with both V1 (0.91) and V2 (0.84), suggesting it could be a common cause of both variables
+3. **Spurious correlation**: The relationship could be coincidental or due to other unmeasured factors
+
+To establish causation, we would need additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that rule out confounding explanations.",no,True,False
+2026-03-09T17:49:34.961062,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: V1 → V3 → V2
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","Yes
+
+**Explanation:** According to the true causal structure V1 → V3 → V2, V1 does cause V2, but *indirectly* through V3. V1 is a causal ancestor of V2, meaning changes in V1 will produce changes in V2 via the causal path through V3. The high correlation between V1 and V2 (0.81) reflects this causal relationship, even though it is mediated by V3 rather than being a direct effect.",yes,True,True
+2026-03-09T17:49:41.301210,abs_direct_4,direct_causation,V1 → V3 → V2,abstract,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where V1 was randomly assigned.
+
+n = 100 observations
+corr(V1, V2) = 0.81
+corr(V1, V3) = 0.91
+corr(V3, V2) = 0.84
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","**No**
+
+**Explanation:**
+
+Since V1 was randomly assigned in an experiment, we can make causal inferences about V1's effects. However, the correlation pattern suggests V1 does NOT cause V2. 
+
+The key evidence is:
+- corr(V1, V3) = 0.91 (very strong)
+- corr(V3, V2) = 0.84 (strong)
+- corr(V1, V2) = 0.81 (strong, but weaker than expected)
+
+If V1 caused V2 directly, we'd expect corr(V1, V2) to be at least as strong as corr(V1, V3). Instead, the pattern suggests V1 → V3 → V2 (V1 causes V3, which causes V2). The correlation between V1 and V2 appears to be mediated entirely through V3.
+
+To confirm: V1 causes V3, and V3 causes V2, but V1 does not have a direct causal effect on V2.",no,True,False
+2026-03-09T17:49:45.546358,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While alpha and beta are strongly correlated (0.83), this correlation alone cannot establish a causal relationship. There are several possible explanations for this correlation:
+
+1. **Reverse causation**: Beta might cause alpha instead
+2. **Confounding variable**: Gamma is highly correlated with both alpha (0.92) and beta (0.88), suggesting it could be a common cause of both variables
+3. **Indirect relationship**: Alpha might influence beta through gamma, or vice versa
+4. **Spurious correlation**: The relationship could be coincidental or due to other unmeasured factors
+
+To establish causation, we would need additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that rule out confounding and reverse causation.",no,True,False
+2026-03-09T17:49:50.521838,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: alpha → gamma → beta
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","No
+
+**Explanation:**
+According to the true causal structure (alpha → gamma → beta), alpha does not *directly* cause beta. Instead, alpha causes gamma, which in turn causes beta. This makes gamma a mediator in the relationship between alpha and beta.
+
+While alpha has a causal influence on beta *indirectly* through gamma, the question asks if alpha causes beta, which typically refers to direct causation. The high correlation between alpha and beta (0.83) exists because of the causal chain through gamma, not because of a direct causal link.
+
+If we were to ask whether alpha has a causal effect on beta (direct or indirect), the answer would be yes. But for direct causation, the answer is no.",no,True,False
+2026-03-09T17:49:58.187221,abs_direct_5,direct_causation,alpha → gamma → beta,abstract,experiment_stated,claude-sonnet-4-5-20250929,"You are given data from a randomized controlled experiment where alpha was randomly assigned.
+
+n = 100 observations
+corr(alpha, beta) = 0.83
+corr(alpha, gamma) = 0.92
+corr(gamma, beta) = 0.88
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Even though alpha was randomly assigned and there is a strong correlation (0.83) between alpha and beta, we cannot conclude that alpha causes beta based solely on this information.
+
+The key issue is **confounding through gamma**. The pattern of correlations suggests that gamma may be a common cause of both alpha and beta:
+- gamma is highly correlated with alpha (0.92)
+- gamma is highly correlated with beta (0.88)
+
+While alpha was randomly assigned *initially*, if gamma occurred *after* the randomization but *before* beta was measured, gamma could be a mediator or post-treatment variable that affects both the realized value of alpha and beta. Alternatively, if there are measurement issues or the correlations reflect post-randomization dynamics, the simple correlation doesn't establish causation.
+
+To properly assess whether alpha causes beta, we would need to:
+1. Verify the temporal sequence of variables
+2. Control for gamma in a regression analysis
+3. Examine whether the alpha→beta relationship persists after accounting for gamma
+
+The randomization of alpha is necessary but not sufficient without proper causal analysis of the full variable structure.",no,True,False
+2026-03-09T17:50:05.102419,abs_confounding_1,confounding,"C → A, C → B",abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(A, B) = 0.88
+corr(C, A) = 0.94
+corr(C, B) = 0.93
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","**No**
+
+The correlation between A and B does not establish causation. The high correlations among all three variables (A, B, and C) suggest several alternative explanations:
+
+1. **Common cause**: C could be causing both A and B (since C is highly correlated with both)
+2. **Reverse causation**: B could be causing A instead
+3. **Confounding**: Another unmeasured variable could be driving all relationships
+4. **Indirect relationship**: A might affect B through C, or vice versa
+
+Correlation alone, regardless of its strength, cannot determine causal direction. Establishing causation would require additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that account for confounders.",no,False,True
+2026-03-09T17:50:08.423171,abs_confounding_1,confounding,"C → A, C → B",abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: C → A, C → B
+
+n = 100 observations
+corr(A, B) = 0.88
+corr(C, A) = 0.94
+corr(C, B) = 0.93
+
+Question: Does A cause B?
+
+Answer Yes or No, then explain briefly.","No.
+
+A does not cause B. Both A and B are caused by their common parent C. The high correlation between A and B (0.88) is due to their shared cause C, not because one causes the other. This is a classic case of confounding - when C is high, both A and B tend to be high, creating a correlation between them. However, this correlation reflects their common dependence on C rather than a direct causal relationship between A and B.",no,False,True
+2026-03-09T17:50:13.185190,abs_confounding_2,confounding,"Z1 → X1, Z1 → Y1",abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(X1, Y1) = 0.78
+corr(Z1, X1) = 0.9
+corr(Z1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While X1 and Y1 are strongly correlated (0.78), this correlation could be due to:
+
+1. **Confounding**: Z1 is highly correlated with both X1 (0.9) and Y1 (0.91), suggesting Z1 could be a common cause of both variables. The observed correlation between X1 and Y1 might be entirely or partially explained by their mutual relationship with Z1.
+
+2. **Reverse causation**: Y1 could cause X1 instead.
+
+3. **Spurious correlation**: The relationship could be coincidental or driven by the confounding variable Z1.
+
+To establish causation, we would need additional evidence such as experimental manipulation, temporal precedence, controlled studies, or causal inference techniques (e.g., controlling for Z1 to see if the X1-Y1 relationship persists).",no,False,True
+2026-03-09T17:50:17.395724,abs_confounding_2,confounding,"Z1 → X1, Z1 → Y1",abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: Z1 → X1, Z1 → Y1
+
+n = 100 observations
+corr(X1, Y1) = 0.78
+corr(Z1, X1) = 0.9
+corr(Z1, Y1) = 0.91
+
+Question: Does X1 cause Y1?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+X1 does not cause Y1. The strong correlation between X1 and Y1 (0.78) is due to their common cause Z1, not because X1 causes Y1.
+
+This is a classic case of confounding. Since Z1 causes both X1 and Y1 (with strong correlations of 0.9 and 0.91 respectively), X1 and Y1 will be correlated even though there is no direct causal relationship between them. The correlation between X1 and Y1 is spurious - it arises entirely from their shared dependence on Z1.
+
+If we were to control for Z1 (hold it constant), the correlation between X1 and Y1 would disappear or be greatly reduced, confirming that X1 does not cause Y1.",no,False,True
+2026-03-09T17:50:22.697078,abs_confounding_3,confounding,"R → P, R → Q",abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(R, P) = 0.91
+corr(R, Q) = 0.93
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Correlation does not imply causation. The high correlation between P and Q (0.85) tells us only that they move together, not that one causes the other.
+
+In fact, the correlation pattern suggests an alternative explanation: R is highly correlated with both P (0.91) and Q (0.93). This raises the possibility that:
+- R could be a common cause of both P and Q (confounding)
+- R could be the actual causal variable
+- All three variables could be caused by some other unmeasured factor
+- The causation could run from Q to P, or be bidirectional
+
+Without additional information such as temporal ordering, experimental manipulation, or causal modeling techniques, we cannot determine causation from correlations alone.",no,False,True
+2026-03-09T17:50:26.122092,abs_confounding_3,confounding,"R → P, R → Q",abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: R → P, R → Q
+
+n = 100 observations
+corr(P, Q) = 0.85
+corr(R, P) = 0.91
+corr(R, Q) = 0.93
+
+Question: Does P cause Q?
+
+Answer Yes or No, then explain briefly.","No.
+
+P does not cause Q. Both P and Q are caused by their common parent R. The high correlation between P and Q (0.85) is due to their shared cause R, not because one causes the other. This is a classic case of confounding, where R acts as a common cause (confounder) that induces a correlation between P and Q even though there is no direct causal relationship between them. The correlations show that R is strongly associated with both P (0.91) and Q (0.93), which explains why P and Q appear correlated.",no,False,True
+2026-03-09T17:50:30.607566,abs_confounding_4,confounding,"V3 → V1, V3 → V2",abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(V1, V2) = 0.8
+corr(V3, V1) = 0.89
+corr(V3, V2) = 0.92
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","**No**
+
+Correlation does not imply causation. The correlation of 0.8 between V1 and V2 tells us only that these variables are associated, not that one causes the other.
+
+There are several possible explanations for this correlation:
+1. V2 could cause V1 (reverse causation)
+2. A third variable could cause both (confounding) - notably, V3 is highly correlated with both V1 (0.89) and V2 (0.92), suggesting it might be a common cause
+3. The relationship could be coincidental
+4. There could be bidirectional causation
+
+To establish causation, we would need additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that rule out confounding.",no,False,True
+2026-03-09T17:50:34.775836,abs_confounding_4,confounding,"V3 → V1, V3 → V2",abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: V3 → V1, V3 → V2
+
+n = 100 observations
+corr(V1, V2) = 0.8
+corr(V3, V1) = 0.89
+corr(V3, V2) = 0.92
+
+Question: Does V1 cause V2?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+V1 does not cause V2. The true causal structure shows that V3 is a common cause of both V1 and V2 (V3 → V1 and V3 → V2). 
+
+The high correlation between V1 and V2 (0.8) is due to their shared dependence on V3, not because one causes the other. This is a classic case of confounding - V1 and V2 are correlated because they have a common cause (V3), creating a spurious association between them. If we were to control for V3, the correlation between V1 and V2 would likely disappear or be greatly reduced, confirming they are conditionally independent given their common cause.",no,False,True
+2026-03-09T17:50:40.924843,abs_confounding_5,confounding,"gamma → alpha, gamma → beta",abstract,neutral,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+n = 100 observations
+corr(alpha, beta) = 0.79
+corr(gamma, alpha) = 0.88
+corr(gamma, beta) = 0.91
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","No.
+
+**Explanation:**
+
+Correlation does not imply causation. While alpha and beta are strongly correlated (0.79), this alone cannot establish a causal relationship. The high correlations suggest several alternative explanations:
+
+1. **Reverse causation**: Beta might cause alpha instead
+2. **Common cause (confounding)**: Gamma is highly correlated with both alpha (0.88) and beta (0.91), suggesting gamma could be a common cause influencing both variables
+3. **Indirect relationship**: Alpha's correlation with beta might be mediated through gamma
+
+To establish causation, we would need additional evidence such as temporal precedence, experimental manipulation, or causal inference methods that rule out confounding variables.",no,False,True
+2026-03-09T17:50:44.076624,abs_confounding_5,confounding,"gamma → alpha, gamma → beta",abstract,structure_given,claude-sonnet-4-5-20250929,"You are given data about relationships between variables.
+
+The true causal structure is: gamma → alpha, gamma → beta
+
+n = 100 observations
+corr(alpha, beta) = 0.79
+corr(gamma, alpha) = 0.88
+corr(gamma, beta) = 0.91
+
+Question: Does alpha cause beta?
+
+Answer Yes or No, then explain briefly.","No.
+
+Alpha does not cause beta. Both alpha and beta are caused by gamma (a common cause). The correlation between alpha and beta (0.79) exists because they share gamma as a common parent variable. This is a classic case of confounding - the correlation between alpha and beta is due to their mutual dependence on gamma, not because of any direct causal relationship between them. If we were to control for gamma, the correlation between alpha and beta would likely disappear or be greatly reduced.",no,False,True

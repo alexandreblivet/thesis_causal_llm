@@ -1,5 +1,5 @@
 """
-Test script for running a single scenario against Ollama models.
+Test script for running a single scenario against Anthropic models.
 Useful for debugging and verifying setup before running the full experiment.
 """
 
@@ -128,7 +128,7 @@ def list_models():
     print("-" * 40)
     for m in models:
         print(f"  {m}")
-    print("\nTo pull a model: ollama pull <model_name>")
+    print("\nAll models use the Anthropic API. Set ANTHROPIC_API_KEY in .env")
 
 
 def main():
